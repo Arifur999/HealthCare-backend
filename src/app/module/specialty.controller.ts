@@ -38,6 +38,23 @@ const getAllSpecialties = async (req: Request, res: Response) => {
   }
 };
 
+const deleteSpecialty = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;   
+    const result = await specialtyService.deleteSpecialty(id as string);
+    res.status(200).json({
+      success: true,
+      data: result,
+      message: "Specialty deleted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete specialty",
+    });
+  }
+};
 
 
 
@@ -45,4 +62,8 @@ const getAllSpecialties = async (req: Request, res: Response) => {
 
 
 
-export const specialtyController = { createSpecialty, getAllSpecialties };
+export const specialtyController = { 
+    createSpecialty,
+     getAllSpecialties,
+deleteSpecialty
+ };

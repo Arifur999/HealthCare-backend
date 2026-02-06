@@ -23,10 +23,25 @@ const getAllSpecialties = async (): Promise<Specialty[]> => {
   }
 };
 
+const deleteSpecialty = async (id: string): Promise<Specialty | null> => {
+  try {
+    const specialty = await prisma.specialty.delete({
+      where: {
+        id,
+      },
+    });
+    return specialty;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
 
 
 
 export const specialtyService = {
   createSpecialty,
     getAllSpecialties,
+    deleteSpecialty,
 };
