@@ -56,7 +56,24 @@ const deleteSpecialty = async (req: Request, res: Response) => {
   }
 };
 
-
+const updateSpecialty = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const payload = req.body;
+    const result = await specialtyService.updateSpecialty(id as string, payload);
+    res.status(200).json({
+      success: true,
+      data: result,
+      message: "Specialty updated successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to update specialty",
+    });
+  }
+};
 
 
 
@@ -65,5 +82,6 @@ const deleteSpecialty = async (req: Request, res: Response) => {
 export const specialtyController = { 
     createSpecialty,
      getAllSpecialties,
-deleteSpecialty
+deleteSpecialty,
+updateSpecialty
  };

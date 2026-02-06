@@ -8,6 +8,8 @@ const router = Router();
 
 router.post('/', specialtyController.createSpecialty);
 router.get('/', specialtyController.getAllSpecialties);
-router.post('/', specialtyController.createSpecialty);
+router.delete('/:id', specialtyController.deleteSpecialty);
+router.put('/:id', specialtyController.updateSpecialty);
+
 
 export const specialtyRoute = router;

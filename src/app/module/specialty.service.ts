@@ -37,6 +37,22 @@ const deleteSpecialty = async (id: string): Promise<Specialty | null> => {
   }
 };
 
+const updateSpecialty = async (id: string, payload: Partial<Specialty>): Promise<Specialty | null> => {
+  try {
+    const specialty = await prisma.specialty.update({
+      where: {
+        id,
+      },
+      data: payload,
+    });
+    return specialty;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
+
 
 
 
@@ -44,4 +60,5 @@ export const specialtyService = {
   createSpecialty,
     getAllSpecialties,
     deleteSpecialty,
+    updateSpecialty,
 };
