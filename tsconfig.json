@@ -4,7 +4,7 @@
 "moduleResolution": "bundler",
 "target": "ES2023",
 
-"rootDir": "./SIC",
+"rootDir": "./src",
 "outDir": "./dist",
 "strict": true,
 "esModuleInterop": true,
