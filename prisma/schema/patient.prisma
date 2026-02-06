@@ -1,0 +1,7 @@
+model Patient {
+  id            String   @id @default(uuid(7))
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dateOfBirth   DateTime
+
+}
