@@ -13,6 +13,20 @@ const createSpecialty = async (payload: Specialty): Promise<Specialty | null> =>
   }
 };
 
+const getAllSpecialties = async (): Promise<Specialty[]> => {
+  try {
+    const specialties = await prisma.specialty.findMany();
+    return specialties;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
+
+
+
 export const specialtyService = {
   createSpecialty,
+    getAllSpecialties,
 };
