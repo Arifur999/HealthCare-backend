@@ -11,6 +11,21 @@ interface ENVConfig {
 }
 
 const loadEnv = (): ENVConfig => {
+
+    const requiredEnvVars = [
+        "NODE_ENV",
+        "PORT",
+        "DATABASE_URL",
+        "BETTER_AUTH_SECRET",
+        "BETTER_AUTH_URL",
+      ];
+
+      requiredEnvVars.forEach((varName) => {
+        if (!process.env[varName]) {
+          throw new Error(`Missing required environment variable: ${varName}`);
+        }
+      });
+
    
   return {
     NODE_ENV: process.env.NODE_ENV as string,
