@@ -3,8 +3,8 @@ model Patient {
   name          String  
   email         String   @unique @db.VarChar(255)
   profilePhoto  String?  
-  contactNumber String
-  address       String
+  contactNumber String?
+  address       String?
   isDeleted     Boolean  @default(false)
   deletedAt     DateTime?
   createdAt     DateTime  @default(now())
@@ -13,6 +13,8 @@ model Patient {
   userId          String @unique
   user            User      @relation(fields: [userId], references: [id], onDelete: Cascade,onUpdate: Cascade)
  
- 
+ @@index([email], name: "idx_patient_email" )
+ @@index([isDeleted], name: "idx_patient_is_deleted")
+ @@map("patients")
 
 }

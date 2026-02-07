@@ -5,12 +5,9 @@ const catchAsync= (fn: RequestHandler) => {
         try {
             await fn(req, res, next);
         } 
-catch (error) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: "Failed to update specialty",
-    });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+catch (error : any) {
+     next(error);    
   }
 
 

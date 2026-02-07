@@ -1,6 +1,7 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 import { prisma } from './app/lib/prisma';
 import { indexRoute } from './app/routes';
+import { errorHandler } from './app/middleware/globalErrorHandler';
 const app: Application = express();
 
 // Enable URL-encoded form data parsing
@@ -16,15 +17,8 @@ app.use(express.json());
 
 app.use('/api/v1',indexRoute)  
 
-
-
-
-
-
-
-
-
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+app.use (errorHandler)
 
 
 
