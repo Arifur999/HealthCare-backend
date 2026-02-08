@@ -1,4 +1,4 @@
-import express, { Application, NextFunction, Request, Response } from 'express';
+import express, { Application, Request, Response } from 'express';
 import { prisma } from './app/lib/prisma';
 import { indexRoute } from './app/routes';
 import { errorHandler } from './app/middleware/globalErrorHandler';
