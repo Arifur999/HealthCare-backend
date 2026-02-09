@@ -5,7 +5,7 @@ import { sendResponse } from "../../shared/sendResponse";
 import status from "http-status";
 
 
-const createUser = catchAsync (
+const createDoctor = catchAsync (
     async (req: Request, res: Response) => {
   const payload = req.body;
   const result = await userService.createDoctor(payload);
@@ -19,6 +19,6 @@ const createUser = catchAsync (
 );
 
 export const userController = {
-  createUser,
+  createDoctor,
 
 };
