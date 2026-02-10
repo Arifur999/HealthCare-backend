@@ -1,32 +1,7 @@
-import { Router } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 import { userController } from "./user.controller";
 import z from "zod";
 import { Gender } from "../../../generated/prisma/enums";
-
-
-
-// {
-//   "password": "doctor1234",
-//   "doctor": {
-//     "name": "Dr. Ayesha Rahman",
-//     "email": "ayesha.rahman@example.com",
-//     "contactNumber": "+8801712345678",
-//     "address": "Dhanmondi, Dhaka",
-//     "registrationNumber": "BMOC-123456",
-//     "experience": 7,
-//     "gender": "MALE",
-//     "appointmentFee": 1200,
-//     "qualification": "MBBS, FCPS (Medicine)",
-//     "currentWorkplace": "Square Hospital Ltd.",
-//     "designation": "Cardiology Expert",
-//     "profilePhoto": "https://i.ibb.co/example/doctor.png"
-//   },
-//   "specialties": [
-//     "019c331c-6821-7188-afca-ba10095bc605"
-//   ]
-// }
-
-
 
 
 const createDoctorZodSchema=z.object({
@@ -52,7 +27,40 @@ const createDoctorZodSchema=z.object({
 
 const router=Router()
 
-router.post('/create-doctor', userController.createDoctor)
+const validateRequest=(zodSchema :z.ZodObject) => {
+    return (req:Request, res:Response, next:NextFunction) => {
+        const parseResult = zodSchema.safeParse(req.body);
+
+        if (!parseResult.success) {
+            return res.status(400).json({
+                success: false,
+                message: "Validation failed",
+                errors: parseResult.error.issues,
+            });
+        }
+
+        req.body = parseResult.data;
+        next();
+    }
+}
+
+
+
+
+router.post('/create-doctor',validateRequest(createDoctorZodSchema),userController.createDoctor)
+    
+// router.post('/create-doctor', (req:Request, res:Response, next:NextFunction) => {
+// const parseResult = createDoctorZodSchema.safeParse(req.body);
+// if (!parseResult.success) {
+//   next(parseResult.error);
+// }
+// req.body = parseResult.data;
+// next();
+
+// },validateRequest(createDoctorZodSchema),userController.createDoctor)
+
+ 
+// router.post('/create-doctor', userController.createDoctor)
 // router.post('/create-admin', userController.createDoctor)
 // router.post('/create-super-admin', userController.createDoctor)
 
