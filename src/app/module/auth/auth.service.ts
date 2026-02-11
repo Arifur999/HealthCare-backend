@@ -1,3 +1,4 @@
+import status from "http-status";
 import {  UserStatus } from "../../../generated/prisma/client";
 import AppError from "../../errorHelpers/AppError";
 import { auth } from "../../lib/auth";
@@ -31,7 +32,7 @@ const registerPatient = async (payload : RegisterPatientPayload) => {
     },
   });
 if (!createdUser?.user) {
-    throw new AppError(500, 'Failed to create user');
+    throw new AppError(status.BAD_REQUEST, 'Failed to create user');
 }
 
 try {
@@ -77,11 +78,11 @@ const loginPatient = async (payload: LoginPatientPayload) => {
   });
 
   if(loginResult.user?.status === UserStatus.BLOCKED) {
-    throw new AppError(403, "User is blocked");
+    throw new AppError(status.UNAUTHORIZED, "User is blocked");
   }
 
   if(loginResult.user?.isDeleted || loginResult.user?.status === UserStatus.DELETED) {
-    throw new AppError(404, "User not found");
+    throw new AppError(status.NOT_FOUND, "User not found");
   }
 
 

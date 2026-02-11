@@ -1,3 +1,4 @@
+import status from "http-status";
 import { Role, Specialty } from "../../../generated/prisma/client";
 import AppError from "../../errorHelpers/AppError";
 import { auth } from "../../lib/auth";
@@ -14,7 +15,7 @@ for (const specialtyId of payload.specialties) {
     },
   });
   if (!specialty) {
-    throw new AppError(400, `Specialty with ID ${specialtyId} not found`);  
+    throw new AppError(status.NOT_FOUND, `Specialty with ID ${specialtyId} not found`);  
   } else {
     specialties.push(specialty);
   }
@@ -26,7 +27,7 @@ const userExists = await prisma.user.findUnique({
   },});
 
 if (userExists) {
-  throw new AppError(400, 'User with this email already exists');               
+  throw new AppError(status.BAD_REQUEST, 'User with this email already exists');               
 
 }
 
@@ -125,7 +126,7 @@ const doctorSpecialtiesData = specialties.map((specialty) => {
         id: userData.user.id,
       },
     });
-    throw new AppError(500, 'Failed to create doctor');
+    throw new AppError(status.INTERNAL_SERVER_ERROR, 'Failed to create doctor');
   
 }
 
