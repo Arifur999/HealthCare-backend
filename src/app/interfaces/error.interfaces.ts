@@ -11,4 +11,6 @@ export interface IErrorResponse {
   message: string;
   errorSource: IError[];
   error?:unknown;
+  stack?: string;
+    
 }

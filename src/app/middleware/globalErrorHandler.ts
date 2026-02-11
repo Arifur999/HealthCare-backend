@@ -20,6 +20,7 @@ if(env.NODE_ENV === "development "){
 let errorSource : IError[] = [];
 let statusCode : number=  status.INTERNAL_SERVER_ERROR;
 let message : string= 'Something went wrong';
+let stack : string | undefined = undefined;
 
 
 if (err instanceof z.ZodError) {
@@ -28,7 +29,15 @@ const simplifiedError = handleZodError(err);
 statusCode = simplifiedError.statusCode as number;
 message = simplifiedError.message;
 errorSource=[...simplifiedError.errorSource];
-}
+stack = err.stack;
+}else if (err instanceof Error) {
+    statusCode = status.INTERNAL_SERVER_ERROR;
+    message = err.message;
+   
+
+    stack = err.stack;
+  }
+
 
 
 
@@ -36,7 +45,9 @@ const errorResponse : IErrorResponse = {
   success: false,
   message: message,
   errorSource: errorSource,
+
   error: env.NODE_ENV === "development" ? err : undefined,
+    stack: env.NODE_ENV === "development" ? stack : undefined,
 }
 
   res.status(statusCode).json(errorResponse);
