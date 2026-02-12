@@ -2,6 +2,8 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma";
 import { Role, UserStatus } from "../../generated/prisma/enums";
+import ms from "ms";
+import { env } from "../../config/env";
 // If your Prisma file is located elsewhere, you can change the path
 
 export const auth = betterAuth({
@@ -40,6 +42,17 @@ export const auth = betterAuth({
       },
     },
   },
+
+  session: {
+    expiresIn:Number(ms(Number(env.BETTER_AUTH_SESSION_EXPIRATION ))), // Session expiration time
+ updateAge: Number(ms(Number(env.BETTER_AUTH_SESSION_TOKEN_UPDATE_AGE))), // Time after which the session token should be updated
+  cookieCache: {
+    enabled: true,
+    maxAge: Number(ms(Number(env.BETTER_AUTH_SESSION_EXPIRATION))), // Cache duration for session cookies
+  },
+
+},
+ 
 
   trustedOrigins: [ process.env.BETTER_AUTH_URL ||"http://localhost:5000"],
   advanced: {
