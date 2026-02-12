@@ -3,6 +3,8 @@ import {  UserStatus } from "../../../generated/prisma/client";
 import AppError from "../../errorHelpers/AppError";
 import { auth } from "../../lib/auth";
 import { prisma } from "../../lib/prisma";
+import { tokenUtils } from "../../utils/token";
+
 
 
 interface RegisterPatientPayload {
@@ -85,9 +87,33 @@ const loginPatient = async (payload: LoginPatientPayload) => {
     throw new AppError(status.NOT_FOUND, "User not found");
   }
 
+  const accessToken=tokenUtils.getAccessToken({
+    userId: loginResult.user.id,
+    role: loginResult.user.role,
+    name: loginResult.user.name,
+    email: loginResult.user.email,
+    status: loginResult.user.status,
+    isDeleted: loginResult.user.isDeleted,
+    emailVerified: loginResult.user.emailVerified,
+  });
+
+  const refreshToken=tokenUtils.getRefreshToken({
+    userId: loginResult.user.id,
+    role: loginResult.user.role,
+    name: loginResult.user.name,
+    email: loginResult.user.email,
+    status: loginResult.user.status,
+    isDeleted: loginResult.user.isDeleted,
+    emailVerified: loginResult.user.emailVerified,
+
+  });
 
 
-  return loginResult;
+  return {
+    ...loginResult,
+    accessToken,
+    refreshToken,
+  }
 }
  export const authService = {
   registerPatient,
