@@ -10,4 +10,10 @@ const verifyToken = (token: string, secret: string) => {
     return decoded;
 }
 
-export { createToken, verifyToken };
+
+const decodeToken = (token: string) => {
+  const decoded = jwt.decode(token);
+  return decoded;
+}
+
+export { createToken, verifyToken, decodeToken };
