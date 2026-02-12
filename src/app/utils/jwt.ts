@@ -1,4 +1,6 @@
+/* eslint-disable no-useless-catch */
 import jwt, { SignOptions, JwtPayload} from 'jsonwebtoken';
+
 
 const createToken = (payload: JwtPayload, secret: string, {expiresIn}: SignOptions) => {
   const token = jwt.sign(payload, secret, { expiresIn });
@@ -6,14 +8,29 @@ const createToken = (payload: JwtPayload, secret: string, {expiresIn}: SignOptio
 }
 
 const verifyToken = (token: string, secret: string) => {
-  const decoded = jwt.verify(token, secret);    
-    return decoded;
+
+try {
+ const decoded = jwt.verify(token, secret) as JwtPayload;
+ return {
+    success: true,
+    decoded,
+    message: 'Token verified successfully',
+ };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+} catch (error :any) {
+    return{
+        success: false,
+        message: error.message,
+        error: error.stack,
+    }
+}
+ 
 }
 
 
 const decodeToken = (token: string) => {
-  const decoded = jwt.decode(token);
+  const decoded = jwt.decode(token) as JwtPayload;
   return decoded;
 }
 
-export { createToken, verifyToken, decodeToken };
+export const jwtUtils = { createToken, verifyToken, decodeToken };
