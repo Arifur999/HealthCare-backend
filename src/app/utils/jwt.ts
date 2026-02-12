@@ -5,3 +5,9 @@ const createToken = (payload: JwtPayload, secret: string, {expiresIn}: SignOptio
   return token;
 }
 
+const verifyToken = (token: string, secret: string) => {
+  const decoded = jwt.verify(token, secret);    
+    return decoded;
+}
+
+export { createToken, verifyToken };
