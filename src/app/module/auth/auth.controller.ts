@@ -4,6 +4,7 @@ import catchAsync from "../../shared/catchAsync";
 import { authService } from "./auth.service";
 import { sendResponse } from "../../shared/sendResponse";
 import status from "http-status";
+import { tokenUtils } from "../../utils/token";
 
 const registerPatient = catchAsync (
     async (req: Request, res: Response) => {
@@ -22,10 +23,18 @@ const loginPatient = catchAsync (
     async (req: Request, res: Response) => {
   const payload = req.body;
   const result = await authService.loginPatient(payload);
+  const { accessToken, refreshToken ,token, ...rest} = result;
+
+  tokenUtils.setAccessTokenCookie(res, accessToken);
+  tokenUtils.setRefreshTokenCookie(res, refreshToken);
+  tokenUtils.BetterAuthSessionCookie(res, token);
+
+
+
     sendResponse(res, {
       httpStatus: status.OK,
       success: true,
-      data: result,
+      data:{...rest, token, accessToken, refreshToken},
       message: "Patient logged in successfully",
     });
     }
