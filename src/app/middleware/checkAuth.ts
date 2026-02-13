@@ -4,6 +4,8 @@ import { prisma } from "../lib/prisma";
 import { UserStatus } from "../../generated/prisma/enums";
 import AppError from "../errorHelpers/AppError";
 import status from "http-status";
+import { jwtUtils } from "../utils/jwt";
+import { env } from "../../config/env";
 
 export const checkAuth=(...authRoles:string[])=> async(req:Request,res:Response,next:NextFunction) =>{
 try {
@@ -49,14 +51,46 @@ if (percentRemaining <20){
 if( user.status === UserStatus.BLOCKED || user.status === UserStatus.DELETED){
     throw new AppError(status.UNAUTHORIZED,"Unauthorized access! User is blocked or deleted")
 }
+if(user.isDeleted){
+    throw new AppError(status.UNAUTHORIZED,"Unauthorized access! User is deleted")
 
+}
 
-
+if(authRoles.length >0 && !authRoles.includes(user.role)){
+    throw new AppError(status.FORBIDDEN,"Forbidden access! You are not authorized to access this route")
+    }
 
 
 
     }
+
+
+const accessToken = cookieUtils.getCookie(req, "accessToken");
+if (!accessToken) {
+    throw new AppError(status.UNAUTHORIZED, "Unauthorized access! No access token found");
 }
+
+
+
+
+
+}
+
+//access token verification 
+const accessToken =cookieUtils.getCookie(req,"accessToken");
+    if(!accessToken){
+        throw new AppError(status.UNAUTHORIZED," Unauthorized access! No access token found")
+    }
+    const verifiedToken= jwtUtils.verifyToken(accessToken,env.ACCESS_TOKEN_SECRET);
+    if(!verifiedToken.success){
+        throw new AppError(status.UNAUTHORIZED,verifiedToken.message)
+    }
+
+if(verifiedToken.decoded!.role !== "ADMIN"){
+    throw new AppError(status.FORBIDDEN,"Forbidden access! Only admins can access this route")
+}
+
+    next();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 } catch (error: any) {
