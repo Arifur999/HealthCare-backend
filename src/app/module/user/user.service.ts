@@ -80,7 +80,7 @@ const doctorSpecialtiesData = specialties.map((specialty) => {
             gender: true,
             appointmentFee: true,
             qualification: true,
-            currentWorkplace: true,
+            currentWorkingPlace: true,
             designation: true,
             createdAt: true,
             updatedAt: true,

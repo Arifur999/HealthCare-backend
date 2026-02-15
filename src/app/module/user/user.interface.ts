@@ -13,7 +13,7 @@ export interface ICreateDoctor   {
   gender: Gender;
   appointmentFee: number;
   qualification: string;
-  currentWorkplace: string;
+  currentWorkingPlace: string;
   designation: string;
  
     }

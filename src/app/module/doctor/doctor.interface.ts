@@ -1,3 +1,8 @@
+export interface IUpdateDoctorPayload {
+     specialtyId: string;
+    shouldDelete?: boolean;
+}
+
 export interface ICreateDoctor   {
  password: string;
  doctor: {
@@ -11,7 +16,7 @@ export interface ICreateDoctor   {
   gender: string;
   appointmentFee: number;
   qualification: string;
-  currentWorkplace: string;
+  currentWorkingPlace: string;
   designation: string;
  
     }

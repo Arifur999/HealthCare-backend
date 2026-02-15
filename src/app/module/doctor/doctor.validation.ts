@@ -13,7 +13,7 @@ export const updateDoctorZodSchema=z.object({
         gender:z.enum([Gender.MALE,Gender.FEMALE],"Gender must be MALE, FEMALE or OTHER").optional(),
         appointmentFee:z.number("Appointment fee must be a number").nonnegative("Appointment fee cannot be negative").optional(),
         qualification:z.string("Qualification is required").min(3,"Qualification must be at least 3 characters long").max(200,"Qualification must be at most 200 characters long").optional(),
-        currentWorkplace:z.string("Current workplace is required").min(3,"Current workplace must be at least 3 characters long").max(100,"Current workplace must be at most 100 characters long").optional(),
+        currentWorkingPlace:z.string("Current working place is required").min(3,"Current working place must be at least 3 characters long").max(100,"Current working place must be at most 100 characters long").optional(),
         designation:z.string("Designation is required").min(3,"Designation must be at least 3 characters long").max(100,"Designation must be at most 100 characters long").optional(),
     }).partial(),
     specialties:z.array(z.uuid(),"Specialty ID must be a valid UUID").min(1,"At least one specialty ID is required").optional(),
