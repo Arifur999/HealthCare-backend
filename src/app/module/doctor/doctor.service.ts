@@ -31,7 +31,7 @@ const updateDoctor = async (id: string, payload: IUpdateDoctorPayload) => {
         throw new AppError(status.NOT_FOUND, "Doctor not found");
     }
 
-    const { doctor: doctorData, specialties } = payload;
+    const { doctor: doctorData, specialties }= payload;
 
     await prisma.$transaction(async (tx) => {
         if (doctorData) {
@@ -45,33 +45,22 @@ const updateDoctor = async (id: string, payload: IUpdateDoctorPayload) => {
             })
         }
 
-        if (specialties && specialties.length > 0) {
-            for (const specialty of specialties) {
-                const { specialtyId, shouldDelete } = specialty;
-                if (shouldDelete) {
-                    await tx.doctorSpecialty.delete({
-                        where: {
-                            doctorId_specialtyId: {
-                                doctorId: id,
-                                specialtyId,
-                            }
-                        }
-                    })
-                } else {
-                    await tx.doctorSpecialty.upsert({
-                        where: {
-                            doctorId_specialtyId: {
-                                doctorId: id,
-                                specialtyId,
-                            }
-                        },
-                        create: {
-                            doctorId: id,
-                            specialtyId,
-                        },
-                        update: {}
-                    })
-                }
+        if (specialties) {
+            await tx.doctorSpecialty.deleteMany({
+                where: {
+                    doctorId: id,
+                },
+            });
+
+            if (specialties.length > 0) {
+                const uniqueSpecialtyIds = [...new Set(specialties)];
+                await tx.doctorSpecialty.createMany({
+                    data: uniqueSpecialtyIds.map((specialtyId) => ({
+                        doctorId: id,
+                        specialtyId,
+                    })),
+                    skipDuplicates: true,
+                });
             }
         }
     })

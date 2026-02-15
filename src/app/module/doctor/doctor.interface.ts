@@ -1,7 +1,4 @@
-export interface IUpdateDoctorPayload {
-     specialtyId: string;
-    shouldDelete?: boolean;
-}
+import { Gender } from "../../../generated/prisma/enums";
 
 export interface ICreateDoctor   {
  password: string;
@@ -13,7 +10,7 @@ export interface ICreateDoctor   {
   address?: string;
   registrationNumber: string;
   experience?: number;
-  gender: string;
+  gender: Gender;
   appointmentFee: number;
   qualification: string;
   currentWorkingPlace: string;
@@ -21,4 +18,9 @@ export interface ICreateDoctor   {
  
     }
     specialties: string[]; // Array of specialty IDs
+}
+
+export interface IUpdateDoctorPayload {
+  doctor?: Partial<ICreateDoctor["doctor"]>;
+  specialties?: string[];
 }
