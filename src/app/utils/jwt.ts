@@ -7,7 +7,21 @@ const createToken = (payload: JwtPayload, secret: string, {expiresIn}: SignOptio
   return token;
 }
 
-const verifyToken = (token: string, secret: string) => {
+type VerifyTokenSuccess = {
+  success: true;
+  decoded: JwtPayload;
+  message: string;
+};
+
+type VerifyTokenFailure = {
+  success: false;
+  message: string;
+  error: unknown;
+};
+
+type VerifyTokenResult = VerifyTokenSuccess | VerifyTokenFailure;
+
+const verifyToken = (token: string, secret: string): VerifyTokenResult => {
 
 try {
  const decoded = jwt.verify(token, secret) as JwtPayload;
@@ -21,7 +35,7 @@ try {
     return{
         success: false,
         message: error.message,
-        error: error.stack,
+        error: error,
     }
 }
  
