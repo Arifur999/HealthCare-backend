@@ -86,7 +86,7 @@ const getNewToken = catchAsync(
         if (!refreshToken) {
             throw new AppError(status.UNAUTHORIZED, "Refresh token is missing");
         }
-        const result = await AuthService.getNewToken(refreshToken, betterAuthSessionToken);
+        const result = await authService.getNewToken(refreshToken, betterAuthSessionToken);
 
         const { accessToken, refreshToken: newRefreshToken, sessionToken } = result;
 
