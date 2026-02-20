@@ -166,5 +166,5 @@ const getMe = async (user : IRequestUser) => {
  export const authService = {
   registerPatient,
   loginUser,
-  getMe
+  getMe,
  };
