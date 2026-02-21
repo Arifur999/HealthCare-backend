@@ -301,6 +301,8 @@ const logoutUser = async (sessionToken : string) => {
     return result;
 }
 
+
+
  export const authService = {
   registerPatient,
   loginUser,
