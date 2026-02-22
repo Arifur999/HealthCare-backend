@@ -23,7 +23,18 @@ const scheduleData = await prisma.schedule.findUniqueOrThrow({
     }
    });
 
+   const doctorSchedule = await prisma.doctorSchedules.findUniqueOrThrow({
+    where : {
+        doctorId_scheduleId:{
+            doctorId : doctorData.id,
+            scheduleId : scheduleData.id,   
+        }
+    }
+   });
 
+
+
+   
 
 }
 
