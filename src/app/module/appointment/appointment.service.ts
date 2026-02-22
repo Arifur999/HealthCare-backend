@@ -9,7 +9,17 @@ const bookAppointment = async (payload : IBookAppointmentPayload, user : IReques
     }
    });
 
+   const doctorData = await prisma.doctor.findUniqueOrThrow({
+    where : {
+        id : payload.doctorId,
+        isDeleted : false,
+    }
+   });
+
 }
 
 
+export const AppointmentService = {
+    bookAppointment,
 
+}
