@@ -27,7 +27,7 @@ const getAdminById = async (id: string) => {
     return admin;
 }
 
-const updateAdmin = async (id: string, payload: IUpdateAdminPayload) => {
+const updateAdmin = async (id: string, payload: IUpdateAdminPayload, user: IRequestUser) => {
     //TODO: Validate who is updating the admin user. Only super admin can update admin user and only super admin can update super admin user but admin user cannot update super admin user
 
     const isAdminExist = await prisma.admin.findUnique({
@@ -38,6 +38,10 @@ const updateAdmin = async (id: string, payload: IUpdateAdminPayload) => {
 
     if (!isAdminExist) {
         throw new AppError(status.NOT_FOUND, "Admin Or Super Admin not found");
+    }
+
+    if(isAdminExist.id===user.userId){
+        throw new AppError(status.BAD_REQUEST,"You cannot delete yourself" )
     }
 
     const { admin } = payload;
