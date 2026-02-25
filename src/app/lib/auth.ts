@@ -80,6 +80,25 @@ if(user&&!user.emailVerified){
   })
 }
 
+      }else if(type === "forget-password"){
+        const user =await prisma.user.findUnique({
+          where:{
+            email,
+          },
+        })
+
+        if(user){
+          sendEmail({
+            to:email,
+            subject:"password reset OTP",
+            templateName:"otp",
+            templateDate:{
+              name:user.name,
+              otp,
+            },
+          })
+        }
+
       }
     },
 
