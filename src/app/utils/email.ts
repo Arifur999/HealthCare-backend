@@ -40,7 +40,7 @@ export const sendEmail = async ({subject,to,  templateName, templateDate, attach
 
     try {
 
-const templatePath=path.resolve(process.cwd(),`src/app/template/${templateName}.ejs`);
+const templatePath=path.resolve(process.cwd(),`src/app/templates/${templateName}.ejs`);
 const html=await ejs.renderFile(templatePath,templateDate);
 
 

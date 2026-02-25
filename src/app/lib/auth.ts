@@ -81,7 +81,11 @@ if(user&&!user.emailVerified){
 }
 
       }
-    }
+    },
+
+    expiresIn:2*60,
+    otpLength:6,
+
   })
 ],
 
