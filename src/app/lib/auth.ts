@@ -2,7 +2,9 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma";
 import { Role, UserStatus } from "../../generated/prisma/enums";
-import { bearer } from "better-auth/plugins";
+import { bearer, emailOTP } from "better-auth/plugins";
+import { sendEmail } from "../utils/email";
+
 // import ms, { StringValue } from "ms";
 // import { env } from "../../config/env";
 // If your Prisma file is located elsewhere, you can change the path
@@ -13,7 +15,17 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    requireEmailVerification:true,
   },
+emailVerification:{
+  sendOnSignUp:true,
+sendOnSignIn:true,
+autoSignInAfterVerification:true,
+},
+
+
+
+
   user: {
     additionalFields: {
       role: {
@@ -45,7 +57,32 @@ export const auth = betterAuth({
   },
 
 plugins:[
-  bearer()
+  bearer(),
+  emailOTP({
+    overrideDefaultEmailVerification:true,
+    async sendVerificationOTP({email,otp,type}){
+      if(type === "email-verification"){
+        const user =await prisma.user.findUnique({
+          where:{
+            email,
+          },
+        })
+
+if(user&&!user.emailVerified){
+  sendEmail({
+    to:email,
+    subject:"verify your email",
+    templateName:"otp",
+    templateDate:{
+      name:user.name,
+      otp,
+    },
+  })
+}
+
+      }
+    }
+  })
 ],
 
 
