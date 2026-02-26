@@ -4,7 +4,14 @@ import { indexRoute } from './app/routes';
 import { errorHandler } from './app/middleware/globalErrorHandler';
 import notFound from './app/middleware/notFound';
 import cookieParser from 'cookie-parser';
+import { toNodeHandler } from 'better-auth/node';
+import { auth } from './app/lib/auth';
+
+
+
 const app: Application = express();
+
+app.use("/api/auth",toNodeHandler(auth))
 
 // Enable URL-encoded form data parsing
 app.use(express.urlencoded({ extended: true }));

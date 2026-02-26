@@ -11,6 +11,9 @@ import { env } from "../../config/env";
 // If your Prisma file is located elsewhere, you can change the path
 
 export const auth = betterAuth({
+  baseURL: env.BETTER_AUTH_URL,
+  secret: env.BETTER_AUTH_SECRET,
+  
   database: prismaAdapter(prisma, {
     provider: "postgresql", // or "mysql", "postgresql", ...etc
   }),
