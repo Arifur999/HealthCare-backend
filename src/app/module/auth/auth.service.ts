@@ -11,6 +11,7 @@ import { env } from "../../../config/env";
 
 
 
+
 const registerPatient = async (payload: IRegisterPatientPayload) => {
     const { name, email, password } = payload;
 
@@ -380,6 +381,19 @@ await auth.api.resetPasswordEmailOTP({
         password : newPassword,
     }
 })
+
+if(isUserExists.needPasswordChange){
+    await prisma.user.update({
+        where : {
+            id : isUserExists.id,
+        },
+        data : {
+            needPasswordChange : false,
+        }
+    })
+
+
+}
 
 await prisma.session.deleteMany({
     where : {
