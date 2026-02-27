@@ -406,6 +406,9 @@ await prisma.session.deleteMany({
 
 }
 
+const googleLoginSuccess = async()=>{}
+
+
  export const authService = {
   registerPatient,
   loginUser,
@@ -416,4 +419,5 @@ await prisma.session.deleteMany({
   verifyEmail,
   forgetPassword,
   resetPassword,
+  googleLoginSuccess
  };
