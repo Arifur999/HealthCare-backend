@@ -12,6 +12,7 @@ import { auth } from "../../lib/auth";
 
 
 
+
 const registerPatient = catchAsync(
     async (req: Request, res: Response) => {
         const maxAge = ms(env.ACCESS_TOKEN_EXPIRES_IN as StringValue);
@@ -221,7 +222,7 @@ const googleLogin = catchAsync(
 
 const googleLoginSuccess = catchAsync(
     async (req: Request, res: Response) => {
-        const redirectUrl = req.query.redirect || "/dashboard";
+        const redirectUrl = req.query.redirect as string|| "/dashboard";
         const sessionPath = req.cookies["better-auth.session_token"];
 
         if(!sessionPath){
@@ -238,6 +239,20 @@ const googleLoginSuccess = catchAsync(
             return res.redirect(`${env.FRONTEND_URL}/login?error=no_user_found`)
 
         }
+
+        const result =await authService.googleLoginSuccess(session);
+
+        const { accessToken, refreshToken} = result;
+        tokenUtils.setAccessTokenCookie(res,accessToken);
+        tokenUtils.setRefreshTokenCookie(res,refreshToken);
+        
+        const isValidRedirectPath=redirectUrl.startsWith("/") && !redirectUrl.startsWith("//");
+        const finalRedirectUrl = isValidRedirectPath ?  redirectUrl :"/dashboard";
+         res.redirect(`${env.FRONTEND_URL}${finalRedirectUrl}`)
+        
+
+        
+
 
 
 
