@@ -235,6 +235,12 @@ const googleLoginSuccess = catchAsync(
             }
         })
 
+
+        if(!session){
+            return res.redirect(`${env.FRONTEND_URL}/login?error=no_session_found`)
+
+        }
+
         if(session && !session.user){
             return res.redirect(`${env.FRONTEND_URL}/login?error=no_user_found`)
 
@@ -256,7 +262,12 @@ const googleLoginSuccess = catchAsync(
 
 
 const handleOAuthError = catchAsync(
-    async (req: Request, res: Response) => {})
+    async (req: Request, res: Response) => {
+        const error = req.query.error as string || "oauth_failed";
+         res.redirect(`${env.FRONTEND_URL}/login?error=${error}`)
+        
+
+    })
 
 
 export const authController = {
