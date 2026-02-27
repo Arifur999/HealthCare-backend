@@ -1,4 +1,3 @@
-
 import { Request, Response } from "express";
 import catchAsync from "../../shared/catchAsync";
 import { authService } from "./auth.service";
@@ -9,6 +8,7 @@ import { env } from "../../../config/env";
 import ms, { StringValue } from "ms";
 import AppError from "../../errorHelpers/AppError";
 import { cookieUtils } from "../../utils/cookie";
+
 
 
 const registerPatient = catchAsync(
@@ -200,13 +200,28 @@ const resetPassword = catchAsync(
     
         })
 
+
+        //  /api/v1/auth/login/google?redirect=/profile
 const googleLogin = catchAsync(
-    async (req: Request, res: Response) => { })   
+    async (req: Request, res: Response) => {
+
+        const redirectUrl = req.query.redirect || "/dashboard";
+        const encodeRedirectPath = encodeURIComponent(redirectUrl as string);
+        const callbackURL = `${env.BETTER_AUTH_URL}/api/v1/auth/google/success?redirect=${encodeRedirectPath}`;
+        res.render("googleRedirect",{
+            callbackURL,
+            betterAuthUrl: env.BETTER_AUTH_URL,
+        })
+        
+        
+     })   
     
 
 
 const googleLoginSuccess = catchAsync(
-    async (req: Request, res: Response) => {})
+    async (req: Request, res: Response) => {
+        
+    })
 
 
 const handleOAuthError = catchAsync(
