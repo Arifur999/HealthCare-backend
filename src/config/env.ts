@@ -27,6 +27,7 @@ EMAIL_SENDER:{
 GOOGLE_CLIENT_ID: string;
 GOOGLE_CLIENT_SECRET: string;
 CALLBACK_URL: string;
+FRONTEND_URL: string;
 
 }
 
@@ -52,6 +53,7 @@ const loadEnv = (): ENVConfig => {
         "GOOGLE_CLIENT_ID",
         "GOOGLE_CLIENT_SECRET",
         "CALLBACK_URL",
+        "FRONTEND_URL",
 
       ];
 
@@ -84,6 +86,7 @@ const loadEnv = (): ENVConfig => {
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID as string,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET as string,
     CALLBACK_URL: process.env.CALLBACK_URL as string,
+    FRONTEND_URL: process.env.FRONTEND_URL as string,
 
   }
 };
@@ -114,7 +117,6 @@ export const env = {
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || "",
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || "",
   CALLBACK_URL: process.env.CALLBACK_URL || "",
-
-
+  FRONTEND_URL: process.env.FRONTEND_URL || "",
 
 };

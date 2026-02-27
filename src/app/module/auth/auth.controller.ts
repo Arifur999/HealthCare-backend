@@ -8,6 +8,7 @@ import { env } from "../../../config/env";
 import ms, { StringValue } from "ms";
 import AppError from "../../errorHelpers/AppError";
 import { cookieUtils } from "../../utils/cookie";
+import { auth } from "../../lib/auth";
 
 
 
@@ -220,7 +221,28 @@ const googleLogin = catchAsync(
 
 const googleLoginSuccess = catchAsync(
     async (req: Request, res: Response) => {
-        
+        const redirectUrl = req.query.redirect || "/dashboard";
+        const sessionPath = req.cookies["better-auth.session_token"];
+
+        if(!sessionPath){
+            return res.redirect(`${env.FRONTEND_URL}/login?error=oauth_failed`)
+        }
+        const session= await auth.api.getSession({
+            headers : {
+                "Cookie" : `better-auth.session_token=${sessionPath}`
+            
+            }
+        })
+
+        if(session && !session.user){
+            return res.redirect(`${env.FRONTEND_URL}/login?error=no_user_found`)
+
+        }
+
+
+
+
+
     })
 
 
