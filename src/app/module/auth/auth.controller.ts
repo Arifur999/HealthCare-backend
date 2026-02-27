@@ -251,12 +251,6 @@ const googleLoginSuccess = catchAsync(
          res.redirect(`${env.FRONTEND_URL}${finalRedirectUrl}`)
         
 
-        
-
-
-
-
-
 
     })
 
