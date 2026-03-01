@@ -5,17 +5,28 @@ import z from "zod";
 import { IError, IErrorResponse } from "../interfaces/error.interfaces";
 import { handleZodError } from "../errorHelpers/handleZodError";
 import AppError from "../errorHelpers/AppError";
+import { deleteFileFromCloudinary } from "../../config/cloudinary.config";
 
 
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-export const errorHandler = ((err:any, req:Request, res:Response,next:NextFunction)  => {
+export const errorHandler = async(err:any, req:Request, res:Response,next:NextFunction)  => {
   console.error(err.stack);
 if(env.NODE_ENV === "development "){
     console.log(err);
     
 }
 
+if(req.file){
+    await deleteFileFromCloudinary(req.file.path);
+}
+
+if(req.files && Array.isArray(req.files)&& req.files.length > 0){
+   const imageUrl=req.files.map((file)=>file.path);
+
+   await Promise.all(imageUrl.map((url)=>deleteFileFromCloudinary(url)));
+}
+    
 
 
 let errorSource : IError[] = [];
@@ -65,4 +76,4 @@ const errorResponse : IErrorResponse = {
 }
 
   res.status(statusCode).json(errorResponse);
-})
+}
