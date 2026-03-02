@@ -6,7 +6,9 @@ import { UserStatus } from "../../../generated/prisma/enums";
 
 const getAllDoctors = async () => {
   const doctors = await prisma.doctor.findMany({
-  
+  where: {
+    isDeleted: false,
+  },
     include: {
       user:true,
       specialties: {

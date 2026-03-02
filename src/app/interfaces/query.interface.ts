@@ -21,3 +21,4 @@ export interface PrismaCountArgs {
     distinct?: string[] | string;
     [key: string]: unknown;
 }
+
