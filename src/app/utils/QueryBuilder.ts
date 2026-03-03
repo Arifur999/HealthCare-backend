@@ -1,4 +1,4 @@
-import { PrismaCountArgs, PrismaFindManyArgs } from "../interfaces/query.interface";
+import { PrismaCountArgs, PrismaFindManyArgs, PrismaModelDelegate } from "../interfaces/query.interface";
 
 export class QueryBuilder <
 T,
@@ -15,10 +15,10 @@ TInclude=Record<string, unknown>,
     private sortOrder:"asc" | "desc" ="desc";
     private selectFields: Record<string, boolean | undefined > ;
 
-    constructor(){
-        this.query = {};
-        this.countQuery = {};
-        this.selectFields = {};
-    }
+    constructor(
+        private model :PrismaModelDelegate,
+        private queryParams: 
+        private config:
+    )
 
 }

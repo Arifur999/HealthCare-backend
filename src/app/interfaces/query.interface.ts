@@ -22,3 +22,10 @@ export interface PrismaCountArgs {
     [key: string]: unknown;
 }
 
+export interface PrismaModelDelegate{
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    findMany(args?:any): Promise<any[]>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    count(args?:any): Promise<number>;
+}
+
