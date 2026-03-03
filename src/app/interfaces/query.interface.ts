@@ -41,3 +41,8 @@ export interface IqueryParams {
     [key: string]: string | undefined;
 }
 
+export interface IQueryConfig {
+    searchableFields: string[];
+    filterableFields: string[];
+   
+}
