@@ -29,3 +29,15 @@ export interface PrismaModelDelegate{
     count(args?:any): Promise<number>;
 }
 
+export interface IqueryParams {
+    searchTerm?: string;
+    page?: string;
+    limit?: string;
+    sortBy?: string;
+    sortOrder?: "asc" | "desc";
+    fields?: string;
+    include?: string;
+    exclude?: string;
+    [key: string]: string | undefined;
+}
+
