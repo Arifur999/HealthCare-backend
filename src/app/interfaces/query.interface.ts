@@ -46,3 +46,18 @@ export interface IQueryConfig {
     filterableFields: string[];
    
 }
+
+export interface PrismaStringFilter{
+    contains ?: string;
+    startsWith ?: string;
+    endsWith ?: string;
+    mode ?: 'insensitive' | 'default';
+    equals ?: string;
+    in ?: string[];
+    notIn ?: string[];
+    lt ?: string;
+    lte ?: string;
+    gt ?: string;
+    gte ?: string;
+    not ?: PrismaStringFilter | string;
+}

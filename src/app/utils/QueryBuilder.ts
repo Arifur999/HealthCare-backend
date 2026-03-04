@@ -37,7 +37,9 @@ TInclude = Record<string, unknown>
         }
     }
 
-    search() : this {
+
+
+     search() : this {
         const {searchTerm} = this.queryParams;
         const { searchableFields} = this.config;
         // doctorSearchableFields = ['user.name', 'user.email', 'specialties.specialty.title' , 'specialties.specialty.description']
@@ -79,7 +81,28 @@ TInclude = Record<string, unknown>
                     }
                     
                 }
-            });
+                // direct field
+                const stringFilter: PrismaStringFilter = {
+                    contains: searchTerm,
+                    mode: 'insensitive' as const,
+                }
+
+                return {
+                    [field]: stringFilter
+                }
+            }
+        )
+
+        const whereConditions = this.query.where as PrismaWhereConditions
+
+        whereConditions.OR = searchConditions;
+
+        const countWhereConditions = this.countQuery.where as PrismaWhereConditions;
+        countWhereConditions.OR = searchConditions;
         }
+
+        return this;
     }
+
+   
 }
