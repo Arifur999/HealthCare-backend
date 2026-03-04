@@ -184,6 +184,14 @@ TInclude = Record<string, unknown>
             return Number(value);
         
         }
+        if(Array.isArray(value)){
+           return{
+            in : value.map((item) => this.parseFilterValue(item)),
+
+           } 
+           
+        }
+        return value;
 
     }
    
