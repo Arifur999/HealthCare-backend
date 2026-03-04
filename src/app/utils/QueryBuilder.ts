@@ -1,4 +1,4 @@
-import { IqueryParams, PrismaCountArgs, PrismaFindManyArgs, PrismaModelDelegate } from "../interfaces/query.interface";
+import { IQueryConfig, IqueryParams, PrismaCountArgs, PrismaFindManyArgs, PrismaModelDelegate } from "../interfaces/query.interface";
 
 export class QueryBuilder <
 T,
@@ -18,7 +18,21 @@ TInclude=Record<string, unknown>,
     constructor(
         private model :PrismaModelDelegate,
         private queryParams: IqueryParams,
-        private config:
-    ){}
+        private config: IQueryConfig,
+    ){
+        this.query = {
+            where:{},
+            include:{},
+            select:{},
+            orderBy:{},
+            skip:0,
+            take:10,
+        
+        };
+        this.countQuery = {
+            where:{},
+        };
+       
+    }
 
 }
