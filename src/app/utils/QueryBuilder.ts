@@ -159,9 +159,8 @@ TInclude = Record<string, unknown>
             }
 
             if(typeof value === "object" && value !== null || !Array.isArray(value)){
-                queryWhere[key] = {
-
-                }
+                queryWhere[key] = this.parseFilterValue(value);
+                countQueryWhere[key] = this.
             }
 
             
@@ -194,5 +193,7 @@ TInclude = Record<string, unknown>
         return value;
 
     }
+
+    private parseRangeFilterValue(value:  Record<string, number> ) {}
    
 }
