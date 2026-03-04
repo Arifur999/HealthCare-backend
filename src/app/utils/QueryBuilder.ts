@@ -1,4 +1,4 @@
-import { IQueryConfig, IqueryParams, PrismaModelDelegate } from "../interfaces/query.interface";
+import { IQueryConfig, IqueryParams, PrismaModelDelegate, PrismaStringFilter } from "../interfaces/query.interface";
 
  
 

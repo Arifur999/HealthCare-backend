@@ -61,3 +61,10 @@ export interface PrismaStringFilter{
     gte ?: string;
     not ?: PrismaStringFilter | string;
 }
+
+export interface PrismaWhereConditions {
+    OR ?: Record<string, unknown>[];
+    AND ?: Record<string, unknown>[];
+    NOT ?: Record<string, unknown>[];
+    [key: string] : unknown;
+}
