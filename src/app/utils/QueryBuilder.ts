@@ -1,4 +1,4 @@
-import { IQueryConfig, IqueryParams, PrismaModelDelegate, PrismaStringFilter, PrismaWhereConditions } from "../interfaces/query.interface";
+import { IQueryConfig, IqueryParams, PrismaModelDelegate, PrismaNumberFilter, PrismaStringFilter, PrismaWhereConditions } from "../interfaces/query.interface";
 
  
 
@@ -160,12 +160,15 @@ TInclude = Record<string, unknown>
 
             if(typeof value === "object" && value !== null || !Array.isArray(value)){
                 queryWhere[key] = this.parseFilterValue(value);
-                countQueryWhere[key] = this.
+                countQueryWhere[key] = this.parseFilterValue(value);
+                return;
+            
             }
 
+       queryWhere[key] = this.parseFilterValue(value);
+       countQueryWhere[key] = this.parseFilterValue(value);
             
         })
-
 
 
 
@@ -194,6 +197,50 @@ TInclude = Record<string, unknown>
 
     }
 
-    private parseRangeFilterValue(value:  Record<string, number> ) {}
+    private parseRangeFilterValue(value:  Record<string,string | number> ):
+    PrismaNumberFilter | PrismaStringFilter | Record<string, unknown>{
+       
+   const rangeQuery: Record<string, string | number | (string | number)[]> = {};
+    Object.keys(value).forEach((operator) => {
+        const operatorValue = value[operator];
+        const parsedValue : string | number =
+         typeof operatorValue === "string" && !isNaN(Number(operatorValue))
+          ? Number(operatorValue) : operatorValue;
+
+        switch(operator){
+            case "lt":
+            case "lte":
+            case "gt":
+            case "gte":
+            case "equals":
+            case "not":
+            case "contains":
+            case "startsWith":
+            case "endsWith":
+        
+                rangeQuery[operator] = parsedValue;
+                break;
+            case "in":
+            case "notIn":
+                if(Array.isArray(operatorValue)){
+                    rangeQuery[operator] = operatorValue
+
+                }else {
+                    rangeQuery[operator] = [parsedValue];
+
+                }
+                break;
+                default:
+                break;
+
+                
+                
+        }
+
+    });
+    return Object.keys(rangeQuery).length > 0 ? rangeQuery : value;
+    
+
    
+}
 }
