@@ -279,6 +279,28 @@ TInclude = Record<string, unknown>
     }
 
 
+     fields() : this {
+        const fieldsParam = this.queryParams.fields;
+        // /doctors?fields=id,name,user => select: { id: true, name: true, user: { select: { name: true } } }
+
+        //no nested field selection for now, only direct fields
+        if(fieldsParam && typeof fieldsParam === 'string'){
+            const fieldsArray = fieldsParam?.split(",").map(field => field.trim());
+            this.selectFields = {};
+
+            fieldsArray?.forEach((field) => {
+                if (this.selectFields) {
+                    this.selectFields[field] = true;
+                }
+            })
+
+            this.query.select = this.selectFields as Record<string, boolean | Record<string, unknown>>;
+
+            delete this.query.include;
+        }
+        return this;
+    }
+
 
 
     
