@@ -301,6 +301,16 @@ TInclude = Record<string, unknown>
         return this;
     }
 
+     include(relation : TInclude) : this{
+        if(this.selectFields){
+            return this
+        }
+
+        //if fields method is, include method will be ignored to prevent conflict between select and include
+        this.query.include = { ...(this.query.include as Record<string, unknown>), ...(relation as Record<string, unknown>) };
+
+        return this;
+    }
 
 
     
