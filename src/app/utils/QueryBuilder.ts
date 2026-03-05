@@ -235,6 +235,51 @@ TInclude = Record<string, unknown>
         return this;
     }
    
+      sort () : this {
+        const sortBy = this.queryParams.sortBy || 'createdAt';
+        const sortOrder = this.queryParams.sortOrder === 'asc' ? 'asc' : 'desc';
+
+        this.sortBy = sortBy;
+        this.sortOrder = sortOrder;
+
+        // /doctors?sortBy=user.name&sortOrder=asc => orderBy: { user: { name: 'asc' } }
+
+        if(sortBy.includes(".")){
+            const parts = sortBy.split(".");
+
+            if(parts.length === 2){
+                const [relation, nestedField] = parts;
+
+                this.query.orderBy = {
+                    [relation] : {
+                        [nestedField] : sortOrder
+                    }
+                }
+            }else if(parts.length === 3){
+                const [relation, nestedRelation, nestedField] = parts;
+
+                this.query.orderBy = {
+                    [relation] : {
+                        [nestedRelation] : {
+                            [nestedField] : sortOrder
+                        }
+                    }
+                }
+            }else{
+                this.query.orderBy = {
+                    [sortBy] : sortOrder
+                }
+            }
+        }else{
+            this.query.orderBy = {
+                [sortBy]: sortOrder
+            }
+        }
+        return this;
+    }
+
+
+
 
     
 
