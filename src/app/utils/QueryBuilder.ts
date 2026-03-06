@@ -347,6 +347,15 @@ TInclude = Record<string, unknown>
         return this;
     }
 
+    where(condition : TWhereInput) : this {
+
+        this.query.where =  this.deepMerge(this.query.where as Record<string, unknown>, condition as Record<string, unknown>);
+
+        this.countQuery.where = this.deepMerge(this.countQuery.where as Record<string, unknown>, condition as Record<string, unknown>);
+
+        return this;
+    }
+
 
     private deepMerge(target : Record<string, unknown>, source : Record<string, unknown>) : Record<string, unknown> {
 
