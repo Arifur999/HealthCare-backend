@@ -1,5 +1,5 @@
 
-import { IQueryConfig, IqueryParams, PrismaModelDelegate, PrismaNumberFilter, PrismaStringFilter, PrismaWhereConditions } from "../interfaces/query.interface";
+import { IQueryConfig, IqueryParams, IQueryResult, PrismaFindManyArgs, PrismaModelDelegate, PrismaNumberFilter, PrismaStringFilter, PrismaWhereConditions } from "../interfaces/query.interface";
 
  
 
@@ -209,8 +209,8 @@ TInclude = Record<string, unknown>
 
             // Range filter parsing
             if(typeof value === 'object' && value !== null && !Array.isArray(value)){
-                queryWhere[key] = this.parseRangeFilterValue(value as Record<string, string | number>);
-                countQueryWhere[key] = this.parseRangeFilterValue(value as Record<string, string | number>);
+                queryWhere[key] = this.parseRangeFilter(value as Record<string, string | number>);
+                countQueryWhere[key] = this.parseRangeFilter(value as Record<string, string | number>);
                 return;
             }
 
@@ -376,9 +376,15 @@ TInclude = Record<string, unknown>
 
     }
 
+async count() : Promise<number> {
+        return await this.model.count(this.countQuery as Parameters<typeof this.model.count>[0]);
+    }
 
+    getQuery() : PrismaFindManyArgs {
+        return this.query;
+    }
 
-    private deepMerge(target : Record<string, unknown>, source : Record<string, unknown>) : Record<string, unknown> {
+   private deepMerge(target : Record<string, unknown>, source : Record<string, unknown>) : Record<string, unknown> {
 
         const result = {...target};
 
@@ -396,71 +402,63 @@ TInclude = Record<string, unknown>
         return result;
     }
 
-    
+    private parseFilterValue(value : unknown) : unknown {
 
-    private parseFilterValue(value: unknown): unknown {
-        if (value === 'true') return true;
-        if (value === 'false') return false;
+        if(value === 'true'){
+            return true;
+        }
+        if(value === 'false'){
+            return false;
+        }
 
-        if(typeof value === "string" && !isNaN(Number(value)) &&value !== "") {
+        if(typeof value === 'string' && !isNaN(Number(value)) && value != ""){
             return Number(value);
-        
         }
+
         if(Array.isArray(value)){
-           return{
-            in : value.map((item) => this.parseFilterValue(item)),
-
-           } 
-           
+            return { in : value.map((item) => this.parseFilterValue(item)) }
         }
-        return value;
 
+        return value;
     }
 
-    private parseRangeFilterValue(value:  Record<string,string | number> ):
-    PrismaNumberFilter | PrismaStringFilter | Record<string, unknown>{
-       
-   const rangeQuery: Record<string, string | number | (string | number)[]> = {};
-    Object.keys(value).forEach((operator) => {
-        const operatorValue = value[operator];
-        const parsedValue : string | number =
-         typeof operatorValue === "string" && !isNaN(Number(operatorValue))
-          ? Number(operatorValue) : operatorValue;
+    private parseRangeFilter(value : Record<string, string | number>) : PrismaNumberFilter | PrismaStringFilter | Record<string, unknown> {
 
-        switch(operator){
-            case "lt":
-            case "lte":
-            case "gt":
-            case "gte":
-            case "equals":
-            case "not":
-            case "contains":
-            case "startsWith":
-            case "endsWith":
-        
-                rangeQuery[operator] = parsedValue;
-                break;
-            case "in":
-            case "notIn":
-                if(Array.isArray(operatorValue)){
-                    rangeQuery[operator] = operatorValue
+        const rangeQuery: Record<string, string | number | (string | number)[] > = {};
 
-                }else {
-                    rangeQuery[operator] = [parsedValue];
+        Object.keys(value).forEach((operator) => {
+            const operatorValue = value[operator];
 
-                }
-                break;
+
+            const parsedValue : string | number = typeof operatorValue === 'string' && !isNaN(Number(operatorValue)) ? Number(operatorValue) : operatorValue;
+
+            switch(operator){
+                case 'lt':
+                case 'lte':
+                case 'gt':
+                case 'gte':
+                case 'equals':
+                case 'not':
+                case 'contains':
+                case 'startsWith':
+                case 'endsWith':
+                    rangeQuery[operator] = parsedValue;
+                    break;
+
+                case 'in':
+                case 'notIn':
+                    if(Array.isArray(operatorValue)){
+                        rangeQuery[operator] = operatorValue
+                    }else {
+                        rangeQuery[operator] = [parsedValue];
+                    }
+                    break;
                 default:
-                break;
+                    break;
 
-                
-                
-        }
+            }
+        });
 
-    });
-    return Object.keys(rangeQuery).length > 0 ? rangeQuery : value;
-    
-
-   
-}
+        return Object.keys(rangeQuery).length > 0 ? rangeQuery : value;
+    }
 }
