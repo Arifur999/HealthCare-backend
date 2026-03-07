@@ -3,23 +3,36 @@ import AppError from "../../errorHelpers/AppError";
 import { prisma } from "../../lib/prisma";
 import { IUpdateDoctorPayload } from "./doctor.interface";
 import { UserStatus } from "../../../generated/prisma/enums";
+import { IqueryParams } from "../../interfaces/query.interface";
+import { QueryBuilder } from "../../utils/QueryBuilder";
 
-const getAllDoctors = async () => {
-  const doctors = await prisma.doctor.findMany({
-  where: {
-    isDeleted: false,
-  },
-    include: {
-      user:true,
-      specialties: {
-        include: {
-          specialty: true,
-        },
-      },
+const getAllDoctors = async (query:IqueryParams) => {
+//   const doctors = await prisma.doctor.findMany({
+//   where: {
+//     isDeleted: false,
+//   },
+//     include: {
+//       user:true,
+//       specialties: {
+//         include: {
+//           specialty: true,
+//         },
+//       },
       
-    },
-  });
-  return doctors;
+//     },
+//   });
+//   return doctors;
+
+const queryBuilder = new QueryBuilder(
+    prisma.doctor,
+    query,
+    {
+        searchableFields: ["user.name", "user.email"],
+        filterableFields: ["specialties.specialtyId"],
+        sortableFields: ["createdAt", "updatedAt"],
+    }
+)
+
 };
 
 const updateDoctor = async (id: string, payload: IUpdateDoctorPayload) => {
