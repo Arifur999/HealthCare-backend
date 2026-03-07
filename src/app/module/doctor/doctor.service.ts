@@ -5,25 +5,11 @@ import { IUpdateDoctorPayload } from "./doctor.interface";
 import { UserStatus } from "../../../generated/prisma/enums";
 import { IqueryParams } from "../../interfaces/query.interface";
 import { QueryBuilder } from "../../utils/QueryBuilder";
-import { doctorFilterableFields, doctorSearchableFields } from "./doctor.constants";
+import { doctorFilterableFields, doctorInCludeConfig, doctorSearchableFields } from "./doctor.constants";
 import { Doctor, Prisma } from "../../../generated/prisma/client";
 
 const getAllDoctors = async (query:IqueryParams) => {
-//   const doctors = await prisma.doctor.findMany({
-//   where: {
-//     isDeleted: false,
-//   },
-//     include: {
-//       user:true,
-//       specialties: {
-//         include: {
-//           specialty: true,
-//         },
-//       },
-      
-//     },
-//   });
-//   return doctors;
+
 
 const queryBuilder = new QueryBuilder<Doctor,Prisma.DoctorWhereInput,Prisma.DoctorInclude>(
     prisma.doctor,
@@ -49,11 +35,12 @@ const result = await queryBuilder
         },
     },
 })
-.dynamicInclude({})
+.dynamicInclude(doctorInCludeConfig)
 
 .paginate()
 .sort()
 .fields()
+.execute();
 
 
 return result;
