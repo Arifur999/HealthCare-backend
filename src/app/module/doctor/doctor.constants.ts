@@ -1,3 +1,5 @@
+import { Prisma } from "../../../generated/prisma/client";
+
 export const doctorSearchableFields = ["name", "email","qualification",
     "designation","currentWorkingPlace","registrationNumber",
     "specialties.specialty.title",
@@ -6,3 +8,27 @@ export const doctorSearchableFields = ["name", "email","qualification",
 export const doctorFilterableFields = ["gender", "isDeleted", "appointmentFee", "experience", "registrationNumber", 
     "specialties.specialtyId","designation","qualification","currentWorkingPlace",
     "specialties.specialty.title","user.role"];
+
+export const doctorInCludeConfig:Partial<Record<keyof Prisma.DoctorInclude, Prisma.DoctorInclude[keyof Prisma.DoctorInclude]>> = {
+    user:true,
+    specialties: {
+        include: {
+            specialty: true,
+        },
+    },
+    appointments: {
+        include: {
+            patient: true,
+            schedule: true,
+            prescription: true,
+        }
+    },
+    doctorSchedules: {
+        include: {
+            schedule: true,
+        }
+    },
+    prescriptions: true,
+    reviews: true
+
+}

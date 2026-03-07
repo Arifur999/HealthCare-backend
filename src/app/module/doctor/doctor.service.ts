@@ -6,6 +6,7 @@ import { UserStatus } from "../../../generated/prisma/enums";
 import { IqueryParams } from "../../interfaces/query.interface";
 import { QueryBuilder } from "../../utils/QueryBuilder";
 import { doctorFilterableFields, doctorSearchableFields } from "./doctor.constants";
+import { Doctor, Prisma } from "../../../generated/prisma/client";
 
 const getAllDoctors = async (query:IqueryParams) => {
 //   const doctors = await prisma.doctor.findMany({
@@ -24,7 +25,7 @@ const getAllDoctors = async (query:IqueryParams) => {
 //   });
 //   return doctors;
 
-const queryBuilder = new QueryBuilder(
+const queryBuilder = new QueryBuilder<Doctor,Prisma.DoctorWhereInput,Prisma.DoctorInclude>(
     prisma.doctor,
     query,
     {
@@ -33,6 +34,29 @@ const queryBuilder = new QueryBuilder(
         
     }
 )
+
+const result = await queryBuilder
+.search()
+.filter()
+.where({ 
+    isDeleted: false,
+ })
+.include({
+    user:true,
+    specialties: {
+        include: {
+            specialty: true,
+        },
+    },
+})
+.dynamicInclude({})
+
+.paginate()
+.sort()
+.fields()
+
+
+return result;
 
 };
 
