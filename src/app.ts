@@ -9,10 +9,12 @@ import { auth } from './app/lib/auth';
 import path from 'path';
 import cors from 'cors';
 import { env } from './config/env';
+import qs from "qs";
 
 
 
 const app: Application = express();
+app.set("query parser",(str:string)=>qs.parse(str));
 
 
 

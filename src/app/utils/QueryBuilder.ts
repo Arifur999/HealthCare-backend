@@ -17,7 +17,7 @@ TInclude = Record<string, unknown>
     private skip : number = 0;
     private sortBy : string = 'createdAt';
     private sortOrder : 'asc' | 'desc' = 'desc';
-    private selectFields: Record<string, boolean> | undefined | Record<string, unknown>;
+    private selectFields: Record<string, boolean> | undefined;
 
 
     constructor(
@@ -58,7 +58,9 @@ TInclude = Record<string, unknown>
 
                         return {
                             [relation] : {
-                                [nestedField] : stringFilter
+                                some :{
+                                    [nestedField]: stringFilter
+                                }
                             }
                         }
                     }else if(parts.length === 3){

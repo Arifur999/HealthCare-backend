@@ -14,8 +14,13 @@ const getAllDoctors =catchAsync (
       httpStatus: status.OK,
       success: true,
       data: result.data,
-      meta: result.meta,
-      message: "Doctor created successfully",
+      meta: {
+        page: result.meta.page,
+        limit: result.meta.limit,
+        total: result.meta.total,
+        totalPage: result.meta.totalPages,
+      },
+      message: "Doctors retrieved successfully",
     });
     }
 );
