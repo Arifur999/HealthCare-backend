@@ -9,8 +9,6 @@ import { doctorFilterableFields, doctorInCludeConfig, doctorSearchableFields } f
 import { Doctor, Prisma } from "../../../generated/prisma/client";
 
 const getAllDoctors = async (query:IqueryParams) => {
-
-
 const queryBuilder = new QueryBuilder<Doctor,Prisma.DoctorWhereInput,Prisma.DoctorInclude>(
     prisma.doctor,
     query,

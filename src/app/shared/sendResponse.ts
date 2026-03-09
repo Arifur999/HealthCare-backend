@@ -4,6 +4,12 @@ interface IResponseData <T> {
  httpStatus: number;
   success: boolean;
   data?: T;
+  meta?: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPage: number;
+  };
   message: string;
 }
 
@@ -12,6 +18,7 @@ interface IResponseData <T> {
   res.status(httpStatus).json({
     success,
     data,
+    meta: responseData.meta,
     message,
   });
 };

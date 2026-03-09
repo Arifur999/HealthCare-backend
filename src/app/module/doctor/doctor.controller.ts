@@ -13,7 +13,8 @@ const getAllDoctors =catchAsync (
     sendResponse(res, {
       httpStatus: status.OK,
       success: true,
-      data: result,
+      data: result.data,
+      meta: result.meta,
       message: "Doctor created successfully",
     });
     }
