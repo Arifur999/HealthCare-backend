@@ -91,6 +91,8 @@ const getAllSchedules = async (query : IqueryParams) => {
     return result;
 }
 
+
+
 export const ScheduleService = {
     createSchedule,
     getAllSchedules,

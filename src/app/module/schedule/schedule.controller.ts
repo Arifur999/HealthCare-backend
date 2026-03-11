@@ -35,9 +35,22 @@ const getAllSchedules = catchAsync( async (req : Request, res : Response) => {
     });
 });
 
+const getScheduleById = catchAsync( async (req : Request, res : Response) => {
+    const { id } = req.params;
+    const schedule = await ScheduleService.getScheduleById(id as string);
+    sendResponse(res, {
+        success: true,
+        httpStatus: status.OK,
+        message: 'Schedule retrieved successfully',
+        data: schedule
+    });
+});
+
+
 
 export const ScheduleController = {
     createSchedule,
     getAllSchedules,
+    getScheduleById,
    
 }
