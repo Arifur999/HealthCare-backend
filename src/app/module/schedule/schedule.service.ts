@@ -1,10 +1,10 @@
-import { addMinutes } from "date-fns";
+import { addHours, addMinutes, format } from "date-fns";
 import { Prisma, Schedule } from "../../../generated/prisma/client";
 import { IqueryParams } from "../../interfaces/query.interface";
 import { prisma } from "../../lib/prisma";
 import { QueryBuilder } from "../../utils/QueryBuilder";
 import { scheduleFilterableFields, scheduleIncludeConfig, scheduleSearchableFields } from "./schedule.constant";
-import { ICreateSchedulePayload } from "./schedule.interface";
+import { ICreateSchedulePayload, IUpdateSchedulePayload } from "./schedule.interface";
 
 const createDateTime = (date: Date, time: string): Date => {
     const [hours, minutes] = time.split(":").map(Number);
@@ -100,7 +100,40 @@ const getScheduleById = async (id: string) => {
     return schedule;
 }
 
+const updateSchedule = async (id: string, payload: IUpdateSchedulePayload) => {
+    const { startDate, endDate, startTime, endTime } = payload;
+    const startDateTime = new Date(
+        addMinutes(
+            addHours(
+                `${format(new Date(startDate), 'yyyy-MM-dd')}`,
+                Number(startTime.split(':')[0])
+            ),
+            Number(startTime.split(':')[1])
+        )
+    );
 
+    const endDateTime = new Date(
+        addMinutes(
+            addHours(
+                `${format(new Date(endDate), 'yyyy-MM-dd')}`,
+                Number(endTime.split(':')[0])
+            ),
+            Number(endTime.split(':')[1])
+        )
+    );
+
+    const updatedSchedule = await prisma.schedule.update({
+        where: {
+            id: id
+        },
+        data: {
+            startTime: startDateTime,
+            endTime: endDateTime
+        }
+    });
+
+    return updatedSchedule;
+}
 
 
 
@@ -108,5 +141,6 @@ export const ScheduleService = {
     createSchedule,
     getAllSchedules,
     getScheduleById,
+    updateSchedule,
     
 }
