@@ -6,10 +6,10 @@ import { validateRequest } from "../../middleware/validateRequest";
 
 const router = Router();
 
-router.post('/', checkAuth(Role.ADMIN, Role.SUPER_ADMIN), validateRequest(createScheduleZodSchema) , ScheduleController.createSchedule);
+router.post('/', checkAuth(Role.ADMIN, Role.SUPER_ADMIN), validateRequest(ScheduleValidation.createScheduleZodSchema) , ScheduleController.createSchedule);
 router.get('/', checkAuth(Role.ADMIN, Role.SUPER_ADMIN, Role.DOCTOR), ScheduleController.getAllSchedules);
 router.get('/:id', checkAuth(Role.ADMIN, Role.SUPER_ADMIN, Role.DOCTOR), ScheduleController.getScheduleById);
-router.patch('/:id', checkAuth(Role.ADMIN, Role.SUPER_ADMIN),validateRequest(updateScheduleZodSchema), ScheduleController.updateSchedule);
+router.patch('/:id', checkAuth(Role.ADMIN, Role.SUPER_ADMIN),validateRequest(ScheduleValidation.updateScheduleZodSchema), ScheduleController.updateSchedule);
 router.delete('/:id', checkAuth(Role.ADMIN, Role.SUPER_ADMIN), ScheduleController.deleteSchedule);
 
 export const scheduleRoutes = router;
