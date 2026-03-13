@@ -53,9 +53,22 @@ const getAllDoctorSchedules = catchAsync(async (req: Request, res: Response) => 
     });
 });
 
+const getDoctorScheduleById = catchAsync(async (req: Request, res: Response) => {
+    const doctorId = req.params.doctorId;
+    const scheduleId = req.params.scheduleId;
+    const doctorSchedule = await DoctorScheduleService.getDoctorScheduleById(doctorId as string, scheduleId as string);
+    sendResponse(res, {
+        success: true,
+        httpStatus: status.OK,
+        message: 'Doctor schedule retrieved successfully',
+        data: doctorSchedule
+    });
+});
+
 export const DoctorScheduleController = {
     createMyDoctorSchedule,
     getMyDoctorSchedules,
     getAllDoctorSchedules,
+    getDoctorScheduleById,
     
 }
