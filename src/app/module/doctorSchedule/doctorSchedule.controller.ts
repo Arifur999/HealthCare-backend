@@ -2,6 +2,7 @@ import status from "http-status";
 import { sendResponse } from "../../shared/sendResponse";
 import catchAsync from "../../shared/catchAsync";
 import { Request, Response } from "express";
+import { DoctorScheduleService } from "./doctorSchedule.service";
 
 const createMyDoctorSchedule = catchAsync( async (req : Request, res : Response) => {
     const payload = req.body;
