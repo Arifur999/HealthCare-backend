@@ -1,34 +1,28 @@
 import { Prisma } from "../../../generated/prisma/client";
 
-export const doctorSearchableFields = ["name", "email","qualification",
-    "designation","currentWorkingPlace","registrationNumber",
-    "specialties.specialty.title",
-     "phoneNumber", "specialties.name"];
+export const doctorSearchableFields = ['name', 'email', 'qualification', 'designation', 'currentWorkingPlace', 'registrationNumber', 'specialties.specialty.title'];
 
-export const doctorFilterableFields = ["gender", "isDeleted", "appointmentFee", "experience", "registrationNumber", 
-    "specialties.specialtyId","designation","qualification","currentWorkingPlace",
-    "specialties.specialty.title","user.role"];
+export const doctorFilterableFields = ['gender', 'isDeleted', 'appointmentFee', 'experience', 'registrationNumber', 'specialties.specialtyId', 'currentWorkingPlace', 'designation', 'qualification', 'specialties.specialty.title', 'user.role'];
 
-export const doctorInCludeConfig:Partial<Record<keyof Prisma.DoctorInclude, Prisma.DoctorInclude[keyof Prisma.DoctorInclude]>> = {
-    user:true,
+export const doctorIncludeConfig : Partial<Record<keyof Prisma.DoctorInclude, Prisma.DoctorInclude[keyof Prisma.DoctorInclude]>> ={
+    user: true,
     specialties: {
-        include: {
-            specialty: true,
-        },
+        include:{
+            specialty: true
+        }
     },
     appointments: {
         include: {
             patient: true,
-            schedule: true,
-            prescription: true,
+            doctor: true,
+
         }
     },
     doctorSchedules: {
         include: {
-            schedule: true,
+            schedule: true
         }
     },
     prescriptions: true,
-    reviews: true
-
+    reviews: true,
 }
