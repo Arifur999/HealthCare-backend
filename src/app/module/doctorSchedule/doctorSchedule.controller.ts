@@ -5,6 +5,7 @@ import { Request, Response } from "express";
 import { DoctorScheduleService } from "./doctorSchedule.service";
 import { IqueryParams } from "../../interfaces/query.interface";
 
+
 const createMyDoctorSchedule = catchAsync( async (req : Request, res : Response) => {
     const payload = req.body;
     const user = req.user;
@@ -36,7 +37,9 @@ const getMyDoctorSchedules = catchAsync(async (req: Request, res: Response) => {
 });
 
 
+
 export const DoctorScheduleController = {
     createMyDoctorSchedule,
     getMyDoctorSchedules,
+    
 }

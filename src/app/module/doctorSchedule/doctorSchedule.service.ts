@@ -73,9 +73,27 @@ const getMyDoctorSchedules = async (user : IRequestUser, query : IqueryParams) =
     return doctorSchedules;
 }
 
+const getAllDoctorSchedules = async (query: IqueryParams) => {
+    const queryBuilder = new QueryBuilder<DoctorSchedules, Prisma.DoctorSchedulesWhereInput, Prisma.DoctorSchedulesInclude>(prisma.doctorSchedules, query, {
+        filterableFields: doctorScheduleFilterableFields,
+        searchableFields: doctorScheduleSearchableFields
+    })
+
+    const result = await queryBuilder
+    .search()
+    .filter()
+    .paginate()
+    .dynamicInclude(doctorScheduleIncludeConfig)
+    .sort()
+    .execute();
+
+    return result;
+}
+
 
 
 export const DoctorScheduleService = {
     createMyDoctorSchedule,
     getMyDoctorSchedules,
+    getAllDoctorSchedules,
 }
