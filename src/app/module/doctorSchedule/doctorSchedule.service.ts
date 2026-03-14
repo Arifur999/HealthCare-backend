@@ -106,6 +106,44 @@ const getDoctorScheduleById = async (doctorId: string, scheduleId: string) => {
     return doctorSchedule;
 }
 
+const updateMyDoctorSchedule = async (user : IRequestUser, payload: IUpdateDoctorSchedulePayload) => {
+        const doctorData = await prisma.doctor.findUniqueOrThrow({
+            where:{
+                email : user.email
+            }
+        });
+
+        const deleteIds = payload.scheduleIds.filter(schedule => schedule.shouldDelete).map(schedule => schedule.id);
+
+        const createIds = payload.scheduleIds.filter(schedule => !schedule.shouldDelete).map(schedule => schedule.id);
+
+        const result = await prisma.$transaction(async (tx) => {
+
+            await tx.doctorSchedules.deleteMany({
+                where : {
+                    isBooked: false,
+                    doctorId : doctorData.id,
+                    scheduleId : {
+                        in : deleteIds
+                    }
+                }
+            });
+
+            const doctorScheduleData = createIds.map((scheduleId) => ({
+                doctorId : doctorData.id,
+                scheduleId
+            }) )
+
+            const result = await tx.doctorSchedules.createMany({
+                data : doctorScheduleData
+            });
+
+            return result;
+        })
+
+        return result;
+}
+
 
 export const DoctorScheduleService = {
     createMyDoctorSchedule,
