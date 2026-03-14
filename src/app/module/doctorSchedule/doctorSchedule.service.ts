@@ -4,7 +4,7 @@ import { IRequestUser } from "../../interfaces/requestUser.interface";
 import { prisma } from "../../lib/prisma";
 import { QueryBuilder } from "../../utils/QueryBuilder";
 import { doctorScheduleFilterableFields, doctorScheduleIncludeConfig, doctorScheduleSearchableFields } from "./doctorSchedule.constant";
-import { ICreateDoctorSchedulePayload } from "./doctorSchedule.interface";
+import { ICreateDoctorSchedulePayload, IUpdateDoctorSchedulePayload } from "./doctorSchedule.interface";
 
 
 const createMyDoctorSchedule = async (user : IRequestUser, payload : ICreateDoctorSchedulePayload) => {
@@ -150,4 +150,5 @@ export const DoctorScheduleService = {
     getMyDoctorSchedules,
     getAllDoctorSchedules,
     getDoctorScheduleById,
+    updateMyDoctorSchedule,
 }
