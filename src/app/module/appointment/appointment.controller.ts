@@ -76,6 +76,19 @@ const bookAppointmentWithPayLater = catchAsync(async (req: Request, res: Respons
     });
 });
 
+const initiatePayment = catchAsync(async (req: Request, res: Response) => {
+    const appointmentId = req.params.id;
+    const user = req.user;
+    const paymentInfo = await AppointmentService.initiatePayment(appointmentId as string, user);
+
+    sendResponse(res, {
+        success: true,
+        httpStatus: status.OK,
+        message: 'Payment initiated successfully',
+        data: paymentInfo
+    });
+});
+
 export const AppointmentController = {
     bookAppointment,
     getMyAppointments,
@@ -83,5 +96,6 @@ export const AppointmentController = {
     getMySingleAppointment,
     getAllAppointments,
     bookAppointmentWithPayLater,
+    initiatePayment,
    
 }
