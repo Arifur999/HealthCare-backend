@@ -24,6 +24,7 @@ EMAIL_SENDER:{
   SMTP_FROM: string;
 }
 
+
 GOOGLE_CLIENT_ID: string;
 GOOGLE_CLIENT_SECRET: string;
 CALLBACK_URL: string;
@@ -32,6 +33,9 @@ FRONTEND_URL: string;
 CLOUDINARY_CLOUD_NAME: string;
 CLOUDINARY_API_KEY: string;
 CLOUDINARY_API_SECRET: string;
+
+STRIPE_SECRET_KEY: string;
+STRIPE_PUBLISHABLE_KEY: string;
 
 }
 
@@ -61,6 +65,8 @@ const loadEnv = (): ENVConfig => {
         "CLOUDINARY_CLOUD_NAME",
         "CLOUDINARY_API_KEY",
         "CLOUDINARY_API_SECRET",
+        "STRIPE_SECRET_KEY",
+        "STRIPE_PUBLISHABLE_KEY",
 
       ];
 
@@ -96,7 +102,9 @@ const loadEnv = (): ENVConfig => {
     FRONTEND_URL: process.env.FRONTEND_URL as string,
     CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME as string,
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY as string,
-    CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET as string,   
+    CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET as string, 
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY as string,
+    STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY as string,  
 
 
   }
@@ -132,5 +140,8 @@ export const env = {
   CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME || "",
   CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || "",
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || "",
+  STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY || "",
+  STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY || "",
+
 
 };

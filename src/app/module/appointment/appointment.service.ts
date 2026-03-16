@@ -1,7 +1,9 @@
+import { uuidv7 } from "zod/mini";
 import { env } from "../../../config/env";
 import { IRequestUser } from "../../interfaces/requestUser.interface";
 import { prisma } from "../../lib/prisma";
 import { IBookAppointmentPayload } from "./appointment.interface";
+import { stripe } from "../../../config/stripe.config";
 
 const bookAppointment = async (payload : IBookAppointmentPayload, user : IRequestUser) => {
    const patientData = await prisma.patient.findUniqueOrThrow({
