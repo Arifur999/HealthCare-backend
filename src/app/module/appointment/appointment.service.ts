@@ -193,7 +193,7 @@ const getMySingleAppointment = async (appointmentId: string, user: IRequestUser)
     const patientData = await prisma.patient.findUnique({
         where: {
             email: user?.email
-            
+
         }
     });
 
@@ -235,10 +235,23 @@ const getMySingleAppointment = async (appointmentId: string, user: IRequestUser)
 
     return appointment;
 }
+const getAllAppointments = async () => {
+    const appointments = await prisma.appointment.findMany({
+        include: {
+            doctor: true,
+            patient: true,
+            schedule: true
+        }
+    });
+    return appointments;
+}
 
 export const AppointmentService = {
     bookAppointment,
     getMyAppointments,
     changeAppointmentStatus,
     getMySingleAppointment,
+    getAllAppointments,
+    
+
 }
