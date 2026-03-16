@@ -4,6 +4,9 @@ import { IRequestUser } from "../../interfaces/requestUser.interface";
 import { prisma } from "../../lib/prisma";
 import { IBookAppointmentPayload } from "./appointment.interface";
 import { stripe } from "../../../config/stripe.config";
+import { AppointmentStatus, Role } from "../../../generated/prisma/enums";
+import status from "http-status";
+import AppError from "../../errorHelpers/AppError";
 
 const bookAppointment = async (payload : IBookAppointmentPayload, user : IRequestUser) => {
    const patientData = await prisma.patient.findUniqueOrThrow({
@@ -154,10 +157,40 @@ const getMyAppointments = async (user: IRequestUser) => {
 
 }
 
+const changeAppointmentStatus = async (appointmentId: string, appointmentStatus: AppointmentStatus, user: IRequestUser) => {
+    const appointmentData = await prisma.appointment.findUniqueOrThrow({
+        where: {
+            id: appointmentId,
+            // status: AppointmentStatus.SCHEDULED
+        },
+        include: {
+            doctor: true
+        }
+    });
 
+    // if (!appointmentData) {
+    //     throw new AppError(status.NOT_FOUND, "Appointment not found or already completed/cancelled");
+    // }
+
+    if (user?.role === Role.DOCTOR) {
+        if (!(user?.email === appointmentData.doctor.email))
+            throw new AppError(status.BAD_REQUEST, "This is not your appointment")
+    }
+
+    return await prisma.appointment.update({
+        where: {
+            id: appointmentId
+        },
+        data: {
+            status: appointmentStatus
+        }
+    })
+
+}
 
 
 export const AppointmentService = {
     bookAppointment,
     getMyAppointments,
+    changeAppointmentStatus,
 }
