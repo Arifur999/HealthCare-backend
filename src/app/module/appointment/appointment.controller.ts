@@ -55,11 +55,22 @@ const getMySingleAppointment = catchAsync(async (req: Request, res: Response) =>
     });
 });
 
+const getAllAppointments = catchAsync(async (req: Request, res: Response) => {
+    const appointments = await AppointmentService.getAllAppointments();
+    sendResponse(res, {
+        success: true,
+        httpStatus: status.OK,
+        message: 'All appointments retrieved successfully',
+        data: appointments
+    });
+});
+
 
 export const AppointmentController = {
     bookAppointment,
     getMyAppointments,
     changeAppointmentStatus,
     getMySingleAppointment,
+    getAllAppointments,
    
 }
