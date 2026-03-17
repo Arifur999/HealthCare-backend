@@ -36,6 +36,7 @@ CLOUDINARY_API_SECRET: string;
 
 STRIPE_SECRET_KEY: string;
 STRIPE_PUBLISHABLE_KEY: string;
+STRIPE_WEBHOOK_SECRET: string;
 
 }
 
@@ -67,6 +68,7 @@ const loadEnv = (): ENVConfig => {
         "CLOUDINARY_API_SECRET",
         "STRIPE_SECRET_KEY",
         "STRIPE_PUBLISHABLE_KEY",
+        "STRIPE_WEBHOOK_SECRET",
 
       ];
 
@@ -105,7 +107,7 @@ const loadEnv = (): ENVConfig => {
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET as string, 
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY as string,
     STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY as string,  
-
+    STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET as string,
 
   }
 };
@@ -142,6 +144,7 @@ export const env = {
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || "",
   STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY || "",
   STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY || "",
+  STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET || "",
 
 
 };
