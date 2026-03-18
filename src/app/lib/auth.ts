@@ -98,7 +98,20 @@ plugins:[
           },
         })
 
-if(user&&!user.emailVerified){
+// const isItFirstSuperAdmin = await prisma.admin.count() === 1;
+
+if(!user){
+  return;
+
+}
+if(user&& user.role === Role.SUPER_ADMIN){
+  return;
+}
+
+if((user&&!user.emailVerified)
+  // || !isItFirstSuperAdmin
+// || user?.role !== Role.SUPER_ADMIN
+){
   sendEmail({
     to:email,
     subject:"verify your email",
