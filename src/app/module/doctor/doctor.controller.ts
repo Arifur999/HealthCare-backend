@@ -1,9 +1,7 @@
 import { Request, Response } from "express";
 import status from "http-status";
-
 import { sendResponse } from "../../shared/sendResponse";
 import catchAsync from "../../shared/catchAsync";
-
 import { IqueryParams } from "../../interfaces/query.interface";
 import { DoctorService } from "./doctor.service";
 

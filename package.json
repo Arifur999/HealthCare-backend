@@ -15,6 +15,7 @@
     "studio": "prisma studio",
     "push": "prisma db push",
     "pull": "prisma db pull",
+    "stripe:webhook":"stripe listen --forward-to localhost:5000/webhook",
     "seed": "prisma db seed",
     "lint": "eslint . --ext .ts",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -62,3 +63,6 @@
     "typescript-eslint": "^8.54.0"
   }
 }
+
+
+
