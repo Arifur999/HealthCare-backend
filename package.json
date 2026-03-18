@@ -15,7 +15,7 @@
     "studio": "prisma studio",
     "push": "prisma db push",
     "pull": "prisma db pull",
-    "stripe:webhook":"stripe listen --forward-to localhost:5000/webhook",
+    "stripe:webhook": "stripe listen --forward-to localhost:5000/webhook",
     "seed": "prisma db seed",
     "lint": "eslint . --ext .ts",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -41,6 +41,7 @@
     "jsonwebtoken": "^9.0.3",
     "multer": "^2.1.0",
     "multer-storage-cloudinary": "^4.0.0",
+    "node-cron": "^4.2.1",
     "nodemailer": "^8.0.1",
     "pg": "^8.18.0",
     "prisma": "^7.3.0",
@@ -63,6 +64,3 @@
     "typescript-eslint": "^8.54.0"
   }
 }
-
-
-

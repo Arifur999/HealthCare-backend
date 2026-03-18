@@ -10,7 +10,9 @@ import path from 'path';
 import cors from 'cors';
 import { env } from './config/env';
 import qs from "qs";
-
+import { PaymentController } from './app/module/payment/payment.controller';
+import cron from 'node-cron';
+import { AppointmentService } from './app/module/appointment/appointment.service';
 
 
 const app: Application = express();
@@ -21,10 +23,7 @@ app.set("query parser",(str:string)=>qs.parse(str));
 app.set("view engine", "ejs")
 app.set("views", path.resolve(process.cwd(),`src/app/templates`))
 
-app.post("/webhook",express.raw({type:"application/json"}),async (req:Request,res:Response)=>{
- console.log("webhook received :", req.body);
-  res.status(200).json({received:true});
-});
+app.post("/webhook",express.raw({type:"application/json"}),PaymentController.handleStripeWebhookEvent)
 
 app.use(cors({
   origin:[env.FRONTEND_URL,env.BETTER_AUTH_URL,"http://localhost:5000","http://localhost:3000"],
@@ -43,6 +42,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+cron.schedule('*/5 * * * *', async () => {
+  try {
+    await AppointmentService.cancelUnpaidAppointments();
+    console.log('Unpaid appointments cancelled successfully');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error : any) {
+    console.error('Error cancelling unpaid appointments:', error.message);
+  }
+});
 
 
 //-------------------start------------------------------
