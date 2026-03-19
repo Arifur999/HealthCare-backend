@@ -1,4 +1,4 @@
-import { uuidv7 } from "zod/mini";
+import { v7 as uuidv7} from "uuid";
 import { env } from "../../../config/env";
 import { IRequestUser } from "../../interfaces/requestUser.interface";
 import { prisma } from "../../lib/prisma";
