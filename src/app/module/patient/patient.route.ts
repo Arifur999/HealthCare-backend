@@ -5,6 +5,7 @@ import { checkAuth } from "../../middleware/checkAuth";
 import { PatientController } from "./patient.controller";
 import { updateMyPatientProfileMiddleware } from "./patient.middlewares";
 import { validateRequest } from "../../middleware/validateRequest";
+import { PatientValidation } from "./patient.validation";
 
 
 const router = Router();
