@@ -3,6 +3,8 @@ import { multerUpload } from "../../../config/multer.config";
 import { Role } from "../../../generated/prisma/enums";
 import { checkAuth } from "../../middleware/checkAuth";
 import { PatientController } from "./patient.controller";
+import { updateMyPatientProfileMiddleware } from "./patient.middlewares";
+import { validateRequest } from "../../middleware/validateRequest";
 
 
 const router = Router();
