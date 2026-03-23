@@ -5,6 +5,7 @@ import { prisma } from "../../lib/prisma";
 import { ICreatePrescriptionPayload } from "./prescription.interface";
 import { uploadFileToCloudinary } from "../../../config/cloudinary.config";
 import { sendEmail } from "../../utils/email";
+import { generatePrescriptionPDF } from "./prescription.utils";
 
 const givePrescription = async (user : IRequestUser, payload : ICreatePrescriptionPayload) => {
     const doctorData = await prisma.doctor.findUniqueOrThrow({
@@ -63,7 +64,7 @@ const givePrescription = async (user : IRequestUser, payload : ICreatePrescripti
        const pdfBuffer = await generatePrescriptionPDF({
            doctorName: doctorData.name,
            patientName: appointmentData.patient.name,
-           appointmentDate: appointmentData.schedule.startDateTime,
+           appointmentDate: appointmentData.schedule.startTime,
            instructions: payload.instructions,
            followUpDate,
            doctorEmail: doctorData.email,
@@ -96,8 +97,9 @@ const givePrescription = async (user : IRequestUser, payload : ICreatePrescripti
                templateData: {
                     doctorName: doctor.name,
                     patientName: patient.name,
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     specialization: doctor.specialties.map((s : any )=> s.title).join(", "),
-                    appointmentDate: new Date(appointmentData.schedule.startDateTime).toLocaleString(),
+                    appointmentDate: new Date(appointmentData.schedule.startTime).toLocaleString(),
                     issuedDate: new Date().toLocaleDateString(),
                     prescriptionId: result.id,
                     instructions: payload.instructions,
