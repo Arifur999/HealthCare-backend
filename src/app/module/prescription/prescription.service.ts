@@ -175,7 +175,20 @@ const myPrescriptions = async (user: IRequestUser) => {
 
 };
 
+const getAllPrescriptions = async () => {
+    const result = await prisma.prescription.findMany({
+        include: {
+            patient: true,
+            doctor: true,
+            appointment: true,
+        }
+    })
+
+    return result;
+};
+
 export const PrescriptionService = {
     givePrescription,
     myPrescriptions,
+    getAllPrescriptions,
 }
