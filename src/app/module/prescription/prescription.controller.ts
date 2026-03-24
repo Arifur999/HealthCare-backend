@@ -29,7 +29,18 @@ const myPrescriptions = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const getAllPrescriptions = catchAsync(async (req: Request, res: Response) => {
+    const result = await PrescriptionService.getAllPrescriptions();
+    sendResponse(res, {
+        httpStatus: httpStatus.OK,
+        success: true,
+        message: 'Prescriptions retrieval successfully',
+        data: result
+    });
+});
+
 export const PrescriptionController = {
     givePrescription,
   myPrescriptions,
+  getAllPrescriptions,
 };
