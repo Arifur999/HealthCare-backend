@@ -53,10 +53,22 @@ const updatePrescription = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const deletePrescription = catchAsync(async (req: Request, res: Response) => {
+    const user = req.user;
+    const prescriptionId = req.params.id;
+    await PrescriptionService.deletePrescription(user, prescriptionId as string);
+
+    sendResponse(res, {
+        httpStatus: httpStatus.OK,
+        success: true,
+        message: 'Prescription deleted successfully',
+    });
+});
 
 export const PrescriptionController = {
     givePrescription,
   myPrescriptions,
   getAllPrescriptions,
   updatePrescription,
+  deletePrescription,
 };
