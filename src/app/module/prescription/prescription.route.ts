@@ -3,6 +3,7 @@ import { Role } from "../../../generated/prisma/enums";
 import { checkAuth } from "../../middleware/checkAuth";
 import { validateRequest } from "../../middleware/validateRequest";
 import { PrescriptionController } from "./prescription.controller";
+import { PrescriptionValidation } from './prescription.validation';
 
 
 const router = express.Router();
