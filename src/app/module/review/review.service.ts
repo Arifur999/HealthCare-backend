@@ -68,7 +68,20 @@ const giveReview = async (user : IRequestUser, payload : ICreateReviewPayload) =
     return result;
 };
 
+const getAllReviews = async (
+) => {
+    const reviews = await prisma.review.findMany({
+        include: {
+            doctor: true,
+            patient: true,
+            appointment: true
+        }
+    });
+
+    return reviews;
+};
 
 export const ReviewService = {
     giveReview,
+    getAllReviews,
 }
