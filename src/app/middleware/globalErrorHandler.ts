@@ -2,10 +2,9 @@ import { NextFunction,  Request, Response } from "express";
 import { env } from "../../config/env";
 import status from "http-status";
 import z from "zod";
-import { IError, IErrorResponse } from "../interfaces/error.interfaces";
+import { IError, IErrorResponse,  } from "../interfaces/error.interfaces";
 import { handleZodError } from "../errorHelpers/handleZodError";
 import AppError from "../errorHelpers/AppError";
-import { deleteFileFromCloudinary } from "../../config/cloudinary.config";
 import { deleteUploadedFilesFromGlobalErrorHandler } from "../utils/deleteUploadedFilesFromGlobalError";
 
 
@@ -26,7 +25,7 @@ export const globalErrorHandler = async (err: any, req: Request, res: Response, 
     // }
     await deleteUploadedFilesFromGlobalErrorHandler(req);
 
-    let errorSources: TErrorSources[] = []
+    let errorSource: IError[] = []
     let statusCode: number = status.INTERNAL_SERVER_ERROR;
     let message: string = 'Internal Server Error';
     let stack: string | undefined = undefined;
@@ -54,14 +53,14 @@ export const globalErrorHandler = async (err: any, req: Request, res: Response, 
         const simplifiedError = handleZodError(err);
         statusCode = simplifiedError.statusCode as number
         message = simplifiedError.message
-        errorSources = [...simplifiedError.errorSources]
+        errorSource = [...simplifiedError.errorSource]
         stack = err.stack;
 
     } else if (err instanceof AppError) {
         statusCode = err.statusCode;
         message = err.message;
         stack = err.stack;
-        errorSources = [
+        errorSource = [
             {
                 path: '',
                 message: err.message
@@ -72,7 +71,7 @@ export const globalErrorHandler = async (err: any, req: Request, res: Response, 
         statusCode = status.INTERNAL_SERVER_ERROR;
         message = err.message
         stack = err.stack;
-        errorSources = [
+        errorSource = [
             {
                 path: '',
                 message: err.message
@@ -81,10 +80,10 @@ export const globalErrorHandler = async (err: any, req: Request, res: Response, 
     }
 
 
-    const errorResponse: TErrorResponse = {
+    const errorResponse: IErrorResponse = {
         success: false,
         message: message,
-        errorSources,
+        errorSource,
         error: env.NODE_ENV === 'development' ? err : undefined,
         stack: env.NODE_ENV === 'development' ? stack : undefined,
     }
