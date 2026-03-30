@@ -89,4 +89,6 @@ export const globalErrorHandler = async (err: any, req: Request, res: Response, 
     }
 
     res.status(statusCode).json(errorResponse);
+    next();
+
 }
