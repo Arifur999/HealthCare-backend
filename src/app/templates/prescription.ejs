@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prescription</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f1f5f9;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: #0f172a;
+    }
+
+    table {
+      border-spacing: 0;
+      border-collapse: collapse;
+    }
+
+    .container {
+      width: 100%;
+      background-color: #f1f5f9;
+      padding: 28px 12px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 680px;
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    .header {
+      background: linear-gradient(135deg, #0f4c81 0%, #0f766e 100%);
+      color: #ffffff;
+      padding: 28px 30px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.3;
+      font-weight: 700;
+    }
+
+    .header p {
+      margin: 8px 0 0;
+      font-size: 14px;
+      line-height: 1.5;
+      opacity: 0.95;
+    }
+
+    .content {
+      padding: 26px 30px;
+    }
+
+    .greeting {
+      margin: 0 0 16px;
+      font-size: 20px;
+      line-height: 1.4;
+      color: #0f172a;
+    }
+
+    .paragraph {
+      margin: 0 0 14px;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #334155;
+    }
+
+    .section-title {
+      margin: 20px 0 10px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 700;
+      color: #0f766e;
+    }
+
+    .info-box {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      background-color: #f8fafc;
+      overflow: hidden;
+    }
+
+    .info-row td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #1e293b;
+      vertical-align: top;
+    }
+
+    .info-row:last-child td {
+      border-bottom: none;
+    }
+
+    .label {
+      width: 180px;
+      font-weight: 600;
+      color: #334155;
+      background-color: #f1f5f9;
+    }
+
+    .instructions-box {
+      margin-top: 8px;
+      border: 1px solid #bae6fd;
+      border-radius: 10px;
+      background-color: #f0f9ff;
+      padding: 14px 16px;
+    }
+
+    .instructions-list {
+      margin: 0;
+      padding: 0 0 0 18px;
+    }
+
+    .instructions-list li {
+      margin: 0 0 7px;
+      color: #0f172a;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .button-wrap {
+      margin-top: 20px;
+    }
+
+    .button {
+      display: inline-block;
+      background-color: #0f766e;
+      color: #ffffff !important;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      border-radius: 8px;
+      padding: 11px 16px;
+    }
+
+    .notice {
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background-color: #ecfeff;
+      border: 1px solid #99f6e4;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #0f766e;
+    }
+
+    .footer {
+      border-top: 1px solid #e2e8f0;
+      background-color: #f8fafc;
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.7;
+      padding: 18px 30px 24px;
+    }
+
+    @media only screen and (max-width: 680px) {
+      .header,
+      .content,
+      .footer {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+      }
+
+      .header h1 {
+        font-size: 21px !important;
+      }
+
+      .greeting {
+        font-size: 18px !important;
+      }
+
+      .label {
+        width: 130px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <%
+    const patient = patientName || "Patient";
+    const doctor = doctorName || "Doctor";
+    const doctorSpecialization = specialization || "Healthcare Provider";
+    const apptDate = appointmentDate || "N/A";
+    const issueDate = issuedDate || "N/A";
+    const rxId = prescriptionId || "N/A";
+    const followDate = followUpDate || "Not specified";
+    const instructionLines = (instructions || "").split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+  %>
+
+  <table role="presentation" width="100%" class="container">
+    <tr>
+      <td align="center">
+        <table role="presentation" class="card">
+          <tr>
+            <td class="header">
+              <h1>Your Prescription Is Ready</h1>
+              <p>HealthCare Services | Patient Prescription Summary</p>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="content">
+              <h2 class="greeting">Hello <%= patient %>,</h2>
+              <p class="paragraph">
+                Dr. <%= doctor %> has issued your prescription. Please review the details below and follow all medical instructions carefully.
+              </p>
+
+              <h3 class="section-title">Prescription Information</h3>
+              <table role="presentation" width="100%" class="info-box">
+                <tr class="info-row">
+                  <td class="label">Prescription ID</td>
+                  <td><%= rxId %></td>
+                </tr>
+                <tr class="info-row">
+                  <td class="label">Doctor</td>
+                  <td>Dr. <%= doctor %></td>
+                </tr>
+                <tr class="info-row">
+                  <td class="label">Specialization</td>
+                  <td><%= doctorSpecialization %></td>
+                </tr>
+                <tr class="info-row">
+                  <td class="label">Appointment Date</td>
+                  <td><%= apptDate %></td>
+                </tr>
+                <tr class="info-row">
+                  <td class="label">Issued Date</td>
+                  <td><%= issueDate %></td>
+                </tr>
+                <tr class="info-row">
+                  <td class="label">Follow-up Date</td>
+                  <td><%= followDate %></td>
+                </tr>
+              </table>
+
+              <h3 class="section-title">Instructions</h3>
+              <div class="instructions-box">
+                <% if (instructionLines.length) { %>
+                  <ul class="instructions-list">
+                    <% instructionLines.forEach((line) => { %>
+                      <li><%= line %></li>
+                    <% }) %>
+                  </ul>
+                <% } else { %>
+                  <p class="paragraph" style="margin:0;">No instructions were added to this prescription.</p>
+                <% } %>
+              </div>
+
+              <% if (pdfUrl) { %>
+                <div class="button-wrap">
+                  <a class="button" href="<%= pdfUrl %>" target="_blank">Download Prescription PDF</a>
+                </div>
+              <% } %>
+
+              <div class="notice">
+                This is an electronically generated prescription. Contact your healthcare provider if any information seems incorrect.
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="footer">
+              This message was sent automatically by HealthCare Services. Please do not reply to this email.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
