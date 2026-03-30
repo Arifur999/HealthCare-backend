@@ -4,6 +4,7 @@ import { prisma } from "../../lib/prisma";
 import { PaymentStatus } from "../../../generated/prisma/enums";
 import { uploadFileToCloudinary } from "../../../config/cloudinary.config";
 import { sendEmail } from "../../utils/email";
+import { generateInvoicePdf } from "./payment.utils";
 
 
 const handlerStripeWebhookEvent = async (event : Stripe.Event) =>{
