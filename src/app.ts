@@ -1,7 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import { prisma } from './app/lib/prisma';
 import { indexRoute } from './app/routes';
-import { errorHandler } from './app/middleware/globalErrorHandler';
+import { globalErrorHandler } from './app/middleware/globalErrorHandler';
 import notFound from './app/middleware/notFound';
 import cookieParser from 'cookie-parser';
 import { toNodeHandler } from 'better-auth/node';
@@ -61,7 +61,7 @@ app.use('/api/v1',indexRoute)
 
 
 //-------------------global------------------------------
-app.use (errorHandler)
+app.use(globalErrorHandler)
 app.use(notFound)
 
 // Basic route
