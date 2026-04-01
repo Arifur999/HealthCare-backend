@@ -1,9 +1,9 @@
 import status from "http-status";
-import { UserStatus } from "../../../generated/prisma/enums";
+import { Role, UserStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import AppError from "../../errorHelpers/AppError";
 import { IRequestUser } from "../../interfaces/requestUser.interface";
-import { IUpdateAdminPayload } from "./admin.interface";
+import { IChangeUserStatusPayload, IUpdateAdminPayload } from "./admin.interface";
 
 
 const getAllAdmins = async () => {
@@ -112,8 +112,38 @@ const deleteAdmin = async (id: string, user : IRequestUser) => {
     return result;
 }
 
-const changeUserStatus = async () => {
-   
+const changeUserStatus = async (user: IRequestUser, payload: IChangeUserStatusPayload) => {
+  const isAdminExist = await prisma.admin.findUniqueOrThrow({
+        where: {
+            email: user.email,
+        },
+        include: {
+            user: true,
+        }
+
+    });
+    const { userId, userStatus } = payload;
+        const userToChangeStatus = await prisma.user.findUniqueOrThrow({
+            where: {
+                id: userId,
+            },
+        })
+    const selfStatusChange = isAdminExist.userId === userId;
+
+    if (selfStatusChange) {
+        throw new AppError(status.BAD_REQUEST, "You cannot change your own status");
+    }
+    if(isAdminExist.user.role === Role.ADMIN && userToChangeStatus.role === Role.SUPER_ADMIN){
+        throw new AppError(status.BAD_REQUEST, "Admin cannot change super admin status");
+    }
+    if(isAdminExist.user.role === Role.ADMIN && userToChangeStatus.role === Role.ADMIN){
+        throw new AppError(status.BAD_REQUEST, "Admin cannot change other admin status");
+    }
+    if(userStatus === UserStatus.DELETED){
+        throw new AppError(status.BAD_REQUEST, "You cannot set user status to deleted. Please delete the user instead");
+     
+    }
+
 }
 
 const changeUserRole=async()  =>{
