@@ -198,3 +198,29 @@ export const handlePrismaClientValidationError = (error: Prisma.PrismaClientVali
          errorSource: errorSources,
     }
 }
+
+export const handlerPrismaClientInitializationError = (error: Prisma.PrismaClientInitializationError) : IErrorResponse => {
+    const statusCode = error.errorCode ? getStatusCodeFromPrismaError(error.errorCode) : status.SERVICE_UNAVAILABLE
+
+    const cleanMessage = error.message;
+
+    cleanMessage.replace(/Invalid `.*?` invocation:?\s*/i, "")
+
+    const lines = cleanMessage.split("\n").filter(line => line.trim());
+
+    const mainMessage = lines[0] || "An error occurred while initializing the Prisma Client."
+
+    const errorSources : IError[] = [
+        {
+            path: error.errorCode || "Initialization Error",
+            message: mainMessage
+        }
+    ]
+
+    return {
+        success: false,
+        statusCode,
+        message: `Prisma Client Initialization Error: ${mainMessage}`,
+        errorSource: errorSources,
+    }
+}
