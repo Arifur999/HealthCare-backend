@@ -224,3 +224,17 @@ export const handlerPrismaClientInitializationError = (error: Prisma.PrismaClien
         errorSource: errorSources,
     }
 }
+
+export const handlerPrismaClientRustPanicError = () : IErrorResponse => {
+    const errorSources : IError[] = [{
+        path : "Rust Engine Crashed",
+        message : "The database engine encountered a fatal error and crashed. This is usually due to an internal bug in the Prisma engine or an unexpected edge case in the database operation. Please check the Prisma logs for more details and consider reporting this issue to the Prisma team if it persists."
+    }]
+
+    return {
+        success: false,
+        statusCode: status.INTERNAL_SERVER_ERROR,
+        message: "Prisma Client Rust Panic Error: The database engine crashed due to a fatal error.",
+        errorSource: errorSources,
+    }
+}

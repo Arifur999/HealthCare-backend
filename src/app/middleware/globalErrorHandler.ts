@@ -7,7 +7,7 @@ import { handleZodError } from "../errorHelpers/handleZodError";
 import AppError from "../errorHelpers/AppError";
 import { deleteUploadedFilesFromGlobalErrorHandler } from "../utils/deleteUploadedFilesFromGlobalError";
 import { Prisma } from "../../generated/prisma/client";
-import { handlePrismaClientKnownRequestError, handlePrismaClientUnknownError, handlePrismaClientValidationError } from "../errorHelpers/handlePrismaErrors";
+import { handlePrismaClientKnownRequestError, handlePrismaClientUnknownError, handlePrismaClientValidationError, handlerPrismaClientInitializationError, handlerPrismaClientRustPanicError } from "../errorHelpers/handlePrismaErrors";
 
 
 
@@ -68,8 +68,20 @@ if(err instanceof Prisma.PrismaClientKnownRequestError){
     message = simplifiedError.message
     errorSource = [...simplifiedError.errorSource]
     stack = err.stack;
-}
-    else if (err instanceof z.ZodError) {
+}else if (err instanceof Prisma.PrismaClientInitializationError) {
+    const simplifiedError = handlerPrismaClientInitializationError(err);
+    statusCode = simplifiedError.statusCode as number
+    message = simplifiedError.message
+    errorSource = [...simplifiedError.errorSource]
+    stack = err.stack;
+}else if (err instanceof Prisma.PrismaClientRustPanicError) {
+    const simplifiedError = handlerPrismaClientRustPanicError();
+    statusCode = simplifiedError.statusCode as number
+    message = simplifiedError.message
+    errorSource = [...simplifiedError.errorSource]
+    stack = err.stack;
+
+} else if (err instanceof z.ZodError) {
         const simplifiedError = handleZodError(err);
         statusCode = simplifiedError.statusCode as number
         message = simplifiedError.message
