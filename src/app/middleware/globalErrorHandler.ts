@@ -6,6 +6,8 @@ import { IError, IErrorResponse,  } from "../interfaces/error.interfaces";
 import { handleZodError } from "../errorHelpers/handleZodError";
 import AppError from "../errorHelpers/AppError";
 import { deleteUploadedFilesFromGlobalErrorHandler } from "../utils/deleteUploadedFilesFromGlobalError";
+import { Prisma } from "../../generated/prisma/client";
+import { handlePrismaClientKnownRequestError } from "../errorHelpers/handlePrismaErrors";
 
 
 
@@ -48,8 +50,16 @@ export const globalErrorHandler = async (err: any, req: Request, res: Response, 
       }
     ] 
     */
+if(err instanceof Prisma.PrismaClientKnownRequestError){
+    const simplifiedError = handlePrismaClientKnownRequestError(err);
+    statusCode = simplifiedError.statusCode as number
+    message = simplifiedError.message
+    errorSource = [...simplifiedError.errorSource]
+    stack = err.stack;
+}
 
-    if (err instanceof z.ZodError) {
+
+    else if (err instanceof z.ZodError) {
         const simplifiedError = handleZodError(err);
         statusCode = simplifiedError.statusCode as number
         message = simplifiedError.message

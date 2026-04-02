@@ -1,5 +1,6 @@
 import status from "http-status"
 import { Prisma } from "../../generated/prisma/client"
+import { IError, IErrorResponse } from "../interfaces/error.interfaces"
 
 const getStatusCodeFromPrismaError = (errorCode: string): number => {
 
@@ -101,7 +102,7 @@ const formatErrorMeta = (meta ?: Record<string, unknown>) : string =>{
     return parts.length > 0 ? parts.join(" |") : ""
 }
 
-export const handlePrismaClientKnownRequestError = (error: Prisma.PrismaClientKnownRequestError) : TErrorResponse => {
+export const handlePrismaClientKnownRequestError = (error: Prisma.PrismaClientKnownRequestError) : IErrorResponse => {
     const statusCode = getStatusCodeFromPrismaError(error.code)
     const metaInfo = formatErrorMeta(error.meta)
 
@@ -115,7 +116,7 @@ export const handlePrismaClientKnownRequestError = (error: Prisma.PrismaClientKn
     const lines = cleanMessage.split("\n").filter(line => line.trim());
     const mainMessage = lines[0] || "An error occurred with the database operation."
 
-    const errorSources : TErrorSources[] = [
+    const errorSources : IError[] = [
         {
             path: error.code,
             message : metaInfo ? `${mainMessage} | ${metaInfo}` : mainMessage
@@ -133,8 +134,30 @@ export const handlePrismaClientKnownRequestError = (error: Prisma.PrismaClientKn
         success: false,
         statusCode,
         message: `Prisma Client Known Request Error: ${mainMessage}`,
-        errorSources,
+        errorSource: errorSources,
     }
 }
 
-export { getStatusCodeFromPrismaError, formatErrorMeta }
+export const handlePrismaClientUnknownError = (error: Prisma.PrismaClientUnknownRequestError) : IErrorResponse => {
+    let cleanMessage = error.message;
+
+    // Remove the "Invalid `prisma.user.create()` invocation: " part from the message for better readability
+    cleanMessage = cleanMessage.replace(/Invalid `.*?` invocation:?\s*/i, "")
+
+    const lines = cleanMessage.split("\n").filter(line => line.trim());
+    const mainMessage = lines[0] || "An unknown error occurred with the database operation."
+
+    const errorSources : IError[] = [
+        {
+         path: "Unknown Prisma Error",
+         message: mainMessage
+        }
+    ]
+
+    return {
+        success: false,
+        statusCode: status.INTERNAL_SERVER_ERROR,
+        message: `Prisma Client Unknown Request Error: ${mainMessage}`,
+        errorSource: errorSources,
+    }
+}
