@@ -3,7 +3,7 @@ import { Role, UserStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import AppError from "../../errorHelpers/AppError";
 import { IRequestUser } from "../../interfaces/requestUser.interface";
-import { IChangeUserStatusPayload, IUpdateAdminPayload } from "./admin.interface";
+import { IChangeUserRolePayload, IChangeUserStatusPayload, IUpdateAdminPayload } from "./admin.interface";
 
 
 const getAllAdmins = async () => {
@@ -143,11 +143,58 @@ const changeUserStatus = async (user: IRequestUser, payload: IChangeUserStatusPa
         throw new AppError(status.BAD_REQUEST, "You cannot set user status to deleted. Please delete the user instead");
      
     }
+    const updatedUser = await prisma.user.update({
+        where: {
+            id: userId,
+        },
+        data: {
+            status: userStatus,
+        },
+    })
+
+    return updatedUser;
 
 }
 
-const changeUserRole=async()  =>{
+const changeUserRole=async(user :IRequestUser, payload :IChangeUserRolePayload )  =>{
+    const isAdminExist = await prisma.admin.findUniqueOrThrow({
+        where: {
+            email: user.email,
+        },
+        include: {
+            user: true,
+        }
 
+    });
+    
+    if (isAdminExist.user.role !== Role.SUPER_ADMIN) {
+        throw new AppError(status.FORBIDDEN, "Only super admin can change user roles");
+    }
+    const { userId, role } = payload;
+        const userToChangeRole = await prisma.user.findUniqueOrThrow({
+            where: {
+                id: userId,
+            },
+        })
+    const selfRoleChange = isAdminExist.userId === userId; 
+    
+    if (selfRoleChange) {
+        throw new AppError(status.BAD_REQUEST, "You cannot change your own role");
+    }
+    if(userToChangeRole.role === Role.DOCTOR || userToChangeRole.role === Role.PATIENT){
+        throw new AppError(status.BAD_REQUEST, "You cannot change role of doctor or patient user");
+    }
+    
+    const updatedUser = await prisma.user.update({
+        where: {
+            id: userId,
+        },
+        data: {
+            role: role,
+        },
+    })
+
+    return updatedUser;
 }
 
 export const AdminService = {
