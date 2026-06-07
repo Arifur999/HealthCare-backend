@@ -27,7 +27,7 @@ try {
  const decoded = jwt.verify(token, secret) as JwtPayload;
  return {
     success: true,
-    decoded,
+     decoded,
     message: 'Token verified successfully',
  };
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -116,7 +116,7 @@ if((user&&!user.emailVerified)
     to:email,
     subject:"verify your email",
     templateName:"otp",
-    templateDate:{
+    templateData:{
       name:user.name,
       otp,
     },
@@ -135,7 +135,7 @@ if((user&&!user.emailVerified)
             to:email,
             subject:"password reset OTP",
             templateName:"otp",
-            templateDate:{
+            templateData:{
               name:user.name,
               otp,
             },
