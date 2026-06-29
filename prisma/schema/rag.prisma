@@ -14,9 +14,6 @@ model DocumentEmbedding{
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 
-    @@index([sourceType], name: "idx_sourceType_embedding")
-    @@index([sourceId], name: "idx_sourceId_embedding")
-    @@map("document_embeddings")
-
+   
 
 }
