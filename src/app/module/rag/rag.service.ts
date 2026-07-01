@@ -2,6 +2,7 @@ import { empty, sqltag as sql } from "@prisma/client/runtime/client";
 import { prisma } from "../../lib/prisma";
 import { EmbeddingService } from "./embedding.service";
 import { IndexingService } from "./indexing.service";
+import { LLMService } from "./llm.service";
 
 export class RAGService{
   private embeddingService: EmbeddingService;
@@ -10,7 +11,7 @@ export class RAGService{
      
   constructor() {
     this.embeddingService = new EmbeddingService();
-    // this.llmService = new LLMService();
+    this.llmService = new LLMService();
     this.indexingService = new IndexingService();
   }
 
@@ -57,7 +58,7 @@ export class RAGService{
     try {
       const releventDocs = await this.retieveRelevantDocuments(query, limit, sourceType);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const context = releventDocs.filter((doc: any) => doc.content).map((doc: any) => doc.content);
+      const context = (releventDocs as any).filter((doc: any) => doc.content).map((doc: any) => doc.content);
      
 
 
