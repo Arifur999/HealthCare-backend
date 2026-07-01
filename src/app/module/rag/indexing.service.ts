@@ -1,4 +1,4 @@
-import { Prisma } from "../../../generated/prisma/client";
+import { raw, sqltag as sql } from "@prisma/client/runtime/client";
 import { prisma } from "../../lib/prisma";
 import { EmbeddingService } from "./embedding.service";
 
@@ -23,7 +23,7 @@ export class IndexingService {
       const embedding = await this.embeddingService.generateEmbedding(content);
       const vectorLiteral = toVectorLiteral(embedding);
 
-      await prisma.$executeRaw(Prisma.sql`
+      await prisma.$executeRaw(sql`
         INSERT INTO "document_embeddings"
         (
           "id",
@@ -38,7 +38,7 @@ export class IndexingService {
         )
         VALUES
         (
-          ${Prisma.raw("gen_random_uuid()")},
+          ${raw("gen_random_uuid()")},
           ${chunkKey},
           ${sourceType},
           ${sourceId},
