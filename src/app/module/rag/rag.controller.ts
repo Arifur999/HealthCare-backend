@@ -1,56 +1,62 @@
-import { Request, Response } from "express"
-import catchAsync from "../../shared/catchAsync"
-import { sendResponse } from "../../shared/sendResponse"
-import status from "http-status"
-import { RAGService } from "./rag.service"
+import { Request, Response } from "express";
+import { RAGService } from "./rag.service";
+import catchAsync from "../../shared/catchAsync";
+import status from "http-status";
+import { sendResponse } from "../../shared/sendResponse";
 
 
-const ragService = new RAGService()
+const ragService = new RAGService();
 
-const getStats=async (req:Request,res:Response)=>{
-    sendResponse(res,{
-        httpStatus:status.OK,
-        success:true,
-        message:"rag stats",
-        data:{}
-    })
-}
+const getStats = catchAsync(async (req: Request, res: Response) => {
+  const result = await ragService.getStats();
 
-const ingestDoctors=catchAsync(async (req:Request,res:Response)=>{
-    const result=await ragService.ingestDoctorData()
-    
-    sendResponse(res,{
-        httpStatus:status.OK,
-        success:true,
-        message:"rag ingest doctors",
-        data:result
-    })
-})
+  sendResponse(res, {
+    success: true,
+    httpStatus: status.OK,
+    message: "RAG stats retrieved successfully",
+    data: result,
+  });
+});
 
-const queryRag=catchAsync(async (req:Request,res:Response)=>{
-    const { query } = req.body;
+const ingestDoctors = catchAsync(async (req: Request, res: Response) => {
+  const result = await ragService.ingestDoctorsData();
 
-    if (!query ) {
-        return sendResponse(res, {
-            httpStatus: status.BAD_REQUEST,
-            success: false,
-            message: "query is required",
-        });
-    }
+  sendResponse(res, {
+    success: true,
+    httpStatus: status.OK,
+    message: "Doctors data ingestion completed",
+    data: result,
+  });
+});
 
+const queryRag = catchAsync(async (req: Request, res: Response) => {
+  const { query, limit, sourceType } = req.body;
 
-    const result=await ragService.generateAnswer(req.body)
-    
-    sendResponse(res,{
-        httpStatus:status.OK,
-        success:true,
-        message:"rag query",
-        data:result
-    })
-})
+  if (!query) {
+    return sendResponse(res, {
+      success: false,
+      httpStatus: status.BAD_REQUEST,
+      message: "Query is required",
+    });
+  }
+
+  const result = await ragService.generateAnswer(
+    query,
+    limit ?? 5,
+    sourceType,
+    true,
+  );
+
+  sendResponse(res, {
+    success: true,
+    httpStatus: status.OK,
+    message: "Answer generated successfully",
+    data: result,
+  });
+});
 
 export const RagController = {
-    getStats,
-    ingestDoctors,
-    queryRag,
-}
+  getStats,
+  ingestDoctors,
+  queryRag,
+};
