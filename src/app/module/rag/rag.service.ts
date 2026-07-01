@@ -15,5 +15,19 @@ export class RAGService{
   async ingestDoctorData(){
     return this.indexingService.indexDoctorsData();
   }
+
+  async generateAnswer(query: string,limit: number = 5,sourceType?: string,asJson: boolean = false){
+    try {
+      const result = await this.indexingService.queryDocuments(query, limit, sourceType, asJson);
+      return {
+        answer: result.answer,
+        sources: result.sources,
+      };
+    } catch (error) {
+      console.log(error);
+      throw new Error("Failed to generate answer");
+    }
+
+  }
      
 }
