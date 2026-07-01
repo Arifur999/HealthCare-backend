@@ -8,7 +8,7 @@ export class EmbeddingService {
   constructor() {
     this.apikey = env.RAG.OPENROUTER_API_KEY || "";
     this.embeddingModel =
-      env.RAG.OPENROUTER_EMBEDDING_MODEL ||
+      env.RAG.OPENROUTER_EMBEDDINGS_MODEL ||
       "nvidia/llama-nemotron-embed-vl-1b-v2:free";
 
     if (!this.apikey) {
