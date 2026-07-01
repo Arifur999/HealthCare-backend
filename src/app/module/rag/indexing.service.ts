@@ -1,4 +1,5 @@
-import { raw, sqltag as sql } from "@prisma/client/runtime/client";
+
+import { Prisma } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 import { EmbeddingService } from "./embedding.service";
 
@@ -23,7 +24,7 @@ export class IndexingService {
       const embedding = await this.embeddingService.generateEmbedding(content);
       const vectorLiteral = toVectorLiteral(embedding);
 
-      await prisma.$executeRaw(sql`
+      await prisma.$executeRaw(Prisma.sql`
         INSERT INTO "document_embeddings"
         (
           "id",
@@ -38,7 +39,7 @@ export class IndexingService {
         )
         VALUES
         (
-          ${raw("gen_random_uuid()")},
+          ${Prisma.raw("gen_random_uuid()")},
           ${chunkKey},
           ${sourceType},
           ${sourceId},
@@ -62,7 +63,7 @@ export class IndexingService {
         `);
     } catch (error) {
       console.log(error);
-      throw new Error(`Failed to index document with chunkKey: ${chunkKey}`);
+      throw error;
     }
   }
 
@@ -137,7 +138,7 @@ export class IndexingService {
       };
     } catch (error) {
       console.log(error);
-      throw new Error("Failed to index doctor data");
+      throw error;
     }
   }
 }
