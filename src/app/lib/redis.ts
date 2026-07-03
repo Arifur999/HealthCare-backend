@@ -56,12 +56,12 @@ class RedisService {
     }
 
 
-    async set(key: string): Promise<string | null> {
+    async get(key: string): Promise<string | null> {
         try {
             const client = this.ensureConnected();
             return await client.get(key);
         } catch (error) {
-            console.error("Error setting Redis key:", error);
+            console.error("Error getting Redis key:", error);
            return null;
         }
     }
@@ -77,6 +77,21 @@ class RedisService {
             
         }
     }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async update(key: string, value: any, ttlInSeconds: number): Promise<void> {
+        try {
+            const client = this.ensureConnected();
+            const stringValue = typeof value === "string" ? value : JSON.stringify(value);
+            await client.set(key, stringValue, { EX: ttlInSeconds });
+        } catch (error) {
+            console.error("Error updating Redis key:", error);
+            
+        }
+
+    }
+
+
 }
 
 
