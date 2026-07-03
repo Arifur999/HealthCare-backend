@@ -38,7 +38,7 @@ class RedisService {
 
         }catch (error) {
             console.error("Error connecting to Redis:", error);
-            throw error;
+            this.isConnected = false;
         }
     }
         private ensureConnected(): RedisClientType {
@@ -53,6 +53,29 @@ class RedisService {
 
             return this.client;
         
+    }
+
+
+    async set(key: string): Promise<string | null> {
+        try {
+            const client = this.ensureConnected();
+            return await client.get(key);
+        } catch (error) {
+            console.error("Error setting Redis key:", error);
+           return null;
+        }
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async set(key: string, value: any, ttlInSeconds: number): Promise<void> {
+        try {
+            const client = this.ensureConnected();
+            const stringValue = typeof value === "string" ? value : JSON.stringify(value);
+            await client.set(key, stringValue, { EX: ttlInSeconds });
+        } catch (error) {
+            console.error("Error setting Redis key:", error);
+            
+        }
     }
 }
 
