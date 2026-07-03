@@ -101,7 +101,16 @@ class RedisService {
         }
     }
 
-
+    async isAvailable(): Promise<boolean> {
+        try {
+            const client = this.ensureConnected();
+            await client.ping();
+            return true;
+        } catch (error) {
+            console.error("Redis is not available:", error);
+            return false;
+        }
+    }
 
 
 }
