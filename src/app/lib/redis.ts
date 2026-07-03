@@ -111,6 +111,17 @@ class RedisService {
             return false;
         }
     }
+    async disconnect(): Promise<void> {
+        try {
+            if (this.client && this.isConnected) {
+                await this.client.quit();
+                this.isConnected = false;
+                console.log("Redis Client Disconnected");
+            }
+        } catch (error) {
+            console.error("Error disconnecting Redis client:", error);
+        }
+    }
 
 
 }
