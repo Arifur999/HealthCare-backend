@@ -91,6 +91,18 @@ class RedisService {
 
     }
 
+    async delete(key: string): Promise<void> {
+        try {
+            const client = this.ensureConnected();
+            await client.del(key);
+        } catch (error) {
+            console.error("Error deleting Redis key:", error);
+            
+        }
+    }
+
+
+
 
 }
 
