@@ -10,6 +10,11 @@ import { PatientValidation } from "./patient.validation";
 
 const router = Router();
 
+router.get("/",
+    checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
+    PatientController.getAllPatients
+)
+
 router.patch("/update-my-profile",
     checkAuth(Role.PATIENT),
     multerUpload.fields([

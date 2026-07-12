@@ -136,7 +136,8 @@ const getMyAppointments = async (user: IRequestUser) => {
             },
             include: {
                 doctor: true,
-                schedule: true
+                schedule: true,
+                payment: true
             }
         });
     } else if (doctorData) {
@@ -146,7 +147,8 @@ const getMyAppointments = async (user: IRequestUser) => {
             },
             include: {
                 patient: true,
-                schedule: true
+                schedule: true,
+                payment: true
             }
         });
     } else {
@@ -242,7 +244,8 @@ const getAllAppointments = async () => {
         include: {
             doctor: true,
             patient: true,
-            schedule: true
+            schedule: true,
+            payment: true
         }
     });
     return appointments;

@@ -107,6 +107,23 @@ const updateMyProfile = async (user : IRequestUser , payload : IUpdatePatientPro
     return result;
 };
 
+const getAllPatients = async () => {
+    const patients = await prisma.patient.findMany({
+        where: {
+            isDeleted: false,
+        },
+        include: {
+            user: true,
+        },
+        orderBy: {
+            createdAt: "desc",
+        }
+    });
+
+    return patients;
+};
+
 export const PatientService = {
     updateMyProfile,
+    getAllPatients,
 }

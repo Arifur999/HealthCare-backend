@@ -21,6 +21,18 @@ const updateMyProfile = catchAsync(async (req : Request, res : Response) =>{
     });
 })
 
+const getAllPatients = catchAsync(async (req: Request, res: Response) => {
+    const result = await PatientService.getAllPatients();
+
+    sendResponse(res, {
+        success: true,
+        httpStatus: status.OK,
+        message: "Patients retrieved successfully",
+        data: result
+    });
+})
+
 export const PatientController = {
-    updateMyProfile
+    updateMyProfile,
+    getAllPatients,
 }

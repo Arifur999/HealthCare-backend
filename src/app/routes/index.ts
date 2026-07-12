@@ -26,7 +26,6 @@ router.use('/admins', AdminRoutes);
 router.use("/schedules", scheduleRoutes);
 router.use('/specialties', specialtyRoute);
 router.use("/doctor-schedules", DoctorScheduleRoutes)
-router.use('/doctor-specialties', DoctorScheduleRoutes);
 router.use('/appointments',AppointmentRoutes);
 router.use("/prescriptions", PrescriptionRoutes);
 router.use("/reviews", ReviewRoutes);

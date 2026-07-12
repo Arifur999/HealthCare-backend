@@ -16,7 +16,7 @@ router.post('/',
 ,multerUpload.single("file"),validateRequest(specialtyValidation.createSpecialty),
  specialtyController.createSpecialty);
 router.get('/', specialtyController.getAllSpecialties);
-router.delete('/:id', specialtyController.deleteSpecialty);
+router.delete('/:id', checkAuth(Role.ADMIN, Role.SUPER_ADMIN), specialtyController.deleteSpecialty);
 router.put('/:id',checkAuth(Role.ADMIN,Role.SUPER_ADMIN), specialtyController.updateSpecialty);
 
 

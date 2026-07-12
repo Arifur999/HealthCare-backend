@@ -165,6 +165,25 @@ const handlerStripeWebhookEvent = async (event : Stripe.Event) =>{
     return {message : `Webhook Event ${event.id} processed successfully`}
 }
 
+const getAllPayments = async () => {
+    const payments = await prisma.payment.findMany({
+        include: {
+            appointment: {
+                include: {
+                    doctor: true,
+                    patient: true,
+                }
+            }
+        },
+        orderBy: {
+            createdAt: "desc",
+        }
+    });
+
+    return payments;
+}
+
 export const PaymentService = {
-    handlerStripeWebhookEvent
+    handlerStripeWebhookEvent,
+    getAllPayments,
 }
