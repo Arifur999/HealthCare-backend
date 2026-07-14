@@ -3,6 +3,7 @@ import { RAGService } from "./rag.service";
 import catchAsync from "../../shared/catchAsync";
 import status from "http-status";
 import { sendResponse } from "../../shared/sendResponse";
+import { redisService } from "../../lib/redis";
 
 
 const ragService = new RAGService();
@@ -40,12 +41,40 @@ const queryRag = catchAsync(async (req: Request, res: Response) => {
     });
   }
 
+  // genareate cache key from query paras
+  const cacheKey = `rag:${query}:${limit ?? 5}:${sourceType ?? "all"}`;
+
+  try {
+    const cachedResult = await redisService.get(cacheKey);
+
+    if (cachedResult) {
+      const parsedResult = JSON.parse(cachedResult);
+      return sendResponse(res, {
+        success: true,
+        httpStatus: status.OK,
+        message: "Answer retrieved from cache",
+        data: parsedResult,
+      });
+    }
+  } catch (error) {
+    console.error("Error occurred while fetching cached result:", error);
+  }
+
+  // cache-miss
+
   const result = await ragService.generateAnswer(
     query,
     limit ?? 5,
     sourceType,
     true,
   );
+
+  // store the result in cache with a TTL of  (600 seconds)
+  try {
+    await redisService.set(cacheKey, result, 600);
+  } catch (error) {
+    console.error("Error occurred while caching the result:", error);
+  }
 
   sendResponse(res, {
     success: true,
