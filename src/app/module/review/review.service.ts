@@ -68,14 +68,35 @@ const giveReview = async (user : IRequestUser, payload : ICreateReviewPayload) =
     return result;
 };
 
+const reviewCardSelect = {
+    id: true,
+    rating: true,
+    comment: true,
+    doctorId: true,
+    patientId: true,
+    appointmentId: true,
+    createdAt: true,
+    doctor: {
+        select: {
+            id: true,
+            name: true,
+            profilePhoto: true,
+        }
+    },
+    patient: {
+        select: {
+            id: true,
+            name: true,
+            profilePhoto: true,
+        }
+    },
+} as const;
+
+// Public-safe listing: only what testimonials/review cards need, no patient PII or appointment data.
 const getAllReviews = async (
 ) => {
     const reviews = await prisma.review.findMany({
-        include: {
-            doctor: true,
-            patient: true,
-            appointment: true
-        }
+        select: reviewCardSelect
     });
 
     return reviews;
@@ -102,10 +123,7 @@ const myReviews = async (user: IRequestUser) => {
             where: {
                 doctorId: doctorData.id
             },
-            include: {
-                patient: true,
-                appointment: true
-            }
+            select: reviewCardSelect
         });
     }
 
@@ -119,10 +137,7 @@ const myReviews = async (user: IRequestUser) => {
             where: {
                 patientId: patientData.id
             },
-            include: {
-                doctor: true,
-                appointment: true
-            }
+            select: reviewCardSelect
         });
     }
 };
