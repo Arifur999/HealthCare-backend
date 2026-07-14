@@ -12,8 +12,10 @@ router.get("/",
     // checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
     DoctorController.getAllDoctors);
 router.get("/:id",
-    checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
     DoctorController.getDoctorById);
+router.get("/:id/admin-detail",
+    checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
+    DoctorController.getDoctorByIdForAdmin);
 router.patch("/:id",
     checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
     validateRequest(updateDoctorZodSchema), DoctorController.updateDoctor);

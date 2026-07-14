@@ -61,7 +61,33 @@ const getAllDoctors = async (query : IqueryParams) => {
     return result;
 }
 
+// Public-safe profile: no patient-linked appointment data, safe for anonymous visitors.
 const getDoctorById = async (id: string) => {
+    const doctor = await prisma.doctor.findUnique({
+        where: {
+            id,
+            isDeleted: false,
+        },
+        include: {
+            user: true,
+            specialties: {
+                include: {
+                    specialty: true
+                }
+            },
+            doctorSchedules: {
+                include: {
+                    schedule: true,
+                }
+            },
+            reviews: true
+        }
+    })
+    return doctor;
+}
+
+// Admin-only profile: includes appointment history with patient details.
+const getDoctorByIdForAdmin = async (id: string) => {
     const doctor = await prisma.doctor.findUnique({
         where: {
             id,
@@ -197,6 +223,7 @@ const deleteDoctor = async (id: string) => {
 export const DoctorService = {
     getAllDoctors,
     getDoctorById,
+    getDoctorByIdForAdmin,
     updateDoctor,
     deleteDoctor,
 }

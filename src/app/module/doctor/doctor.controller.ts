@@ -42,6 +42,21 @@ const getDoctorById = catchAsync(
     }
 )
 
+const getDoctorByIdForAdmin = catchAsync(
+    async (req: Request, res: Response) => {
+        const { id } = req.params;
+
+        const doctor = await DoctorService.getDoctorByIdForAdmin(id as string);
+
+        sendResponse(res, {
+            httpStatus: status.OK,
+            success: true,
+            message: "Doctor fetched successfully",
+            data: doctor,
+        })
+    }
+)
+
 const updateDoctor = catchAsync(
     async (req: Request, res: Response) => {
         const { id } = req.params;
@@ -76,6 +91,7 @@ const deleteDoctor = catchAsync(
 export const DoctorController = {
     getAllDoctors,
     getDoctorById,
+    getDoctorByIdForAdmin,
     updateDoctor,
     deleteDoctor,
 };
