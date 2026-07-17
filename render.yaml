@@ -4,7 +4,7 @@ services:
     runtime: node
     plan: free
     buildCommand: pnpm install && pnpm prisma generate && pnpm build
-    startCommand: pnpm prisma migrate deploy && node dist/server.js
+    startCommand: pnpm prisma migrate deploy && pnpm start
     envVars:
       - key: NODE_ENV
         value: production
@@ -69,4 +69,6 @@ services:
       - key: OPENROUTER_EMBEDDINGS_MODEL
         sync: false
       - key: OPENROUTER_LLM_MODEL
+        sync: false
+      - key: CRON_SECRET
         sync: false
