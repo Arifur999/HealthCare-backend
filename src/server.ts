@@ -1,8 +1,8 @@
 import { Server } from "http";
-import { seedSuperAdmin } from "./app/utils/seed";
-import app from "./app";
-import { env } from "./config/env";
-import { redisService } from "./app/lib/redis";
+import { seedSuperAdmin } from "./app/utils/seed.js";
+import app from "./app.js";
+import { env } from "./config/env.js";
+import { redisService } from "./app/lib/redis.js";
 
 let server : Server;
 const bootstrap = async() => {

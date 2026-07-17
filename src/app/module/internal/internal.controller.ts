@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import status from "http-status";
-import catchAsync from "../../shared/catchAsync";
-import { sendResponse } from "../../shared/sendResponse";
-import { AppointmentService } from "../appointment/appointment.service";
-import { env } from "../../../config/env";
-import AppError from "../../errorHelpers/AppError";
+import catchAsync from "../../shared/catchAsync.js";
+import { sendResponse } from "../../shared/sendResponse.js";
+import { AppointmentService } from "../appointment/appointment.service.js";
+import { env } from "../../../config/env.js";
+import AppError from "../../errorHelpers/AppError.js";
 
 // Triggered by an external scheduler (e.g. Vercel Cron or a free cron-ping service)
 // in deployments where the process doesn't stay alive for node-cron to fire on its own.

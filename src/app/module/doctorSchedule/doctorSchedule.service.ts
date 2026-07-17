@@ -1,10 +1,10 @@
-import { DoctorSchedules, Prisma } from "../../../generated/prisma/client";
-import { IqueryParams } from "../../interfaces/query.interface";
-import { IRequestUser } from "../../interfaces/requestUser.interface";
-import { prisma } from "../../lib/prisma";
-import { QueryBuilder } from "../../utils/QueryBuilder";
-import { doctorScheduleFilterableFields, doctorScheduleIncludeConfig, doctorScheduleSearchableFields } from "./doctorSchedule.constant";
-import { ICreateDoctorSchedulePayload, IUpdateDoctorSchedulePayload } from "./doctorSchedule.interface";
+import { DoctorSchedules, Prisma } from "../../../generated/prisma/client.js";
+import { IqueryParams } from "../../interfaces/query.interface.js";
+import { IRequestUser } from "../../interfaces/requestUser.interface.js";
+import { prisma } from "../../lib/prisma.js";
+import { QueryBuilder } from "../../utils/QueryBuilder.js";
+import { doctorScheduleFilterableFields, doctorScheduleIncludeConfig, doctorScheduleSearchableFields } from "./doctorSchedule.constant.js";
+import { ICreateDoctorSchedulePayload, IUpdateDoctorSchedulePayload } from "./doctorSchedule.interface.js";
 
 
 const createMyDoctorSchedule = async (user : IRequestUser, payload : ICreateDoctorSchedulePayload) => {

@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { cookieUtils } from "../utils/cookie";
-import { prisma } from "../lib/prisma";
-import { Role, UserStatus } from "../../generated/prisma/enums";
-import AppError from "../errorHelpers/AppError";
+import { cookieUtils } from "../utils/cookie.js";
+import { prisma } from "../lib/prisma.js";
+import { Role, UserStatus } from "../../generated/prisma/enums.js";
+import AppError from "../errorHelpers/AppError.js";
 import status from "http-status";
-import { jwtUtils } from "../utils/jwt";
-import { env } from "../../config/env";
+import { jwtUtils } from "../utils/jwt.js";
+import { env } from "../../config/env.js";
 
 
 export const checkAuth = (...authRoles: Role[]) => async (req: Request, res: Response, next: NextFunction) => {

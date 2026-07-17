@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm install && pnpm prisma generate && pnpm prisma migrate deploy",
+  "buildCommand": "pnpm install && pnpm prisma generate && node scripts/fix-esm-imports.mjs && pnpm prisma migrate deploy",
   "rewrites": [
     { "source": "/(.*)", "destination": "/api/index" }
   ],

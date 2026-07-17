@@ -1,11 +1,11 @@
 import status from "http-status";
-import { Doctor, Prisma, UserStatus } from "../../../generated/prisma/client";
-import AppError from "../../errorHelpers/AppError";
-import { IqueryParams } from "../../interfaces/query.interface";
-import { prisma } from "../../lib/prisma";
-import { QueryBuilder } from "../../utils/QueryBuilder";
-import { doctorFilterableFields, doctorIncludeConfig, doctorSearchableFields } from "./doctor.constants";
-import { IUpdateDoctorPayload } from "./doctor.interface";
+import { Doctor, Prisma, UserStatus } from "../../../generated/prisma/client.js";
+import AppError from "../../errorHelpers/AppError.js";
+import { IqueryParams } from "../../interfaces/query.interface.js";
+import { prisma } from "../../lib/prisma.js";
+import { QueryBuilder } from "../../utils/QueryBuilder.js";
+import { doctorFilterableFields, doctorIncludeConfig, doctorSearchableFields } from "./doctor.constants.js";
+import { IUpdateDoctorPayload } from "./doctor.interface.js";
 
 
 // /doctors?specialty=cardiology&include=doctorSchedules,appointments

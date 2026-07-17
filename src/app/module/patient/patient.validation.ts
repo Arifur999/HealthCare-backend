@@ -1,5 +1,5 @@
 import z from "zod";
-import { BloodGroup, Gender } from "../../../generated/prisma/enums";
+import { BloodGroup, Gender } from "../../../generated/prisma/enums.js";
 
 
 const updatePatientProfileZodSchema = z.object({

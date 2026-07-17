@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Prisma } from "../../../generated/prisma/client";
-import { prisma } from "../../lib/prisma";
-import { EmbeddingService } from "./embedding.service";
-import { IndexingService } from "./indexing.service";
-import { LLMService } from "./llm.service";
+import { Prisma } from "../../../generated/prisma/client.js";
+import { prisma } from "../../lib/prisma.js";
+import { EmbeddingService } from "./embedding.service.js";
+import { IndexingService } from "./indexing.service.js";
+import { LLMService } from "./llm.service.js";
 
 
 export class RAGService {

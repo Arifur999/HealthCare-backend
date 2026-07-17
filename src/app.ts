@@ -1,17 +1,17 @@
 import express, { Application, Request, Response } from 'express';
-import { indexRoute } from './app/routes';
-import { globalErrorHandler } from './app/middleware/globalErrorHandler';
-import notFound from './app/middleware/notFound';
+import { indexRoute } from './app/routes/index.js';
+import { globalErrorHandler } from './app/middleware/globalErrorHandler.js';
+import notFound from './app/middleware/notFound.js';
 import cookieParser from 'cookie-parser';
 import { toNodeHandler } from 'better-auth/node';
-import { auth } from './app/lib/auth';
+import { auth } from './app/lib/auth.js';
 import path from 'path';
 import cors from 'cors';
-import { env } from './config/env';
+import { env } from './config/env.js';
 import qs from "qs";
-import { PaymentController } from './app/module/payment/payment.controller';
+import { PaymentController } from './app/module/payment/payment.controller.js';
 import cron from 'node-cron';
-import { AppointmentService } from './app/module/appointment/appointment.service';
+import { AppointmentService } from './app/module/appointment/appointment.service.js';
 
 
 const app: Application = express();

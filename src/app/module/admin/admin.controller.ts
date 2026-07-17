@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import catchAsync from "../../shared/catchAsync";
-import { AdminService } from "./admin.service";
-import { sendResponse } from "../../shared/sendResponse";
+import catchAsync from "../../shared/catchAsync.js";
+import { AdminService } from "./admin.service.js";
+import { sendResponse } from "../../shared/sendResponse.js";
 import status from "http-status";
 
 

@@ -1,19 +1,19 @@
 import {Router} from 'express';
-import { specialtyRoute } from '../module/specialty/specialty.route';
-import { AuthRoute } from '../module/auth/auth.route';
-import { UserRoutes } from '../module/user/user.route';
-import { DoctorRoutes } from '../module/doctor/doctor.route';
-import { PatientRoutes } from '../module/patient/patient.route';
-import { AdminRoutes } from '../module/admin/admin.route';
-import { DoctorScheduleRoutes } from '../module/doctorSchedule/doctorSchedule.route';
-import { AppointmentRoutes } from '../module/appointment/appointment.route';
-import { scheduleRoutes } from '../module/schedule/schedule.route';
-import { PrescriptionRoutes } from '../module/prescription/prescription.route';
-import { ReviewRoutes } from '../module/review/review.route';
-import { PaymentRoutes } from '../module/payment/payment.route';
-import { StatsRoutes } from '../module/stats/stats.route';
-import { RagRoutes } from '../module/rag/rag.route';
-import { InternalRoutes } from '../module/internal/internal.route';
+import { specialtyRoute } from '../module/specialty/specialty.route.js';
+import { AuthRoute } from '../module/auth/auth.route.js';
+import { UserRoutes } from '../module/user/user.route.js';
+import { DoctorRoutes } from '../module/doctor/doctor.route.js';
+import { PatientRoutes } from '../module/patient/patient.route.js';
+import { AdminRoutes } from '../module/admin/admin.route.js';
+import { DoctorScheduleRoutes } from '../module/doctorSchedule/doctorSchedule.route.js';
+import { AppointmentRoutes } from '../module/appointment/appointment.route.js';
+import { scheduleRoutes } from '../module/schedule/schedule.route.js';
+import { PrescriptionRoutes } from '../module/prescription/prescription.route.js';
+import { ReviewRoutes } from '../module/review/review.route.js';
+import { PaymentRoutes } from '../module/payment/payment.route.js';
+import { StatsRoutes } from '../module/stats/stats.route.js';
+import { RagRoutes } from '../module/rag/rag.route.js';
+import { InternalRoutes } from '../module/internal/internal.route.js';
 
 const router = Router();
 

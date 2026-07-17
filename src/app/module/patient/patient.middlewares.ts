@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { IUpdatePatientInfoPayload, IUpdatePatientProfilePayload } from "./patient.interface";
+import { IUpdatePatientInfoPayload, IUpdatePatientProfilePayload } from "./patient.interface.js";
 
 
 export const updateMyPatientProfileMiddleware = (req : Request, res : Response, next : NextFunction) => { 

@@ -1,8 +1,8 @@
-import { deleteFileFromCloudinary } from "../../../config/cloudinary.config";
-import { IRequestUser } from "../../interfaces/requestUser.interface";
-import { prisma } from "../../lib/prisma";
-import { IUpdatePatientHealthDataPayload, IUpdatePatientProfilePayload } from "./patient.interface";
-import { convertToDateTime } from "./patient.utils";
+import { deleteFileFromCloudinary } from "../../../config/cloudinary.config.js";
+import { IRequestUser } from "../../interfaces/requestUser.interface.js";
+import { prisma } from "../../lib/prisma.js";
+import { IUpdatePatientHealthDataPayload, IUpdatePatientProfilePayload } from "./patient.interface.js";
+import { convertToDateTime } from "./patient.utils.js";
 
 const updateMyProfile = async (user : IRequestUser , payload : IUpdatePatientProfilePayload) => {
     // throw new Error("This is an intentional error to test Sentry integration in the backend.");

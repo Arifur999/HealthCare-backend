@@ -1,9 +1,9 @@
 import {  Router } from "express";
-import { userController } from "./user.controller";
-import { validateRequest } from "../../middleware/validateRequest";
-import { createDoctorZodSchema } from "./user.validation";
-import { checkAuth } from "../../middleware/checkAuth";
-import { Role } from "../../../generated/prisma/enums";
+import { userController } from "./user.controller.js";
+import { validateRequest } from "../../middleware/validateRequest.js";
+import { createDoctorZodSchema } from "./user.validation.js";
+import { checkAuth } from "../../middleware/checkAuth.js";
+import { Role } from "../../../generated/prisma/enums.js";
 
 
 

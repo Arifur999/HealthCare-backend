@@ -1,12 +1,12 @@
 import { v7 as uuidv7} from "uuid";
-import { env } from "../../../config/env";
-import { IRequestUser } from "../../interfaces/requestUser.interface";
-import { prisma } from "../../lib/prisma";
-import { IBookAppointmentPayload } from "./appointment.interface";
-import { stripe } from "../../../config/stripe.config";
-import { AppointmentStatus, PaymentStatus, Role } from "../../../generated/prisma/enums";
+import { env } from "../../../config/env.js";
+import { IRequestUser } from "../../interfaces/requestUser.interface.js";
+import { prisma } from "../../lib/prisma.js";
+import { IBookAppointmentPayload } from "./appointment.interface.js";
+import { stripe } from "../../../config/stripe.config.js";
+import { AppointmentStatus, PaymentStatus, Role } from "../../../generated/prisma/enums.js";
 import status from "http-status";
-import AppError from "../../errorHelpers/AppError";
+import AppError from "../../errorHelpers/AppError.js";
 
 const bookAppointment = async (payload : IBookAppointmentPayload, user : IRequestUser) => {
    const patientData = await prisma.patient.findUniqueOrThrow({

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import status from "http-status";
-import { env } from "../../config/env";
-import AppError from "../errorHelpers/AppError";
+import { env } from "../../config/env.js";
+import AppError from "../errorHelpers/AppError.js";
 import path from "path";
 import ejs from "ejs";
 import nodemailer from "nodemailer";

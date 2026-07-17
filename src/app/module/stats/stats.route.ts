@@ -1,8 +1,8 @@
 
 import express from 'express';
-import { checkAuth } from '../../middleware/checkAuth';
-import { Role } from '../../../generated/prisma/enums';
-import { StatsController } from './stats.controller';
+import { checkAuth } from '../../middleware/checkAuth.js';
+import { Role } from '../../../generated/prisma/enums.js';
+import { StatsController } from './stats.controller.js';
 const router = express.Router();
 
 router.get(

@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import catchAsync from "../../shared/catchAsync";
-import { ScheduleService } from "./schedule.service";
-import { IqueryParams } from "../../interfaces/query.interface";
-import { sendResponse } from "../../shared/sendResponse";
+import catchAsync from "../../shared/catchAsync.js";
+import { ScheduleService } from "./schedule.service.js";
+import { IqueryParams } from "../../interfaces/query.interface.js";
+import { sendResponse } from "../../shared/sendResponse.js";
 import status from "http-status";
 
 

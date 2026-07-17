@@ -11,7 +11,7 @@
     "build": "tsc",
     "dev": "tsx watch src/server.ts",
     "migrate": "prisma migrate dev",
-    "generate": "prisma generate",
+    "generate": "prisma generate && node scripts/fix-esm-imports.mjs",
     "studio": "prisma studio",
     "push": "prisma db push",
     "pull": "prisma db pull",

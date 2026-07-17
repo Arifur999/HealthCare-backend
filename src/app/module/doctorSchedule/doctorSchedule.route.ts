@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { Role } from "../../../generated/prisma/enums";
-import { DoctorScheduleController } from "./doctorSchedule.controller";
-import { checkAuth } from "../../middleware/checkAuth";
+import { Role } from "../../../generated/prisma/enums.js";
+import { DoctorScheduleController } from "./doctorSchedule.controller.js";
+import { checkAuth } from "../../middleware/checkAuth.js";
 
 
 

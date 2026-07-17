@@ -1,9 +1,9 @@
 import status from "http-status";
-import { Role, UserStatus } from "../../../generated/prisma/enums";
-import { prisma } from "../../lib/prisma";
-import AppError from "../../errorHelpers/AppError";
-import { IRequestUser } from "../../interfaces/requestUser.interface";
-import { IChangeUserRolePayload, IChangeUserStatusPayload, IUpdateAdminPayload } from "./admin.interface";
+import { Role, UserStatus } from "../../../generated/prisma/enums.js";
+import { prisma } from "../../lib/prisma.js";
+import AppError from "../../errorHelpers/AppError.js";
+import { IRequestUser } from "../../interfaces/requestUser.interface.js";
+import { IChangeUserRolePayload, IChangeUserStatusPayload, IUpdateAdminPayload } from "./admin.interface.js";
 
 
 const getAllAdmins = async () => {

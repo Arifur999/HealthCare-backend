@@ -1,13 +1,13 @@
 import { NextFunction,  Request, Response } from "express";
-import { env } from "../../config/env";
+import { env } from "../../config/env.js";
 import status from "http-status";
 import z from "zod";
-import { IError, IErrorResponse,  } from "../interfaces/error.interfaces";
-import { handleZodError } from "../errorHelpers/handleZodError";
-import AppError from "../errorHelpers/AppError";
-import { deleteUploadedFilesFromGlobalErrorHandler } from "../utils/deleteUploadedFilesFromGlobalError";
-import { Prisma } from "../../generated/prisma/client";
-import { handlePrismaClientKnownRequestError, handlePrismaClientUnknownError, handlePrismaClientValidationError, handlerPrismaClientInitializationError, handlerPrismaClientRustPanicError } from "../errorHelpers/handlePrismaErrors";
+import { IError, IErrorResponse,  } from "../interfaces/error.interfaces.js";
+import { handleZodError } from "../errorHelpers/handleZodError.js";
+import AppError from "../errorHelpers/AppError.js";
+import { deleteUploadedFilesFromGlobalErrorHandler } from "../utils/deleteUploadedFilesFromGlobalError.js";
+import { Prisma } from "../../generated/prisma/client.js";
+import { handlePrismaClientKnownRequestError, handlePrismaClientUnknownError, handlePrismaClientValidationError, handlerPrismaClientInitializationError, handlerPrismaClientRustPanicError } from "../errorHelpers/handlePrismaErrors.js";
 
 
 

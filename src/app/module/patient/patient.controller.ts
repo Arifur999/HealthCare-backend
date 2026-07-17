@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import catchAsync from "../../shared/catchAsync";
-import { IRequestUser } from "../../interfaces/requestUser.interface";
-import { PatientService } from "./patient.service";
-import { sendResponse } from "../../shared/sendResponse";
+import catchAsync from "../../shared/catchAsync.js";
+import { IRequestUser } from "../../interfaces/requestUser.interface.js";
+import { PatientService } from "./patient.service.js";
+import { sendResponse } from "../../shared/sendResponse.js";
 import status from "http-status";
 
 const updateMyProfile = catchAsync(async (req : Request, res : Response) =>{

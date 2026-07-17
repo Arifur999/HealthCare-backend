@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import status from "http-status";
-import { sendResponse } from "../../shared/sendResponse";
-import catchAsync from "../../shared/catchAsync";
-import { IqueryParams } from "../../interfaces/query.interface";
-import { DoctorService } from "./doctor.service";
+import { sendResponse } from "../../shared/sendResponse.js";
+import catchAsync from "../../shared/catchAsync.js";
+import { IqueryParams } from "../../interfaces/query.interface.js";
+import { DoctorService } from "./doctor.service.js";
 
 
 const getAllDoctors = catchAsync(

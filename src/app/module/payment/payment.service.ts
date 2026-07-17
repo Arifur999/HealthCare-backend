@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Stripe from "stripe";
-import { prisma } from "../../lib/prisma";
-import { PaymentStatus } from "../../../generated/prisma/enums";
-import { uploadFileToCloudinary } from "../../../config/cloudinary.config";
-import { sendEmail } from "../../utils/email";
-import { generateInvoicePdf } from "./payment.utils";
+import { prisma } from "../../lib/prisma.js";
+import { PaymentStatus } from "../../../generated/prisma/enums.js";
+import { uploadFileToCloudinary } from "../../../config/cloudinary.config.js";
+import { sendEmail } from "../../utils/email.js";
+import { generateInvoicePdf } from "./payment.utils.js";
 
 
 const handlerStripeWebhookEvent = async (event : Stripe.Event) =>{

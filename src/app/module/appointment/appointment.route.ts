@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { checkAuth } from "../../middleware/checkAuth";
-import { Role } from "../../../generated/prisma/enums";
-import { AppointmentController } from "./appointment.controller";
+import { checkAuth } from "../../middleware/checkAuth.js";
+import { Role } from "../../../generated/prisma/enums.js";
+import { AppointmentController } from "./appointment.controller.js";
 
 const router = Router();
 

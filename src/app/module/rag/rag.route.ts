@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { RagController } from "./rag.controller";
+import { RagController } from "./rag.controller.js";
 
 
 const router = Router();

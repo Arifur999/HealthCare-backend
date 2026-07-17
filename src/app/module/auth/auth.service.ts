@@ -1,13 +1,13 @@
 import status from "http-status";
-import {  UserStatus } from "../../../generated/prisma/client";
-import AppError from "../../errorHelpers/AppError";
-import { auth } from "../../lib/auth";
-import { prisma } from "../../lib/prisma";
-import { tokenUtils } from "../../utils/token";
-import { IChangePasswordPayload, ILoginUserPayload, IRegisterPatientPayload } from "./auth.interface";
-import { IRequestUser } from "../../interfaces/requestUser.interface";
-import { jwtUtils } from "../../utils/jwt";
-import { env } from "../../../config/env";
+import {  UserStatus } from "../../../generated/prisma/client.js";
+import AppError from "../../errorHelpers/AppError.js";
+import { auth } from "../../lib/auth.js";
+import { prisma } from "../../lib/prisma.js";
+import { tokenUtils } from "../../utils/token.js";
+import { IChangePasswordPayload, ILoginUserPayload, IRegisterPatientPayload } from "./auth.interface.js";
+import { IRequestUser } from "../../interfaces/requestUser.interface.js";
+import { jwtUtils } from "../../utils/jwt.js";
+import { env } from "../../../config/env.js";
 
 
 

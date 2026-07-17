@@ -1,10 +1,10 @@
 import { addHours, addMinutes, format } from "date-fns";
-import { Prisma, Schedule } from "../../../generated/prisma/client";
-import { IqueryParams } from "../../interfaces/query.interface";
-import { prisma } from "../../lib/prisma";
-import { QueryBuilder } from "../../utils/QueryBuilder";
-import { scheduleFilterableFields, scheduleIncludeConfig, scheduleSearchableFields } from "./schedule.constant";
-import { ICreateSchedulePayload, IUpdateSchedulePayload } from "./schedule.interface";
+import { Prisma, Schedule } from "../../../generated/prisma/client.js";
+import { IqueryParams } from "../../interfaces/query.interface.js";
+import { prisma } from "../../lib/prisma.js";
+import { QueryBuilder } from "../../utils/QueryBuilder.js";
+import { scheduleFilterableFields, scheduleIncludeConfig, scheduleSearchableFields } from "./schedule.constant.js";
+import { ICreateSchedulePayload, IUpdateSchedulePayload } from "./schedule.interface.js";
 
 const createDateTime = (date: Date, time: string): Date => {
     const [hours, minutes] = time.split(":").map(Number);

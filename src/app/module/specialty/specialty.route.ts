@@ -1,10 +1,10 @@
 import {Router,} from "express";
-import { specialtyController } from "./specialty.controller";
-import { checkAuth } from "../../middleware/checkAuth";
-import { Role } from "../../../generated/prisma/enums";
-import { multerUpload } from "../../../config/multer.config";
-import { validateRequest } from "../../middleware/validateRequest";
-import { specialtyValidation } from "./specialty.validation";
+import { specialtyController } from "./specialty.controller.js";
+import { checkAuth } from "../../middleware/checkAuth.js";
+import { Role } from "../../../generated/prisma/enums.js";
+import { multerUpload } from "../../../config/multer.config.js";
+import { validateRequest } from "../../middleware/validateRequest.js";
+import { specialtyValidation } from "./specialty.validation.js";
 
 
 

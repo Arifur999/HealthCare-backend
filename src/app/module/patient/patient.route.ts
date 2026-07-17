@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { multerUpload } from "../../../config/multer.config";
-import { Role } from "../../../generated/prisma/enums";
-import { checkAuth } from "../../middleware/checkAuth";
-import { PatientController } from "./patient.controller";
-import { updateMyPatientProfileMiddleware } from "./patient.middlewares";
-import { validateRequest } from "../../middleware/validateRequest";
-import { PatientValidation } from "./patient.validation";
+import { multerUpload } from "../../../config/multer.config.js";
+import { Role } from "../../../generated/prisma/enums.js";
+import { checkAuth } from "../../middleware/checkAuth.js";
+import { PatientController } from "./patient.controller.js";
+import { updateMyPatientProfileMiddleware } from "./patient.middlewares.js";
+import { validateRequest } from "../../middleware/validateRequest.js";
+import { PatientValidation } from "./patient.validation.js";
 
 
 const router = Router();

@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import catchAsync from "../../shared/catchAsync";
-import { authService } from "./auth.service";
-import { sendResponse } from "../../shared/sendResponse";
+import catchAsync from "../../shared/catchAsync.js";
+import { authService } from "./auth.service.js";
+import { sendResponse } from "../../shared/sendResponse.js";
 import status from "http-status";
-import { tokenUtils } from "../../utils/token";
-import { env } from "../../../config/env";
+import { tokenUtils } from "../../utils/token.js";
+import { env } from "../../../config/env.js";
 import ms, { StringValue } from "ms";
-import AppError from "../../errorHelpers/AppError";
-import { cookieUtils } from "../../utils/cookie";
-import { auth } from "../../lib/auth";
+import AppError from "../../errorHelpers/AppError.js";
+import { cookieUtils } from "../../utils/cookie.js";
+import { auth } from "../../lib/auth.js";
 
 
 

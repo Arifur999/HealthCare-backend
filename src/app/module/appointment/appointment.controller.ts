@@ -1,7 +1,7 @@
 import status from "http-status";
-import { sendResponse } from "../../shared/sendResponse";
-import { AppointmentService } from "./appointment.service";
-import catchAsync from "../../shared/catchAsync";
+import { sendResponse } from "../../shared/sendResponse.js";
+import { AppointmentService } from "./appointment.service.js";
+import catchAsync from "../../shared/catchAsync.js";
 import { Request, Response } from "express";
 
 const bookAppointment = catchAsync( async (req : Request, res : Response) => {

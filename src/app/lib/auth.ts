@@ -1,13 +1,13 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { prisma } from "./prisma";
-import { Role, UserStatus } from "../../generated/prisma/enums";
+import { prisma } from "./prisma.js";
+import { Role, UserStatus } from "../../generated/prisma/enums.js";
 import { bearer, emailOTP } from "better-auth/plugins";
-import { sendEmail } from "../utils/email";
-import { env } from "../../config/env";
+import { sendEmail } from "../utils/email.js";
+import { env } from "../../config/env.js";
 
 // import ms, { StringValue } from "ms";
-// import { env } from "../../config/env";
+// import { env } from "../../config/env.js";
 // If your Prisma file is located elsewhere, you can change the path
 
 export const auth = betterAuth({

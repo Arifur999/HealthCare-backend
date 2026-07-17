@@ -1,6 +1,6 @@
 import status from "http-status"
-import { Prisma } from "../../generated/prisma/client"
-import { IError, IErrorResponse } from "../interfaces/error.interfaces"
+import { Prisma } from "../../generated/prisma/client.js"
+import { IError, IErrorResponse } from "../interfaces/error.interfaces.js"
 
 const getStatusCodeFromPrismaError = (errorCode: string): number => {
 

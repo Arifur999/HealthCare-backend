@@ -1,8 +1,8 @@
 import status from "http-status";
-import { PaymentStatus, Role } from "../../../generated/prisma/enums";
-import AppError from "../../errorHelpers/AppError";
-import { IRequestUser } from "../../interfaces/requestUser.interface";
-import { prisma } from "../../lib/prisma";
+import { PaymentStatus, Role } from "../../../generated/prisma/enums.js";
+import AppError from "../../errorHelpers/AppError.js";
+import { IRequestUser } from "../../interfaces/requestUser.interface.js";
+import { prisma } from "../../lib/prisma.js";
 
 const getDashboardStatsData = async (user : IRequestUser) => {
     let statsData;

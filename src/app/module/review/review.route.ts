@@ -1,9 +1,9 @@
 import express from 'express';
-import { ReviewController } from './review.controller';
-import { checkAuth } from '../../middleware/checkAuth';
-import { Role } from '../../../generated/prisma/enums';
-import { validateRequest } from '../../middleware/validateRequest';
-import { ReviewValidation } from './review.validation';
+import { ReviewController } from './review.controller.js';
+import { checkAuth } from '../../middleware/checkAuth.js';
+import { Role } from '../../../generated/prisma/enums.js';
+import { validateRequest } from '../../middleware/validateRequest.js';
+import { ReviewValidation } from './review.validation.js';
 const router = express.Router();
 
 router.get('/', ReviewController.getAllReviews);

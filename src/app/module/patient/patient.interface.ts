@@ -1,4 +1,4 @@
-import { BloodGroup, Gender } from "../../../generated/prisma/enums";
+import { BloodGroup, Gender } from "../../../generated/prisma/enums.js";
 
 export interface IUpdatePatientInfoPayload{
     name ?: string;

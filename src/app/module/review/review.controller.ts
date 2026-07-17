@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { ReviewService } from "./review.service";
-import catchAsync from "../../shared/catchAsync";
-import { sendResponse } from "../../shared/sendResponse";
+import { ReviewService } from "./review.service.js";
+import catchAsync from "../../shared/catchAsync.js";
+import { sendResponse } from "../../shared/sendResponse.js";
 import httpStatus from 'http-status';
 
 

@@ -1,6 +1,6 @@
-import catchAsync from "../../shared/catchAsync";
-import { sendResponse } from "../../shared/sendResponse";
-import { PrescriptionService } from "./prescription.service";
+import catchAsync from "../../shared/catchAsync.js";
+import { sendResponse } from "../../shared/sendResponse.js";
+import { PrescriptionService } from "./prescription.service.js";
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 

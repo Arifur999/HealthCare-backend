@@ -1,7 +1,7 @@
 
-import { Prisma } from "../../../generated/prisma/client";
-import { prisma } from "../../lib/prisma";
-import { EmbeddingService } from "./embedding.service";
+import { Prisma } from "../../../generated/prisma/client.js";
+import { prisma } from "../../lib/prisma.js";
+import { EmbeddingService } from "./embedding.service.js";
 
 const toVectorLiteral = (vector: number[]) => `[${vector.join(",")}]`;
 

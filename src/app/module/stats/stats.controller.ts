@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import catchAsync from "../../shared/catchAsync";
-import { StatsService } from "./stats.service";
-import { sendResponse } from "../../shared/sendResponse";
+import catchAsync from "../../shared/catchAsync.js";
+import { StatsService } from "./stats.service.js";
+import { sendResponse } from "../../shared/sendResponse.js";
 import status from "http-status";
 
 const getDashboardStatsData = catchAsync(async (req: Request, res: Response) => {

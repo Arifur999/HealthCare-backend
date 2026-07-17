@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { RAGService } from "./rag.service";
-import catchAsync from "../../shared/catchAsync";
+import { RAGService } from "./rag.service.js";
+import catchAsync from "../../shared/catchAsync.js";
 import status from "http-status";
-import { sendResponse } from "../../shared/sendResponse";
-import { redisService } from "../../lib/redis";
+import { sendResponse } from "../../shared/sendResponse.js";
+import { redisService } from "../../lib/redis.js";
 
 
 const ragService = new RAGService();

@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
-import app from "../src/app";
-import { seedSuperAdmin } from "../src/app/utils/seed";
-import { redisService } from "../src/app/lib/redis";
+import app from "../src/app.js";
+import { seedSuperAdmin } from "../src/app/utils/seed.js";
+import { redisService } from "../src/app/lib/redis.js";
 
 // Runs once per cold start (module scope persists across warm invocations
 // of the same serverless instance), not on every request.

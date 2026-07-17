@@ -1,9 +1,9 @@
 import status from "http-status";
-import { PaymentStatus, Role } from "../../../generated/prisma/enums";
-import { IRequestUser } from "../../interfaces/requestUser.interface";
-import { prisma } from "../../lib/prisma";
-import { ICreateReviewPayload, IUpdateReviewPayload } from "./review.interface";
-import AppError from "../../errorHelpers/AppError";
+import { PaymentStatus, Role } from "../../../generated/prisma/enums.js";
+import { IRequestUser } from "../../interfaces/requestUser.interface.js";
+import { prisma } from "../../lib/prisma.js";
+import { ICreateReviewPayload, IUpdateReviewPayload } from "./review.interface.js";
+import AppError from "../../errorHelpers/AppError.js";
 
 const giveReview = async (user : IRequestUser, payload : ICreateReviewPayload) => {
    const patientData = await prisma.patient.findUniqueOrThrow({

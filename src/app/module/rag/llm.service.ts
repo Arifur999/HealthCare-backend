@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { env } from "../../../config/env";
+import { env } from "../../../config/env.js";
 
 
 

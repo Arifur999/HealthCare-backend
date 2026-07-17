@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { Role } from "../../../generated/prisma/enums";
-import { checkAuth } from "../../middleware/checkAuth";
-import { AdminController } from "./admin.controller";
-import { validateRequest } from "../../middleware/validateRequest";
-import { updateAdminZodSchema } from "./admin.validation";
+import { Role } from "../../../generated/prisma/enums.js";
+import { checkAuth } from "../../middleware/checkAuth.js";
+import { AdminController } from "./admin.controller.js";
+import { validateRequest } from "../../middleware/validateRequest.js";
+import { updateAdminZodSchema } from "./admin.validation.js";
 
 
 
