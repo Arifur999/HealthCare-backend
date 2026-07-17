@@ -167,6 +167,7 @@ export const env = {
   STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET || "",
   SUPER_ADMIN_EMAIL: process.env.SUPER_ADMIN_EMAIL as string ,
   SUPER_ADMIN_PASSWORD: process.env.SUPER_ADMIN_PASSWORD as string,
+  CRON_SECRET: process.env.CRON_SECRET || "",
   RAG:{
     OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY || "",
     OPENROUTER_EMBEDDINGS_MODEL: process.env.OPENROUTER_EMBEDDINGS_MODEL || "",
