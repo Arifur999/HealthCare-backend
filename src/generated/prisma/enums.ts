@@ -67,3 +67,11 @@ export const PaymentStatus = {
 } as const
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
+export const AppointmentType = {
+  IN_PERSON: 'IN_PERSON',
+  VIDEO_CALL: 'VIDEO_CALL'
+} as const
+
+export type AppointmentType = (typeof AppointmentType)[keyof typeof AppointmentType]

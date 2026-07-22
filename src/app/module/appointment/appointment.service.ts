@@ -4,7 +4,7 @@ import { IRequestUser } from "../../interfaces/requestUser.interface.js";
 import { prisma } from "../../lib/prisma.js";
 import { IBookAppointmentPayload } from "./appointment.interface.js";
 import { stripe } from "../../../config/stripe.config.js";
-import { AppointmentStatus, PaymentStatus, Role } from "../../../generated/prisma/enums.js";
+import { AppointmentStatus, AppointmentType, PaymentStatus, Role } from "../../../generated/prisma/enums.js";
 import status from "http-status";
 import AppError from "../../errorHelpers/AppError.js";
 
@@ -46,6 +46,7 @@ const bookAppointment = async (payload : IBookAppointmentPayload, user : IReques
                 patientId : patientData.id,
                 scheduleId : doctorSchedule.scheduleId,
                 videoCallingId,
+                appointmentType: payload.appointmentType === "VIDEO_CALL" ? AppointmentType.VIDEO_CALL : AppointmentType.IN_PERSON,
             }
         });
 
@@ -289,6 +290,7 @@ const bookAppointmentWithPayLater = async (payload : IBookAppointmentPayload, us
                 patientId: patientData.id,
                 scheduleId: doctorSchedule.scheduleId,
                 videoCallingId,
+                appointmentType: payload.appointmentType === "VIDEO_CALL" ? AppointmentType.VIDEO_CALL : AppointmentType.IN_PERSON,
             }
         });
 

@@ -160,6 +160,13 @@ export type UuidFilter<$PrismaModel = never> = {
   not?: Prisma.NestedUuidFilter<$PrismaModel> | string
 }
 
+export type EnumAppointmentTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.AppointmentType | Prisma.EnumAppointmentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.AppointmentType[] | Prisma.ListEnumAppointmentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AppointmentType[] | Prisma.ListEnumAppointmentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAppointmentTypeFilter<$PrismaModel> | $Enums.AppointmentType
+}
+
 export type EnumAppointmentStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.AppointmentStatus | Prisma.EnumAppointmentStatusFieldRefInput<$PrismaModel>
   in?: $Enums.AppointmentStatus[] | Prisma.ListEnumAppointmentStatusFieldRefInput<$PrismaModel>
@@ -187,6 +194,16 @@ export type UuidWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedStringFilter<$PrismaModel>
   _max?: Prisma.NestedStringFilter<$PrismaModel>
+}
+
+export type EnumAppointmentTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AppointmentType | Prisma.EnumAppointmentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.AppointmentType[] | Prisma.ListEnumAppointmentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AppointmentType[] | Prisma.ListEnumAppointmentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAppointmentTypeWithAggregatesFilter<$PrismaModel> | $Enums.AppointmentType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAppointmentTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAppointmentTypeFilter<$PrismaModel>
 }
 
 export type EnumAppointmentStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -540,6 +557,13 @@ export type NestedUuidFilter<$PrismaModel = never> = {
   not?: Prisma.NestedUuidFilter<$PrismaModel> | string
 }
 
+export type NestedEnumAppointmentTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.AppointmentType | Prisma.EnumAppointmentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.AppointmentType[] | Prisma.ListEnumAppointmentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AppointmentType[] | Prisma.ListEnumAppointmentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAppointmentTypeFilter<$PrismaModel> | $Enums.AppointmentType
+}
+
 export type NestedEnumAppointmentStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.AppointmentStatus | Prisma.EnumAppointmentStatusFieldRefInput<$PrismaModel>
   in?: $Enums.AppointmentStatus[] | Prisma.ListEnumAppointmentStatusFieldRefInput<$PrismaModel>
@@ -566,6 +590,16 @@ export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedStringFilter<$PrismaModel>
   _max?: Prisma.NestedStringFilter<$PrismaModel>
+}
+
+export type NestedEnumAppointmentTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AppointmentType | Prisma.EnumAppointmentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.AppointmentType[] | Prisma.ListEnumAppointmentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AppointmentType[] | Prisma.ListEnumAppointmentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAppointmentTypeWithAggregatesFilter<$PrismaModel> | $Enums.AppointmentType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAppointmentTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAppointmentTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumAppointmentStatusWithAggregatesFilter<$PrismaModel = never> = {

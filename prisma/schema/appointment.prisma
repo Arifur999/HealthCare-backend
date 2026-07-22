@@ -1,6 +1,7 @@
 model Appointment {
   id             String            @id @default(uuid(7))
   videoCallingId String            @db.Uuid()
+  appointmentType AppointmentType  @default(IN_PERSON)
   status         AppointmentStatus @default(SCHEDULED)
   paymentStatus  PaymentStatus     @default(UNPAID)
   createdAt      DateTime          @default(now())

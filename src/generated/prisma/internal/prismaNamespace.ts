@@ -1795,6 +1795,7 @@ export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof Ad
 export const AppointmentScalarFieldEnum = {
   id: 'id',
   videoCallingId: 'videoCallingId',
+  appointmentType: 'appointmentType',
   status: 'status',
   paymentStatus: 'paymentStatus',
   createdAt: 'createdAt',
@@ -2138,6 +2139,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AppointmentType'
+ */
+export type EnumAppointmentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AppointmentType'>
+    
+
+
+/**
+ * Reference to a field of type 'AppointmentType[]'
+ */
+export type ListEnumAppointmentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AppointmentType[]'>
     
 
 

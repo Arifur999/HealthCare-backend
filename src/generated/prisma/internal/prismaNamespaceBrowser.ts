@@ -106,6 +106,7 @@ export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof Ad
 export const AppointmentScalarFieldEnum = {
   id: 'id',
   videoCallingId: 'videoCallingId',
+  appointmentType: 'appointmentType',
   status: 'status',
   paymentStatus: 'paymentStatus',
   createdAt: 'createdAt',
