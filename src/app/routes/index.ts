@@ -14,6 +14,7 @@ import { PaymentRoutes } from '../module/payment/payment.route.js';
 import { StatsRoutes } from '../module/stats/stats.route.js';
 import { RagRoutes } from '../module/rag/rag.route.js';
 import { InternalRoutes } from '../module/internal/internal.route.js';
+import { NotificationRoutes } from '../module/notification/notification.route.js';
 
 const router = Router();
 
@@ -34,6 +35,7 @@ router.use("/stats", StatsRoutes);
 router.use("/payments", PaymentRoutes);
 router.use("/rag", RagRoutes);
 router.use("/internal", InternalRoutes);
+router.use("/notifications", NotificationRoutes);
 
 
 export const indexRoute = router;

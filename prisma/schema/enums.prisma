@@ -44,3 +44,10 @@ enum AppointmentType {
   IN_PERSON
   VIDEO_CALL
 }
+
+enum NotificationType {
+  APPOINTMENT
+  PRESCRIPTION
+  PAYMENT
+  SYSTEM
+}

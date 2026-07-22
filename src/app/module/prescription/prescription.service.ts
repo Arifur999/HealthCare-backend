@@ -6,7 +6,8 @@ import { ICreatePrescriptionPayload } from "./prescription.interface.js";
 import { deleteFileFromCloudinary, uploadFileToCloudinary } from "../../../config/cloudinary.config.js";
 import { sendEmail } from "../../utils/email.js";
 import { generatePrescriptionPDF } from "./prescription.utils.js";
-import { Role } from "../../../generated/prisma/enums.js";
+import { NotificationType, Role } from "../../../generated/prisma/enums.js";
+import { NotificationService } from "../notification/notification.service.js";
 
 const givePrescription = async (user : IRequestUser, payload : ICreatePrescriptionPayload) => {
     const doctorData = await prisma.doctor.findUniqueOrThrow({
@@ -125,8 +126,16 @@ const givePrescription = async (user : IRequestUser, payload : ICreatePrescripti
     timeout: 20000,
    });
 
+    await NotificationService.createNotification({
+        userId: appointmentData.patient.userId,
+        title: "New prescription ready",
+        message: `${appointmentData.doctor.name} issued a prescription for you.`,
+        type: NotificationType.PRESCRIPTION,
+        link: "/dashboard/my-prescription",
+    });
+
     return result;
-  
+
 };
 
 const myPrescriptions = async (user: IRequestUser) => {

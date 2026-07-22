@@ -75,3 +75,13 @@ export const AppointmentType = {
 } as const
 
 export type AppointmentType = (typeof AppointmentType)[keyof typeof AppointmentType]
+
+
+export const NotificationType = {
+  APPOINTMENT: 'APPOINTMENT',
+  PRESCRIPTION: 'PRESCRIPTION',
+  PAYMENT: 'PAYMENT',
+  SYSTEM: 'SYSTEM'
+} as const
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]

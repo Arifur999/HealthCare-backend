@@ -58,6 +58,11 @@ export type Doctor = Prisma.DoctorModel
  */
 export type MedicalReport = Prisma.MedicalReportModel
 /**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
  * Model Patient
  * 
  */

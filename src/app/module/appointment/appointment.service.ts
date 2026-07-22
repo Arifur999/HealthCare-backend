@@ -7,6 +7,8 @@ import { stripe } from "../../../config/stripe.config.js";
 import { AppointmentStatus, AppointmentType, PaymentStatus, Role } from "../../../generated/prisma/enums.js";
 import status from "http-status";
 import AppError from "../../errorHelpers/AppError.js";
+import { NotificationService } from "../notification/notification.service.js";
+import { NotificationType } from "../../../generated/prisma/enums.js";
 
 const bookAppointment = async (payload : IBookAppointmentPayload, user : IRequestUser) => {
    const patientData = await prisma.patient.findUniqueOrThrow({
@@ -107,6 +109,21 @@ const bookAppointment = async (payload : IBookAppointmentPayload, user : IReques
         };
     });
 
+    await NotificationService.createNotification({
+        userId: doctorData.userId,
+        title: "New appointment booked",
+        message: `${patientData.name} booked an appointment with you.`,
+        type: NotificationType.APPOINTMENT,
+        link: "/doctor/dashboard/appointments",
+    });
+    await NotificationService.createNotification({
+        userId: patientData.userId,
+        title: "Appointment booked",
+        message: `Your appointment with ${doctorData.name} is booked. Complete payment to confirm.`,
+        type: NotificationType.APPOINTMENT,
+        link: "/dashboard/my-appointments",
+    });
+
     return {
         appointment : result.appointmentData,
         payment : result.paymentData,
@@ -167,7 +184,8 @@ const changeAppointmentStatus = async (appointmentId: string, appointmentStatus:
             // status: AppointmentStatus.SCHEDULED
         },
         include: {
-            doctor: true
+            doctor: true,
+            patient: true
         }
     });
 
@@ -180,15 +198,24 @@ const changeAppointmentStatus = async (appointmentId: string, appointmentStatus:
             throw new AppError(status.BAD_REQUEST, "This is not your appointment")
     }
 
-    return await prisma.appointment.update({
+    const updated = await prisma.appointment.update({
         where: {
             id: appointmentId
         },
         data: {
             status: appointmentStatus
         }
-    })
+    });
 
+    await NotificationService.createNotification({
+        userId: appointmentData.patient.userId,
+        title: "Appointment status updated",
+        message: `Your appointment with ${appointmentData.doctor.name} is now ${appointmentStatus.toLowerCase()}.`,
+        type: NotificationType.APPOINTMENT,
+        link: "/dashboard/my-appointments",
+    });
+
+    return updated;
 }
 
 const getMySingleAppointment = async (appointmentId: string, user: IRequestUser) => {
@@ -323,8 +350,23 @@ const bookAppointmentWithPayLater = async (payload : IBookAppointmentPayload, us
 
     });
 
+    await NotificationService.createNotification({
+        userId: doctorData.userId,
+        title: "New appointment booked",
+        message: `${patientData.name} booked an appointment with you.`,
+        type: NotificationType.APPOINTMENT,
+        link: "/doctor/dashboard/appointments",
+    });
+    await NotificationService.createNotification({
+        userId: patientData.userId,
+        title: "Appointment booked",
+        message: `Your appointment with ${doctorData.name} is booked. Complete payment to confirm.`,
+        type: NotificationType.APPOINTMENT,
+        link: "/dashboard/my-appointments",
+    });
+
     return result;
-}  
+}
 
 const initiatePayment = async (appointmentId: string, user : IRequestUser) => {
     const patientData = await prisma.patient.findUniqueOrThrow({
