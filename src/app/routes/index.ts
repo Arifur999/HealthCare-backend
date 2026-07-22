@@ -15,6 +15,7 @@ import { StatsRoutes } from '../module/stats/stats.route.js';
 import { RagRoutes } from '../module/rag/rag.route.js';
 import { InternalRoutes } from '../module/internal/internal.route.js';
 import { NotificationRoutes } from '../module/notification/notification.route.js';
+import { NewsRoutes } from '../module/news/news.route.js';
 
 const router = Router();
 
@@ -36,6 +37,7 @@ router.use("/payments", PaymentRoutes);
 router.use("/rag", RagRoutes);
 router.use("/internal", InternalRoutes);
 router.use("/notifications", NotificationRoutes);
+router.use("/news", NewsRoutes);
 
 
 export const indexRoute = router;

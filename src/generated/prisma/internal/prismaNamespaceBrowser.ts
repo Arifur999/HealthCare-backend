@@ -59,6 +59,7 @@ export const ModelName = {
   Verification: 'Verification',
   Doctor: 'Doctor',
   MedicalReport: 'MedicalReport',
+  News: 'News',
   Notification: 'Notification',
   Patient: 'Patient',
   PatientHealthData: 'PatientHealthData',
@@ -219,6 +220,23 @@ export const MedicalReportScalarFieldEnum = {
 } as const
 
 export type MedicalReportScalarFieldEnum = (typeof MedicalReportScalarFieldEnum)[keyof typeof MedicalReportScalarFieldEnum]
+
+
+export const NewsScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  slug: 'slug',
+  excerpt: 'excerpt',
+  content: 'content',
+  coverImage: 'coverImage',
+  author: 'author',
+  category: 'category',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NewsScalarFieldEnum = (typeof NewsScalarFieldEnum)[keyof typeof NewsScalarFieldEnum]
 
 
 export const NotificationScalarFieldEnum = {
