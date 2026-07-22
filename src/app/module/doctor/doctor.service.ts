@@ -50,6 +50,17 @@ const getAllDoctors = async (query : IqueryParams) => {
                     specialty: true
                 }
             },
+            // Lightweight availability probe: at most one upcoming open slot,
+            // just enough for the card to show an "Available" badge without
+            // shipping the doctor's whole schedule in the list response.
+            doctorSchedules: {
+                where: {
+                    isBooked: false,
+                    schedule: { startTime: { gte: new Date() } },
+                },
+                select: { scheduleId: true },
+                take: 1,
+            },
         })
         .dynamicInclude(doctorIncludeConfig)
         .paginate()
