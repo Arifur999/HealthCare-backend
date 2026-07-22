@@ -9,6 +9,9 @@ import status from "http-status";
 import AppError from "../../errorHelpers/AppError.js";
 import { NotificationService } from "../notification/notification.service.js";
 import { NotificationType } from "../../../generated/prisma/enums.js";
+import { sendEmail } from "../../utils/email.js";
+
+const VIDEO_BASE = process.env.VIDEO_MEETING_BASE_URL || "https://meet.jit.si";
 
 const bookAppointment = async (payload : IBookAppointmentPayload, user : IRequestUser) => {
    const patientData = await prisma.patient.findUniqueOrThrow({
@@ -485,6 +488,75 @@ const cancelUnpaidAppointments = async () => {
     });
 }
 
+// Sends a reminder for paid, upcoming appointments that start within the next
+// ~15 minutes and haven't been reminded yet. Designed to be called on a short
+// interval by an external scheduler (see the /internal reminder endpoint); the
+// reminderSent flag guarantees each appointment is reminded at most once.
+const sendAppointmentReminders = async () => {
+    const now = new Date();
+    const windowEnd = new Date(now.getTime() + 15 * 60 * 1000);
+
+    const upcoming = await prisma.appointment.findMany({
+        where: {
+            reminderSent: false,
+            paymentStatus: PaymentStatus.PAID,
+            status: AppointmentStatus.SCHEDULED,
+            schedule: {
+                startTime: { gte: now, lte: windowEnd },
+            },
+        },
+        include: {
+            patient: true,
+            doctor: true,
+            schedule: true,
+        },
+    });
+
+    let sent = 0;
+
+    for (const appointment of upcoming) {
+        const joinLink =
+            appointment.appointmentType === AppointmentType.VIDEO_CALL
+                ? `${VIDEO_BASE}/meddical-${appointment.videoCallingId}`
+                : null;
+
+        try {
+            await sendEmail({
+                to: appointment.patient.email,
+                subject: `Reminder: your appointment with ${appointment.doctor.name} starts soon`,
+                templateName: "appointmentReminder",
+                templateData: {
+                    patientName: appointment.patient.name,
+                    doctorName: appointment.doctor.name,
+                    startTime: new Date(appointment.schedule.startTime).toLocaleString(),
+                    appointmentType: appointment.appointmentType === AppointmentType.VIDEO_CALL ? "Video call" : "In-person",
+                    joinLink,
+                },
+            });
+        } catch (error) {
+            console.error("Failed to send reminder email for appointment", appointment.id, error);
+            continue;
+        }
+
+        await prisma.appointment.update({
+            where: { id: appointment.id },
+            data: { reminderSent: true },
+        });
+
+        await NotificationService.createNotification({
+            userId: appointment.patient.userId,
+            title: "Appointment starting soon",
+            message: `Your appointment with ${appointment.doctor.name} starts soon.`,
+            type: NotificationType.APPOINTMENT,
+            link: "/dashboard/my-appointments",
+        });
+
+        sent++;
+    }
+
+    return { checked: upcoming.length, sent };
+};
+
 export const AppointmentService = {
     bookAppointment,
     getMyAppointments,
@@ -494,5 +566,6 @@ export const AppointmentService = {
     bookAppointmentWithPayLater,
     initiatePayment,
     cancelUnpaidAppointments,
+    sendAppointmentReminders,
 
 }

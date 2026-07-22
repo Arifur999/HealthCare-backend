@@ -110,6 +110,7 @@ export const AppointmentScalarFieldEnum = {
   appointmentType: 'appointmentType',
   status: 'status',
   paymentStatus: 'paymentStatus',
+  reminderSent: 'reminderSent',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   patientId: 'patientId',
