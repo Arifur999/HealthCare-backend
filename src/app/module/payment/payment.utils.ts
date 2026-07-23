@@ -42,10 +42,10 @@ export const generateInvoicePdf = async (data: InvoiceData): Promise<Buffer> => 
             doc
                 .fontSize(10)
                 .font('Helvetica')
-                .text('PH Healthcare Services', {
+                .text('MEDdical', {
                     align: 'center',
                 });
-            doc.text('Your Health, Our Priority', { align: 'center' });
+            doc.text('Leading the Way in Medical Excellence', { align: 'center' });
 
             doc.moveDown(1);
 
@@ -139,7 +139,7 @@ export const generateInvoicePdf = async (data: InvoiceData): Promise<Buffer> => 
 
             // Footer
             doc.fontSize(9).font('Helvetica').text(
-                'Thank you for choosing PH Healthcare. This is an electronically generated invoice.',
+                'Thank you for choosing MEDdical. This is an electronically generated invoice.',
                 {
                     align: 'center',
                 }

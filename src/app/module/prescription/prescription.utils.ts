@@ -44,10 +44,10 @@ export const generatePrescriptionPDF = async (prescriptionData: PrescriptionData
             doc
                 .fontSize(10)
                 .font('Helvetica')
-                .text('PH Healthcare Services', {
+                .text('MEDdical', {
                     align: 'center',
                 });
-            doc.text('Your Health, Our Priority', { align: 'center' });
+            doc.text('Leading the Way in Medical Excellence', { align: 'center' });
 
             doc.moveDown(1);
 
