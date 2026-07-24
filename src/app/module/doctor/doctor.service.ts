@@ -90,7 +90,17 @@ const getDoctorById = async (id: string) => {
                     schedule: true,
                 }
             },
-            reviews: true
+            // Include only the reviewer's display name + photo — never email,
+            // contact, or address — so public review cards can show who wrote them
+            // without leaking patient PII.
+            reviews: {
+                include: {
+                    patient: {
+                        select: { name: true, profilePhoto: true },
+                    },
+                },
+                orderBy: { createdAt: "desc" },
+            }
         }
     })
     return doctor;
