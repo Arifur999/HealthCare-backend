@@ -42,6 +42,19 @@ const changeAppointmentStatus = catchAsync(async (req: Request, res: Response) =
     });
 });
 
+const cancelMyAppointment = catchAsync(async (req: Request, res: Response) => {
+    const appointmentId = req.params.id;
+    const user = req.user;
+
+    const cancelled = await AppointmentService.cancelMyAppointment(appointmentId as string, user);
+    sendResponse(res, {
+        success: true,
+        httpStatus: status.OK,
+        message: 'Appointment canceled successfully',
+        data: cancelled
+    });
+});
+
 const getMySingleAppointment = catchAsync(async (req: Request, res: Response) => {
     const appointmentId = req.params.id;
     const user = req.user;
@@ -93,6 +106,7 @@ export const AppointmentController = {
     bookAppointment,
     getMyAppointments,
     changeAppointmentStatus,
+    cancelMyAppointment,
     getMySingleAppointment,
     getAllAppointments,
     bookAppointmentWithPayLater,

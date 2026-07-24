@@ -221,6 +221,80 @@ const changeAppointmentStatus = async (appointmentId: string, appointmentStatus:
     return updated;
 }
 
+// Lets a patient cancel their own appointment. Only unpaid, still-scheduled
+// appointments can be canceled here — there's no online refund flow, so a paid
+// appointment must be handled by support, and a completed/already-canceled one
+// can't be undone. Frees the doctor's slot for rebooking, removes the pending
+// payment row, and notifies the doctor.
+const cancelMyAppointment = async (appointmentId: string, user: IRequestUser) => {
+    const patientData = await prisma.patient.findUnique({
+        where: { email: user?.email },
+    });
+
+    if (!patientData) {
+        throw new AppError(status.NOT_FOUND, "Patient profile not found");
+    }
+
+    const appointment = await prisma.appointment.findFirst({
+        where: { id: appointmentId, patientId: patientData.id },
+        include: { doctor: true },
+    });
+
+    if (!appointment) {
+        throw new AppError(status.NOT_FOUND, "Appointment not found");
+    }
+
+    if (appointment.status === AppointmentStatus.CANCELED) {
+        throw new AppError(status.BAD_REQUEST, "This appointment is already canceled");
+    }
+
+    if (appointment.status === AppointmentStatus.COMPLETED) {
+        throw new AppError(status.BAD_REQUEST, "A completed appointment can't be canceled");
+    }
+
+    if (appointment.paymentStatus === PaymentStatus.PAID) {
+        throw new AppError(
+            status.BAD_REQUEST,
+            "Paid appointments can't be canceled online. Please contact support.",
+        );
+    }
+
+    const updated = await prisma.$transaction(async (tx) => {
+        const cancelled = await tx.appointment.update({
+            where: { id: appointmentId },
+            data: { status: AppointmentStatus.CANCELED },
+        });
+
+        // Release the reserved slot so another patient can book it.
+        await tx.doctorSchedules.update({
+            where: {
+                doctorId_scheduleId: {
+                    doctorId: appointment.doctorId,
+                    scheduleId: appointment.scheduleId,
+                },
+            },
+            data: { isBooked: false },
+        });
+
+        // Drop the pending (unpaid) payment row, if one exists.
+        await tx.payment.deleteMany({
+            where: { appointmentId },
+        });
+
+        return cancelled;
+    });
+
+    await NotificationService.createNotification({
+        userId: appointment.doctor.userId,
+        title: "Appointment canceled",
+        message: `${patientData.name} canceled their appointment.`,
+        type: NotificationType.APPOINTMENT,
+        link: "/doctor/dashboard/appointments",
+    });
+
+    return updated;
+}
+
 const getMySingleAppointment = async (appointmentId: string, user: IRequestUser) => {
 
     const patientData = await prisma.patient.findUnique({
@@ -561,6 +635,7 @@ export const AppointmentService = {
     bookAppointment,
     getMyAppointments,
     changeAppointmentStatus,
+    cancelMyAppointment,
     getMySingleAppointment,
     getAllAppointments,
     bookAppointmentWithPayLater,
