@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doctor Application Update</title>
+  <style>
+    body { margin: 0; padding: 0; background-color: #f2f6fb; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; color: #1f2937; }
+    .container { width: 100%; padding: 28px 12px; background-color: #f2f6fb; }
+    .card { width: 100%; max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 6px 24px rgba(31, 43, 108, 0.08); }
+    .header { background: #1f2b6c; padding: 28px 32px; color: #ffffff; }
+    .brand { font-size: 24px; font-weight: 700; letter-spacing: 1px; }
+    .brand .accent { color: #159eec; }
+    .body { padding: 32px; }
+    .h1 { font-size: 20px; margin: 0 0 8px; color: #1f2b6c; }
+    .muted { color: #5b6472; font-size: 14px; line-height: 1.6; }
+    .detail { margin: 20px 0; border: 1px solid #e4e9f5; border-radius: 10px; overflow: hidden; }
+    .detail-row { display: flex; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid #eef2fb; font-size: 14px; }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-label { color: #5b6472; }
+    .detail-value { font-weight: 600; color: #1f2b6c; }
+    .btn { display: inline-block; margin-top: 8px; background: #159eec; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 999px; font-weight: 600; font-size: 14px; }
+    .note { margin-top: 16px; padding: 12px 16px; background: #f2f6fb; border-radius: 8px; font-size: 13px; color: #5b6472; }
+    .footer { padding: 20px 32px; color: #94a3b8; font-size: 12px; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="header">
+        <div class="brand">MED<span class="accent">DICAL</span></div>
+      </div>
+      <div class="body">
+        <% if (approved) { %>
+          <h1 class="h1">Welcome to MEDdical, Dr. <%= name %>!</h1>
+          <p class="muted">Your application to join as a doctor has been approved. We've created your account so you can start managing your schedule and appointments.</p>
+
+          <div class="detail">
+            <div class="detail-row"><span class="detail-label">Email</span><span class="detail-value"><%= email %></span></div>
+            <div class="detail-row"><span class="detail-label">Temporary password</span><span class="detail-value"><%= tempPassword %></span></div>
+          </div>
+
+          <p class="muted">For your security, you'll be asked to set a new password the first time you log in.</p>
+          <a class="btn" href="<%= loginUrl %>">Log in to your account</a>
+        <% } else { %>
+          <h1 class="h1">Update on your application</h1>
+          <p class="muted">Hi <%= name %>, thank you for your interest in joining MEDdical. After careful review, we're unable to approve your application at this time.</p>
+          <p class="muted">You're welcome to apply again in the future.</p>
+        <% } %>
+
+        <% if (note && note.length > 0) { %>
+          <div class="note"><strong>Note from our team:</strong> <%= note %></div>
+        <% } %>
+      </div>
+      <div class="footer">
+        This is an automated message from MEDdical. Please do not reply to this email.
+      </div>
+    </div>
+  </div>
+</body>
+</html>

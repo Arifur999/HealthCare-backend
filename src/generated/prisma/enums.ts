@@ -85,3 +85,12 @@ export const NotificationType = {
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
+
+
+export const DoctorApplicationStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type DoctorApplicationStatus = (typeof DoctorApplicationStatus)[keyof typeof DoctorApplicationStatus]

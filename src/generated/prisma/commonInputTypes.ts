@@ -10,8 +10,8 @@
  */
 
 import type * as runtime from "@prisma/client/runtime/client"
-import * as $Enums from "./enums"
-import type * as Prisma from "./internal/prismaNamespace"
+import * as $Enums from "./enums.js"
+import type * as Prisma from "./internal/prismaNamespace.js"
 
 
 export type StringFilter<$PrismaModel = never> = {
@@ -329,6 +329,23 @@ export type FloatWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedFloatFilter<$PrismaModel>
   _min?: Prisma.NestedFloatFilter<$PrismaModel>
   _max?: Prisma.NestedFloatFilter<$PrismaModel>
+}
+
+export type EnumDoctorApplicationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.DoctorApplicationStatus | Prisma.EnumDoctorApplicationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DoctorApplicationStatus[] | Prisma.ListEnumDoctorApplicationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DoctorApplicationStatus[] | Prisma.ListEnumDoctorApplicationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDoctorApplicationStatusFilter<$PrismaModel> | $Enums.DoctorApplicationStatus
+}
+
+export type EnumDoctorApplicationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DoctorApplicationStatus | Prisma.EnumDoctorApplicationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DoctorApplicationStatus[] | Prisma.ListEnumDoctorApplicationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DoctorApplicationStatus[] | Prisma.ListEnumDoctorApplicationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDoctorApplicationStatusWithAggregatesFilter<$PrismaModel> | $Enums.DoctorApplicationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDoctorApplicationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDoctorApplicationStatusFilter<$PrismaModel>
 }
 
 export type EnumNotificationTypeFilter<$PrismaModel = never> = {
@@ -731,6 +748,23 @@ export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedFloatFilter<$PrismaModel>
   _min?: Prisma.NestedFloatFilter<$PrismaModel>
   _max?: Prisma.NestedFloatFilter<$PrismaModel>
+}
+
+export type NestedEnumDoctorApplicationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.DoctorApplicationStatus | Prisma.EnumDoctorApplicationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DoctorApplicationStatus[] | Prisma.ListEnumDoctorApplicationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DoctorApplicationStatus[] | Prisma.ListEnumDoctorApplicationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDoctorApplicationStatusFilter<$PrismaModel> | $Enums.DoctorApplicationStatus
+}
+
+export type NestedEnumDoctorApplicationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DoctorApplicationStatus | Prisma.EnumDoctorApplicationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DoctorApplicationStatus[] | Prisma.ListEnumDoctorApplicationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DoctorApplicationStatus[] | Prisma.ListEnumDoctorApplicationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDoctorApplicationStatusWithAggregatesFilter<$PrismaModel> | $Enums.DoctorApplicationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDoctorApplicationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDoctorApplicationStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumNotificationTypeFilter<$PrismaModel = never> = {

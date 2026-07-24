@@ -16,6 +16,7 @@ import { RagRoutes } from '../module/rag/rag.route.js';
 import { InternalRoutes } from '../module/internal/internal.route.js';
 import { NotificationRoutes } from '../module/notification/notification.route.js';
 import { NewsRoutes } from '../module/news/news.route.js';
+import { DoctorApplicationRoutes } from '../module/doctorApplication/doctorApplication.route.js';
 
 const router = Router();
 
@@ -38,6 +39,7 @@ router.use("/rag", RagRoutes);
 router.use("/internal", InternalRoutes);
 router.use("/notifications", NotificationRoutes);
 router.use("/news", NewsRoutes);
+router.use("/doctor-applications", DoctorApplicationRoutes);
 
 
 export const indexRoute = router;

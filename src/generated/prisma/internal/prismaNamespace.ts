@@ -16,10 +16,10 @@
  */
 
 import * as runtime from "@prisma/client/runtime/client"
-import type * as Prisma from "../models"
-import { type PrismaClient } from "./class"
+import type * as Prisma from "../models.js"
+import { type PrismaClient } from "./class.js"
 
-export type * from '../models'
+export type * from '../models.js'
 
 export type DMMF = typeof runtime.DMMF
 
@@ -391,6 +391,7 @@ export const ModelName = {
   Account: 'Account',
   Verification: 'Verification',
   Doctor: 'Doctor',
+  DoctorApplication: 'DoctorApplication',
   MedicalReport: 'MedicalReport',
   News: 'News',
   Notification: 'Notification',
@@ -419,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admin" | "appointment" | "user" | "session" | "account" | "verification" | "doctor" | "medicalReport" | "news" | "notification" | "patient" | "patientHealthData" | "payment" | "prescription" | "documentEmbedding" | "review" | "schedule" | "doctorSchedules" | "specialty" | "doctorSpecialty"
+    modelProps: "admin" | "appointment" | "user" | "session" | "account" | "verification" | "doctor" | "doctorApplication" | "medicalReport" | "news" | "notification" | "patient" | "patientHealthData" | "payment" | "prescription" | "documentEmbedding" | "review" | "schedule" | "doctorSchedules" | "specialty" | "doctorSpecialty"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -938,6 +939,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.DoctorCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.DoctorCountAggregateOutputType> | number
+        }
+      }
+    }
+    DoctorApplication: {
+      payload: Prisma.$DoctorApplicationPayload<ExtArgs>
+      fields: Prisma.DoctorApplicationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DoctorApplicationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorApplicationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DoctorApplicationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorApplicationPayload>
+        }
+        findFirst: {
+          args: Prisma.DoctorApplicationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorApplicationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DoctorApplicationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorApplicationPayload>
+        }
+        findMany: {
+          args: Prisma.DoctorApplicationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorApplicationPayload>[]
+        }
+        create: {
+          args: Prisma.DoctorApplicationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorApplicationPayload>
+        }
+        createMany: {
+          args: Prisma.DoctorApplicationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DoctorApplicationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorApplicationPayload>[]
+        }
+        delete: {
+          args: Prisma.DoctorApplicationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorApplicationPayload>
+        }
+        update: {
+          args: Prisma.DoctorApplicationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorApplicationPayload>
+        }
+        deleteMany: {
+          args: Prisma.DoctorApplicationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DoctorApplicationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DoctorApplicationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorApplicationPayload>[]
+        }
+        upsert: {
+          args: Prisma.DoctorApplicationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorApplicationPayload>
+        }
+        aggregate: {
+          args: Prisma.DoctorApplicationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDoctorApplication>
+        }
+        groupBy: {
+          args: Prisma.DoctorApplicationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DoctorApplicationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DoctorApplicationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DoctorApplicationCountAggregateOutputType> | number
         }
       }
     }
@@ -2047,6 +2122,28 @@ export const DoctorScalarFieldEnum = {
 export type DoctorScalarFieldEnum = (typeof DoctorScalarFieldEnum)[keyof typeof DoctorScalarFieldEnum]
 
 
+export const DoctorApplicationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  contactNumber: 'contactNumber',
+  registrationNumber: 'registrationNumber',
+  experience: 'experience',
+  gender: 'gender',
+  qualification: 'qualification',
+  currentWorkingPlace: 'currentWorkingPlace',
+  designation: 'designation',
+  appointmentFee: 'appointmentFee',
+  message: 'message',
+  status: 'status',
+  reviewNote: 'reviewNote',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DoctorApplicationScalarFieldEnum = (typeof DoctorApplicationScalarFieldEnum)[keyof typeof DoctorApplicationScalarFieldEnum]
+
+
 export const MedicalReportScalarFieldEnum = {
   id: 'id',
   reportName: 'reportName',
@@ -2438,6 +2535,20 @@ export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMode
 
 
 /**
+ * Reference to a field of type 'DoctorApplicationStatus'
+ */
+export type EnumDoctorApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DoctorApplicationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'DoctorApplicationStatus[]'
+ */
+export type ListEnumDoctorApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DoctorApplicationStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'NotificationType'
  */
 export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType'>
@@ -2595,6 +2706,7 @@ export type GlobalOmitConfig = {
   account?: Prisma.AccountOmit
   verification?: Prisma.VerificationOmit
   doctor?: Prisma.DoctorOmit
+  doctorApplication?: Prisma.DoctorApplicationOmit
   medicalReport?: Prisma.MedicalReportOmit
   news?: Prisma.NewsOmit
   notification?: Prisma.NotificationOmit

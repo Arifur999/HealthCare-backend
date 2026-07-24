@@ -1,0 +1,24 @@
+model DoctorApplication {
+  id String @id @default(uuid(7))
+
+  name                String
+  email               String
+  contactNumber       String
+  registrationNumber  String
+  experience          Int    @default(0)
+  gender              Gender
+  qualification       String
+  currentWorkingPlace String
+  designation         String
+  appointmentFee      Float
+  message             String?
+
+  status     DoctorApplicationStatus @default(PENDING)
+  reviewNote String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status], name: "idx_doctor_application_status")
+  @@map("doctor_application")
+}

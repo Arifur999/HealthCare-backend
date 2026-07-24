@@ -51,3 +51,9 @@ enum NotificationType {
   PAYMENT
   SYSTEM
 }
+
+enum DoctorApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}

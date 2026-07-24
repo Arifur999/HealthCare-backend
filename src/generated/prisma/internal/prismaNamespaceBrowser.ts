@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models'
-export type * from './prismaNamespace'
+export type * from '../models.js'
+export type * from './prismaNamespace.js'
 
 export const Decimal = runtime.Decimal
 
@@ -58,6 +58,7 @@ export const ModelName = {
   Account: 'Account',
   Verification: 'Verification',
   Doctor: 'Doctor',
+  DoctorApplication: 'DoctorApplication',
   MedicalReport: 'MedicalReport',
   News: 'News',
   Notification: 'Notification',
@@ -208,6 +209,28 @@ export const DoctorScalarFieldEnum = {
 } as const
 
 export type DoctorScalarFieldEnum = (typeof DoctorScalarFieldEnum)[keyof typeof DoctorScalarFieldEnum]
+
+
+export const DoctorApplicationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  contactNumber: 'contactNumber',
+  registrationNumber: 'registrationNumber',
+  experience: 'experience',
+  gender: 'gender',
+  qualification: 'qualification',
+  currentWorkingPlace: 'currentWorkingPlace',
+  designation: 'designation',
+  appointmentFee: 'appointmentFee',
+  message: 'message',
+  status: 'status',
+  reviewNote: 'reviewNote',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DoctorApplicationScalarFieldEnum = (typeof DoctorApplicationScalarFieldEnum)[keyof typeof DoctorApplicationScalarFieldEnum]
 
 
 export const MedicalReportScalarFieldEnum = {
