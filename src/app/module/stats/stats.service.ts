@@ -51,18 +51,20 @@ const getSuperAdminStatsData = async () => {
 
     const pieChartData = await getPieChartData();
     const barChartData = await getBarChartData();
+    const revenueByMonth = await getRevenueByMonth();
 
     return {
         appointmentCount,
         doctorCount,
-        patientCount, 
-        superAdminCount,  
+        patientCount,
+        superAdminCount,
         adminCount,
         paymentCount,
         userCount,
         totalRevenue: totalRevenue._sum.amount || 0,
         pieChartData,
-        barChartData
+        barChartData,
+        revenueByMonth
     }
 }
 
@@ -83,6 +85,7 @@ const getAdminStatsData = async () => {
 
         const pieChartData = await getPieChartData();
         const barChartData = await getBarChartData();
+        const revenueByMonth = await getRevenueByMonth();
 
         return {
             appointmentCount,
@@ -93,7 +96,8 @@ const getAdminStatsData = async () => {
             adminCount,
             totalRevenue: totalRevenue._sum.amount || 0,
             pieChartData,
-            barChartData
+            barChartData,
+            revenueByMonth
         }
 }
 
@@ -236,6 +240,24 @@ const getBarChartData = async () => {
     `
 
     return appointmentCountByMonth
+}
+
+// Monthly paid-revenue trend for the admin/super-admin dashboard.
+const getRevenueByMonth = async () => {
+    interface RevenueByMonth {
+        month: Date;
+        revenue: number;
+    }
+    const revenueByMonth : RevenueByMonth[] = await prisma.$queryRaw`
+        SELECT DATE_TRUNC('month', "createdAt") AS month,
+        CAST(COALESCE(SUM("amount"), 0) AS DOUBLE PRECISION) AS revenue
+        FROM "payments"
+        WHERE "status" = 'PAID'
+        GROUP BY month
+        ORDER BY month ASC;
+    `
+
+    return revenueByMonth
 }
 
 
