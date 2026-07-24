@@ -91,6 +91,24 @@ class RedisService {
 
     }
 
+    // Atomically increments a counter and, on its first increment, sets the
+    // key to expire after `ttlInSeconds` (a fixed-window rate-limit counter).
+    // Returns the new count, or null if Redis is unavailable so callers can
+    // fail open rather than block legitimate traffic.
+    async incrementWithExpiry(key: string, ttlInSeconds: number): Promise<number | null> {
+        try {
+            const client = this.ensureConnected();
+            const count = await client.incr(key);
+            if (count === 1) {
+                await client.expire(key, ttlInSeconds);
+            }
+            return count;
+        } catch (error) {
+            console.error("Error incrementing Redis key:", error);
+            return null;
+        }
+    }
+
     async delete(key: string): Promise<void> {
         try {
             const client = this.ensureConnected();
